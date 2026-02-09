@@ -41,3 +41,11 @@ mobileOverlay.addEventListener('click', closeMenu);
 mobileMenu.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', closeMenu);
 });
+
+function openBasket() {
+    document.getElementById('cartPanel').classList.add('active');
+}
+
+function closeBasket() {
+    document.getElementById('cartPanel').classList.remove('active');
+}

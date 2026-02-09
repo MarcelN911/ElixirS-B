@@ -24,6 +24,17 @@
                 </ul>
             </div>
 
+            <div class="mobile-left">
+                <button class="nav-icon-button" id="mobileSearchButton" aria-label="Buscar">
+                    <img src="./img/search.svg" class="nav-icon" alt="Buscar">
+                </button>
+                <button class="mobile-menu-toggle" id="menuButton" aria-label="Menú">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+
             <div class="nav-center">
                 <a href="#">
                     <img src="./img/logo.svg" alt="Elixir S&B Logo" class="nav-logo">
@@ -32,31 +43,34 @@
 
             <div class="nav-right">
                 <ul>
-                    <li><a href="#" id="instagramLink" aria-label="Instagram">
-                        <img src="./img/instagram_white.svg" class="social_button" alt="Instagram">
-                    </a></li>
-                    <li><a href="#" id="whatsappLink" aria-label="WhatsApp">
-                        <img src="./img/whatsapp_white.svg" class="social_button" alt="WhatsApp">
-                    </a></li>
                     <li>
-                        <button class="cart-button" aria-label="Carrito">
-                            <img src="./img/shopping-car.svg" class="basket-icon" alt="Carrito">
+                        <a href="https://www.instagram.com/p/DIzDB8NNuoE/" aria-label="Instagram">
+                            <img src="./img/instagram_white.svg" class="nav-icon social-icon" alt="Instagram">
+                        </a>
+                    </li>
+                    <li>
+                        <button class="nav-icon-button" aria-label="Carrito" onclick="openBasket()">
+                            <img src="./img/shopping-car.svg" class="nav-icon basket-icon" alt="Carrito">
                             <span class="cart-count">0</span>
                         </button>
                     </li>
                 </ul>
             </div>
 
-            <button class="mobile-menu-toggle" id="menuButton" aria-label="Menú">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+            <div class="mobile-right">
+                <a href="https://www.instagram.com/p/DIzDB8NNuoE/" class="nav-icon-button" aria-label="Instagram">
+                    <img src="./img/instagram_white.svg" class="nav-icon" alt="Instagram">
+                </a>
+                <button class="nav-icon-button" id="mobileFavoritesButton" aria-label="Favoritos">
+                    <img src="./img/heart.svg" class="nav-icon" alt="Favoritos">
+                    <span class="favorites-count">0</span>
+                </button>
+            </div>
         </nav>
 
         <div class="mobile-menu" id="mobileMenu">
             <div class="mobile-menu-header">
-                <img src="./img/proLOGO.png" alt="Elixir S&B" class="mobile-logo">
+                <img src="./img/logo.svg" alt="Elixir S&B" class="mobile-logo">
                 <button class="mobile-close" id="menuClose" aria-label="Cerrar menú">&times;</button>
             </div>
             <ul>
@@ -65,11 +79,56 @@
                 <li><a href="#contacto">Contacto</a></li>
             </ul>
             <div class="mobile-social">
-                <a href="#" aria-label="Instagram"><img src="./img/instagram_white.svg" alt="Instagram"></a>
+                <a href="https://www.instagram.com/p/DIzDB8NNuoE/" aria-label="Instagram"><img src="./img/instagram_white.svg" alt="Instagram"></a>
                 <a href="#" aria-label="WhatsApp"><img src="./img/whatsapp_white.svg" alt="WhatsApp"></a>
             </div>
         </div>
         <div class="mobile-overlay" id="mobileOverlay"></div>
     </header>
+
+    <div class="cart-panel" id="cartPanel">
+        <div class="cart-panel-header">
+            <h2>Tu Carrito</h2>
+            <button class="cart-panel-close" id="cartPanelClose" onclick="closeBasket()">&times;</button>
+        </div>
+        <div class="cart-panel-content" id="cartPanelContent">
+            <div class="cart-empty">
+                <img src="./img/shopping-car.svg" alt="Carrito vacío">
+                <p>Tu carrito está vacío</p>
+                <a href="#productos" class="cart-empty-link">Ver productos</a>
+            </div>
+        </div>
+        <div class="cart-panel-footer">
+            <div class="cart-panel-subtotal">
+                <span>Subtotal</span>
+                <span class="cart-panel-total">$0 COP</span>
+            </div>
+            <button class="cart-panel-checkout">Finalizar Compra</button>
+            <p class="cart-panel-note">Envío calculado en el checkout</p>
+        </div>
+    </div>
+    <div class="cart-overlay" id="cartOverlay"></div>
+
+    <div class="cart-bar active" id="cartBar">
+        <div class="cart-bar-info">
+            <div class="cart-bar-icon">
+                <img src="./img/shopping-car.svg" alt="Carrito">
+                <span class="cart-bar-count" id="cartBarCount">0</span>
+            </div>
+            <div class="cart-bar-details">
+                <span class="cart-bar-items"><span id="cartItemsText">0 artículos</span></span>
+                <span class="cart-bar-total">$<span id="cartTotal">0</span> COP</span>
+            </div>
+        </div>
+        <button class="cart-bar-button" id="cartBarButton">
+            Ver Carrito
+        </button>
+    </div>
+
+    <div class="whatsapp-float">
+        <a href="https://wa.me/57XXXXXXXXXXX" target="_blank" aria-label="Contactar por WhatsApp">
+            <img src="./img/whatsapp_white.svg" alt="WhatsApp">
+        </a>
+    </div>
 </body>
 </html>
