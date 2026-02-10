@@ -692,7 +692,136 @@ nav ul {
     opacity: 1;
 }
 
+.search-container {
+    margin-top: 60px;
+    padding: 50px 20px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.4) 0%,
+        transparent 100%
+    );
+}
+
+.search-container h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.search-form {
+    display: flex;
+    width: 100%;
+    max-width: 500px;
+    border: 1px solid rgba(212, 175, 125, 0.4);
+    border-radius: 30px;
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.search-form input {
+    flex: 1;
+    padding: 14px 20px;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+}
+
+.search-form input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.search-form button {
+    background: transparent;
+    border: none;
+    padding: 14px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-form button img {
+    width: 20px;
+    height: 20px;
+    opacity: 0.7;
+}
+
+.search-form:focus-within {
+    border-color: var(--gold);
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.search-form:focus-within button img {
+    opacity: 1;
+}
+
 @media (min-width: 600px) {
+    .search-container {
+        margin-top: 70px;
+        padding: 100px 25px 80px;
+    }
+
+    .search-container h1 {
+        font-size: 22px;
+        letter-spacing: 4px;
+    }
+
+    .search-form {
+        max-width: 550px;
+    }
+
+    .search-form input {
+        padding: 16px 25px;
+        font-size: 15px;
+    }
+}
+
+@media (min-width: 900px) {
+    .search-container {
+        margin-top: 88px;
+        padding: 80px 40px 50px;
+    }
+
+    .search-container h1 {
+        font-size: 26px;
+        letter-spacing: 5px;
+        margin-bottom: 40px;
+    }
+
+    .search-form {
+        max-width: 600px;
+    }
+
+    .search-form input {
+        padding: 18px 30px;
+        font-size: 16px;
+    }
+
+    .search-form button {
+        padding: 18px 25px;
+    }
+
+    .search-form button img {
+        width: 22px;
+        height: 22px;
+    }
+
+    .search-form button:hover img {
+        opacity: 1;
+        filter: drop-shadow(0 0 6px rgba(212, 175, 125, 0.4));
+    }
+
     nav {
         height: 70px;
         padding: 0 25px;
