@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Elixir S&B</title>
 
+    <link rel="icon" type="image/png" href="./img/logo-transparent.png">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
@@ -70,7 +72,7 @@
 
         <div class="mobile-menu" id="mobileMenu">
             <div class="mobile-menu-header">
-                <img src="./img/logo.svg" alt="Elixir S&B" class="mobile-logo">
+                <img src="./img/logo-transparent.png" alt="Elixir S&B" class="mobile-logo">
                 <button class="mobile-close" id="menuClose" aria-label="Cerrar menú">&times;</button>
             </div>
             <ul>
@@ -97,7 +99,276 @@
                     </button>
                 </form>
             </div>
+            <div class="bestsellers">
+                <div class="bestsellers-header">
+                    <h2 class="bestsellers-title">Los Favoritos</h2>
+                    <div class="bestsellers-nav">
+                        <button class="bestsellers-nav-btn" id="scrollLeft" aria-label="Anterior">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M15 18l-6-6 6-6"/>
+                            </svg>
+                        </button>
+                        <button class="bestsellers-nav-btn" id="scrollRight" aria-label="Siguiente">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 18l6-6-6-6"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="bestsellers-carousel" id="bestsellersCarousel">
+                    <article class="product-card">
+                        <div class="product-card-image">
+                            <img src="./img/product-placeholder.svg" alt="Perfume 1">
+                            <div class="product-card-overlay"></div>
+                            <button class="product-card-favorite" aria-label="Añadir a favoritos">
+                                <img src="./img/heart.svg" alt="Favorito">
+                            </button>
+                            <span class="product-card-badge">Los Favoritos</span>
+                        </div>
+                        <div class="product-card-info">
+                            <h3 class="product-card-name">Nombre del Perfume</h3>
+                            <p class="product-card-brand">Inspirado en Designer</p>
+                            <div class="product-card-price">
+                                <span class="price-current">$85.000 COP</span>
+                            </div>
+                            <button class="product-card-button">Añadir al Carrito</button>
+                        </div>
+                    </article>
+                    <article class="product-card">
+                        <div class="product-card-image">
+                            <img src="./img/product-placeholder.svg" alt="Perfume 2">
+                            <div class="product-card-overlay"></div>
+                            <button class="product-card-favorite" aria-label="Añadir a favoritos">
+                                <img src="./img/heart.svg" alt="Favorito">
+                            </button>
+                            <span class="product-card-badge">Los Favoritos</span>
+                        </div>
+                        <div class="product-card-info">
+                            <h3 class="product-card-name">Nombre del Perfume</h3>
+                            <p class="product-card-brand">Inspirado en Designer</p>
+                            <div class="product-card-price">
+                                <span class="price-current">$85.000 COP</span>
+                            </div>
+                            <button class="product-card-button">Añadir al Carrito</button>
+                        </div>
+                    </article>
+                    <article class="product-card">
+                        <div class="product-card-image">
+                            <img src="./img/product-placeholder.svg" alt="Perfume 3">
+                            <div class="product-card-overlay"></div>
+                            <button class="product-card-favorite" aria-label="Añadir a favoritos">
+                                <img src="./img/heart.svg" alt="Favorito">
+                            </button>
+                            <span class="product-card-badge">Los Favoritos</span>
+                        </div>
+                        <div class="product-card-info">
+                            <h3 class="product-card-name">Nombre del Perfume</h3>
+                            <p class="product-card-brand">Inspirado en Designer</p>
+                            <div class="product-card-price">
+                                <span class="price-current">$85.000 COP</span>
+                            </div>
+                            <button class="product-card-button">Añadir al Carrito</button>
+                        </div>
+                    </article>
+                    <article class="product-card">
+                        <div class="product-card-image">
+                            <img src="./img/product-placeholder.svg" alt="Perfume 4">
+                            <div class="product-card-overlay"></div>
+                            <button class="product-card-favorite" aria-label="Añadir a favoritos">
+                                <img src="./img/heart.svg" alt="Favorito">
+                            </button>
+                            <span class="product-card-badge">Los Favoritos</span>
+                        </div>
+                        <div class="product-card-info">
+                            <h3 class="product-card-name">Nombre del Perfume</h3>
+                            <p class="product-card-brand">Inspirado en Designer</p>
+                            <div class="product-card-price">
+                                <span class="price-current">$85.000 COP</span>
+                            </div>
+                            <button class="product-card-button">Añadir al Carrito</button>
+                        </div>
+                    </article>
+                    <article class="product-card">
+                        <div class="product-card-image">
+                            <img src="./img/product-placeholder.svg" alt="Perfume 5">
+                            <div class="product-card-overlay"></div>
+                            <button class="product-card-favorite" aria-label="Añadir a favoritos">
+                                <img src="./img/heart.svg" alt="Favorito">
+                            </button>
+                            <span class="product-card-badge">Los Favoritos</span>
+                        </div>
+                        <div class="product-card-info">
+                            <h3 class="product-card-name">Nombre del Perfume</h3>
+                            <p class="product-card-brand">Inspirado en Designer</p>
+                            <div class="product-card-price">
+                                <span class="price-current">$85.000 COP</span>
+                            </div>
+                            <button class="product-card-button">Añadir al Carrito</button>
+                        </div>
+                    </article>
+                    <article class="product-card">
+                        <div class="product-card-image">
+                            <img src="./img/product-placeholder.svg" alt="Perfume 6">
+                            <div class="product-card-overlay"></div>
+                            <button class="product-card-favorite" aria-label="Añadir a favoritos">
+                                <img src="./img/heart.svg" alt="Favorito">
+                            </button>
+                            <span class="product-card-badge">Los Favoritos</span>
+                        </div>
+                        <div class="product-card-info">
+                            <h3 class="product-card-name">Nombre del Perfume</h3>
+                            <p class="product-card-brand">Inspirado en Designer</p>
+                            <div class="product-card-price">
+                                <span class="price-current">$85.000 COP</span>
+                            </div>
+                            <button class="product-card-button">Añadir al Carrito</button>
+                        </div>
+                    </article>
+                </div>
+                <div class="bestsellers-dots" id="bestsellersDots"></div>
+            </div>
         </section>
+        
+        <section class="social-media-content" id="socialSection">
+            <div class="social-header">
+                <div class="social-title-group">
+                    <img src="./img/instagram_white.svg" alt="Instagram" class="social-icon-title">
+                    <h2 class="social-title">@elixirsyb</h2>
+                </div>
+                <a href="https://www.instagram.com/elixirsyb/" target="_blank" class="social-follow-btn">
+                    Seguir en Instagram
+                </a>
+            </div>
+            <div class="social-showcase">
+                <a href="https://www.instagram.com/p/DUerC3NEQKk/" target="_blank" class="social-video-container" data-video-link>
+                    <video 
+                        class="social-video" 
+                        id="socialVideo"
+                        src="./img/instagram/video.mp4" 
+                        muted 
+                        loop 
+                        playsinline
+                        poster="./img/instagram/post-1.svg"
+                    ></video>
+                    <div class="social-video-overlay" id="videoOverlay">
+                        <div class="social-play-btn">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                                <polygon points="5,3 19,12 5,21"/>
+                            </svg>
+                        </div>
+                        <div class="social-video-instagram">
+                            <img src="./img/instagram_white.svg" alt="Instagram" class="social-ig-icon">
+                            <span>Ver en Instagram</span>
+                        </div>
+                    </div>
+                </a>
+                <div class="social-photos">
+                    <a href="https://www.instagram.com/p/DEIN_POST_ID_1/" target="_blank" class="social-photo-item" id="socialPhoto1">
+                        <img src="./img/instagram/post-2.svg" alt="Instagram Post" class="social-photo active" data-index="0">
+                        <img src="./img/instagram/post-2.svg" alt="Instagram Post" class="social-photo" data-index="1">
+                        <img src="./img/instagram/post-2.svg" alt="Instagram Post" class="social-photo" data-index="2">
+                        <div class="social-photo-overlay">
+                            <img src="./img/instagram_white.svg" alt="" class="social-ig-icon">
+                        </div>
+                    </a>
+                    <a href="https://www.instagram.com/p/DEIN_POST_ID_2/" target="_blank" class="social-photo-item" id="socialPhoto2">
+                        <img src="./img/instagram/post-2.svg" alt="Instagram Post" class="social-photo active" data-index="0">
+                        <img src="./img/instagram/post-2.svg" alt="Instagram Post" class="social-photo" data-index="1">
+                        <img src="./img/instagram/post-2.svg" alt="Instagram Post" class="social-photo" data-index="2">
+                        <div class="social-photo-overlay">
+                            <img src="./img/instagram_white.svg" alt="" class="social-ig-icon">
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="testimonials-section" id="testimonials">
+            <div class="testimonials-header">
+                <h2 class="testimonials-title">Calificaciones</h2>
+                <div class="testimonials-stars">
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                </div>
+                <p class="testimonials-subtitle">+500 clientes satisfechos en Colombia</p>
+            </div>
+            <div class="testimonials-carousel" id="testimonialsCarousel">
+                <article class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                    </div>
+                    <p class="testimonial-text">"La calidad es increíble, dura todo el día y siempre me preguntan qué perfume uso. 100% recomendado!"</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">C</div>
+                        <div class="testimonial-info">
+                            <span class="testimonial-name">Camila R.</span>
+                            <span class="testimonial-location">Medellín</span>
+                        </div>
+                    </div>
+                    <span class="testimonial-verified">✓ Compra verificada</span>
+                </article>
+                <article class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                    </div>
+                    <p class="testimonial-text">"Excelente servicio y el perfume huele exactamente como el original. Mi esposa quedó encantada con su regalo."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">J</div>
+                        <div class="testimonial-info">
+                            <span class="testimonial-name">Juan Pablo M.</span>
+                            <span class="testimonial-location">Bogotá</span>
+                        </div>
+                    </div>
+                    <span class="testimonial-verified">✓ Compra verificada</span>
+                </article>
+                <article class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                    </div>
+                    <p class="testimonial-text">"Pedí 3 perfumes y llegaron súper rápido. La presentación es elegante y los aromas son de alta calidad."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">V</div>
+                        <div class="testimonial-info">
+                            <span class="testimonial-name">Valentina S.</span>
+                            <span class="testimonial-location">Cali</span>
+                        </div>
+                    </div>
+                    <span class="testimonial-verified">✓ Compra verificada</span>
+                </article>
+                <article class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                    </div>
+                    <p class="testimonial-text">"Ya es mi tercera compra. Los precios son justos para la calidad que ofrecen. ¡Los recomiendo totalmente!"</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">A</div>
+                        <div class="testimonial-info">
+                            <span class="testimonial-name">Andrés G.</span>
+                            <span class="testimonial-location">Barranquilla</span>
+                        </div>
+                    </div>
+                    <span class="testimonial-verified">✓ Compra verificada</span>
+                </article>
+                <article class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                    </div>
+                    <p class="testimonial-text">"Encontré mi perfume favorito a un precio accesible. La atención por WhatsApp fue muy amable y rápida."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">M</div>
+                        <div class="testimonial-info">
+                            <span class="testimonial-name">María José L.</span>
+                            <span class="testimonial-location">Cartagena</span>
+                        </div>
+                    </div>
+                    <span class="testimonial-verified">✓ Compra verificada</span>
+                </article>
+            </div>
+        </section>
+
     </main>
 
     <div class="cart-panel" id="cartPanel">
