@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rose Noir — Elixir S&B</title>
+
+    <link rel="icon" type="image/png" href="./img/logo-transparent.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="styles.css">
+
+    <script src="producto.js" defer></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="nav-inner">
+                <div class="nav-left">
+                    <ul>
+                        <li><a href="productos.html">Productos</a></li>
+                        <li><a href="index.html#nosotros">Nosotros</a></li>
+                    </ul>
+                </div>
+
+                <div class="mobile-left">
+                    <a href="productos.html" class="nav-icon-button" aria-label="Volver a productos">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="15 18 9 12 15 6"/>
+                        </svg>
+                    </a>
+                    <button class="mobile-menu-toggle" id="menuButton" aria-label="Menú">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+
+                <div class="nav-center">
+                    <a href="index.html">
+                        <img src="./img/logo-transparent.png" alt="Elixir S&B Logo" class="nav-logo">
+                    </a>
+                </div>
+
+                <div class="nav-right">
+                    <ul>
+                        <li>
+                            <a href="https://www.instagram.com/elixirsb__/" target="_blank" aria-label="Instagram">
+                                <img src="./img/instagram_white.svg" class="nav-icon social-icon" alt="Instagram">
+                            </a>
+                        </li>
+                        <li>
+                            <button class="nav-icon-button" aria-label="Carrito" id="cartNavBtn">
+                                <img src="./img/shopping-car.svg" class="nav-icon basket-icon" alt="Carrito">
+                                <span class="cart-count">0</span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="mobile-right">
+                    <button class="nav-icon-button" id="pdFavNav" aria-label="Añadir a favoritos">
+                        <img src="./img/heart.svg" class="nav-icon" alt="Favorito">
+                    </button>
+                    <button class="nav-icon-button" aria-label="Carrito" id="cartNavBtnMobile">
+                        <img src="./img/shopping-car.svg" class="nav-icon basket-icon" alt="Carrito">
+                        <span class="cart-count">0</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <div class="mobile-menu" id="mobileMenu">
+            <div class="mobile-menu-header">
+                <img src="./img/logo-transparent.png" alt="Elixir S&B" class="mobile-logo">
+                <button class="mobile-close" id="menuClose" aria-label="Cerrar menú">&times;</button>
+            </div>
+            <ul>
+                <li><a href="productos.html">Productos</a></li>
+                <li><a href="index.html#nosotros">Nosotros</a></li>
+                <li><a href="index.html#contacto">Contacto</a></li>
+            </ul>
+            <div class="mobile-social">
+                <a href="https://www.instagram.com/elixirsb__/" target="_blank" aria-label="Instagram">
+                    <img src="./img/instagram_white.svg" alt="Instagram">
+                </a>
+                <a href="https://wa.me/57XXXXXXXXXXX" target="_blank" aria-label="WhatsApp">
+                    <img src="./img/whatsapp_white.svg" alt="WhatsApp">
+                </a>
+            </div>
+        </div>
+        <div class="mobile-overlay" id="mobileOverlay"></div>
+    </header>
+
+    <main>
+
+        <!-- Breadcrumb -->
+        <div class="pd-breadcrumb">
+            <div class="pd-breadcrumb-inner">
+                <a href="productos.html" class="pd-breadcrumb-back">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6"/>
+                    </svg>
+                    Productos
+                </a>
+                <span class="pd-breadcrumb-sep">/</span>
+                <span class="pd-breadcrumb-current">Rose Noir</span>
+            </div>
+        </div>
+
+        <!-- Product Section -->
+        <section class="pd-section">
+            <div class="pd-layout">
+
+                <!-- Gallery -->
+                <div class="pd-gallery">
+                    <div class="pd-image-wrap">
+                        <img src="./img/product-placeholder.svg" alt="Rose Noir" class="pd-image">
+                        <span class="pd-img-badge">Los Favoritos</span>
+                        <button class="pd-img-favorite" id="pdFavorite" aria-label="Añadir a favoritos">
+                            <img src="./img/heart.svg" alt="">
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Info -->
+                <div class="pd-info">
+                    <p class="pd-eyebrow">Para Ella · Floral Oriental</p>
+                    <h1 class="pd-title">Rose Noir</h1>
+                    <p class="pd-inspiration">Inspirado en <em>Tom Ford Black Orchid</em></p>
+
+                    <div class="pd-rating">
+                        <span class="pd-stars">★★★★★</span>
+                        <span class="pd-rating-count">42 reseñas</span>
+                    </div>
+
+                    <div class="pd-divider"></div>
+
+                    <!-- Size selector -->
+                    <div class="pd-size-group">
+                        <div class="pd-size-header">
+                            <span class="pd-label">Tamaño</span>
+                            <span class="pd-size-selected" id="pdSizeLabel">30 ml</span>
+                        </div>
+                        <div class="pd-sizes">
+                            <button class="pd-size-btn active" data-size="30 ml" data-price="65000">30 ml</button>
+                            <button class="pd-size-btn" data-size="50 ml" data-price="95000">50 ml</button>
+                            <button class="pd-size-btn" data-size="100 ml" data-price="160000">100 ml</button>
+                        </div>
+                    </div>
+
+                    <!-- Price -->
+                    <div class="pd-price-row">
+                        <span class="pd-price-current" id="pdPrice">$65.000 COP</span>
+                    </div>
+
+                    <!-- Quantity -->
+                    <div class="pd-quantity-row">
+                        <span class="pd-label">Cantidad</span>
+                        <div class="pd-qty-control">
+                            <button class="pd-qty-btn" id="pdQtyMinus" aria-label="Reducir cantidad">−</button>
+                            <span class="pd-qty-value" id="pdQtyValue">1</span>
+                            <button class="pd-qty-btn" id="pdQtyPlus" aria-label="Aumentar cantidad">+</button>
+                        </div>
+                    </div>
+
+                    <!-- CTAs -->
+                    <div class="pd-ctas">
+                        <button class="pd-btn-primary" id="pdAddCart">Añadir al Carrito</button>
+                        <a href="https://wa.me/57XXXXXXXXXXX" target="_blank" class="pd-btn-whatsapp">
+                            <img src="./img/whatsapp_white.svg" alt=""> Pedir por WhatsApp
+                        </a>
+                    </div>
+
+                    <!-- Trust bar -->
+                    <div class="pd-trust">
+                        <div class="pd-trust-item">
+                            <span class="pd-trust-icon">✦</span>
+                            <span class="pd-trust-text">Alta calidad</span>
+                        </div>
+                        <div class="pd-trust-item">
+                            <span class="pd-trust-icon">✈</span>
+                            <span class="pd-trust-text">Envío nacional</span>
+                        </div>
+                        <div class="pd-trust-item">
+                            <span class="pd-trust-icon">↩</span>
+                            <span class="pd-trust-text">Garantía</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Scent Pyramid -->
+        <section class="pd-notes">
+            <div class="pd-notes-inner">
+                <h2 class="pd-notes-title">Pirámide Olfativa</h2>
+                <div class="pd-pyramid">
+                    <div class="pd-pyramid-col">
+                        <p class="pd-pyramid-label">Salida</p>
+                        <div class="pd-pyramid-notes">
+                            <span class="pd-note">Bergamota</span>
+                            <span class="pd-note">Cardamomo</span>
+                            <span class="pd-note">Pimienta Rosa</span>
+                        </div>
+                    </div>
+                    <div class="pd-pyramid-sep"></div>
+                    <div class="pd-pyramid-col">
+                        <p class="pd-pyramid-label">Corazón</p>
+                        <div class="pd-pyramid-notes">
+                            <span class="pd-note">Rosa Negra</span>
+                            <span class="pd-note">Orquídea</span>
+                            <span class="pd-note">Jazmín</span>
+                        </div>
+                    </div>
+                    <div class="pd-pyramid-sep"></div>
+                    <div class="pd-pyramid-col">
+                        <p class="pd-pyramid-label">Fondo</p>
+                        <div class="pd-pyramid-notes">
+                            <span class="pd-note">Patchouli</span>
+                            <span class="pd-note">Vetiver</span>
+                            <span class="pd-note">Cedro Negro</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Accordion: Descripción / Envíos / Garantía -->
+        <section class="pd-details">
+            <div class="pd-details-inner">
+
+                <div class="pd-acc-item open">
+                    <button class="pd-acc-trigger" aria-expanded="true">
+                        <span>Descripción</span>
+                        <span class="pd-acc-icon">+</span>
+                    </button>
+                    <div class="pd-acc-body">
+                        <p>Rose Noir es una fragancia oscura y seductora que evoca el misterio de la noche. Su apertura especiada con bergamota y cardamomo da paso a un corazón floral profundo, dominado por la rosa negra y la orquídea, antes de asentarse en una base cálida de maderas oscuras y patchouli. Una fragancia para quienes no temen destacar.</p>
+                    </div>
+                </div>
+
+                <div class="pd-acc-item">
+                    <button class="pd-acc-trigger" aria-expanded="false">
+                        <span>Envíos</span>
+                        <span class="pd-acc-icon">+</span>
+                    </button>
+                    <div class="pd-acc-body">
+                        <p>Realizamos envíos a todo Colombia. El tiempo de entrega es de 3 a 7 días hábiles. Los pedidos se procesan dentro de las 24 horas hábiles siguientes a la confirmación del pago.</p>
+                    </div>
+                </div>
+
+                <div class="pd-acc-item">
+                    <button class="pd-acc-trigger" aria-expanded="false">
+                        <span>Garantía y Devoluciones</span>
+                        <span class="pd-acc-icon">+</span>
+                    </button>
+                    <div class="pd-acc-body">
+                        <p>Garantizamos la calidad de todos nuestros productos. Si por alguna razón no estás satisfecho con tu compra, contáctanos dentro de los 7 días siguientes a la recepción del pedido para gestionar una solución.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Related Products -->
+        <section class="pd-related">
+            <div class="pd-related-inner">
+                <h2 class="pd-related-title">También te puede gustar</h2>
+                <div class="pd-related-carousel">
+
+                    <article class="product-card">
+                        <div class="product-card-image">
+                            <img src="./img/product-placeholder.svg" alt="Velvet Orchid">
+                            <div class="product-card-overlay"></div>
+                            <button class="product-card-favorite" aria-label="Añadir a favoritos">
+                                <img src="./img/heart.svg" alt="Favorito">
+                            </button>
+                            <span class="product-card-badge product-card-badge--new">Nuevo</span>
+                        </div>
+                        <div class="product-card-info">
+                            <h3 class="product-card-name">Velvet Orchid</h3>
+                            <p class="product-card-brand">Inspirado en Chanel</p>
+                            <div class="product-card-sizes">
+                                <button class="size-pill active">50 ml</button>
+                                <button class="size-pill">100 ml</button>
+                            </div>
+                            <div class="product-card-price">
+                                <span class="price-current">$85.000 COP</span>
+                            </div>
+                            <button class="product-card-button">Añadir al Carrito</button>
+                        </div>
+                    </article>
+
+                    <article class="product-card">
+                        <div class="product-card-image">
+                            <img src="./img/product-placeholder.svg" alt="Midnight Blue">
+                            <div class="product-card-overlay"></div>
+                            <button class="product-card-favorite" aria-label="Añadir a favoritos">
+                                <img src="./img/heart.svg" alt="Favorito">
+                            </button>
+                        </div>
+                        <div class="product-card-info">
+                            <h3 class="product-card-name">Midnight Blue</h3>
+                            <p class="product-card-brand">Inspirado en Bleu de Chanel</p>
+                            <div class="product-card-sizes">
+                                <button class="size-pill active">50 ml</button>
+                                <button class="size-pill">100 ml</button>
+                            </div>
+                            <div class="product-card-price">
+                                <span class="price-current">$80.000 COP</span>
+                            </div>
+                            <button class="product-card-button">Añadir al Carrito</button>
+                        </div>
+                    </article>
+
+                    <article class="product-card">
+                        <div class="product-card-image">
+                            <img src="./img/product-placeholder.svg" alt="Oud Intense">
+                            <div class="product-card-overlay"></div>
+                            <button class="product-card-favorite" aria-label="Añadir a favoritos">
+                                <img src="./img/heart.svg" alt="Favorito">
+                            </button>
+                            <span class="product-card-badge">Los Favoritos</span>
+                        </div>
+                        <div class="product-card-info">
+                            <h3 class="product-card-name">Oud Intense</h3>
+                            <p class="product-card-brand">Inspirado en YSL</p>
+                            <div class="product-card-sizes">
+                                <button class="size-pill active">50 ml</button>
+                                <button class="size-pill">100 ml</button>
+                            </div>
+                            <div class="product-card-price">
+                                <span class="price-current">$95.000 COP</span>
+                            </div>
+                            <button class="product-card-button">Añadir al Carrito</button>
+                        </div>
+                    </article>
+
+                    <article class="product-card">
+                        <div class="product-card-image">
+                            <img src="./img/product-placeholder.svg" alt="White Jasmine">
+                            <div class="product-card-overlay"></div>
+                            <button class="product-card-favorite" aria-label="Añadir a favoritos">
+                                <img src="./img/heart.svg" alt="Favorito">
+                            </button>
+                        </div>
+                        <div class="product-card-info">
+                            <h3 class="product-card-name">White Jasmine</h3>
+                            <p class="product-card-brand">Inspirado en Guerlain</p>
+                            <div class="product-card-sizes">
+                                <button class="size-pill active">30 ml</button>
+                                <button class="size-pill">50 ml</button>
+                            </div>
+                            <div class="product-card-price">
+                                <span class="price-current">$75.000 COP</span>
+                            </div>
+                            <button class="product-card-button">Añadir al Carrito</button>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Cart Panel -->
+    <div class="cart-panel" id="cartPanel">
+        <div class="cart-panel-header">
+            <h2>Tu Carrito</h2>
+            <button class="cart-panel-close" id="cartPanelClose">&times;</button>
+        </div>
+        <div class="cart-panel-content" id="cartPanelContent">
+            <div class="cart-empty">
+                <img src="./img/shopping-car.svg" alt="Carrito vacío">
+                <p>Tu carrito está vacío</p>
+                <a href="productos.html" class="cart-empty-link">Ver productos</a>
+            </div>
+        </div>
+        <div class="cart-panel-footer">
+            <div class="cart-panel-subtotal">
+                <span>Subtotal</span>
+                <span class="cart-panel-total">$0 COP</span>
+            </div>
+            <button class="cart-panel-checkout">Finalizar Compra</button>
+            <p class="cart-panel-note">Envío calculado en el checkout</p>
+        </div>
+    </div>
+    <div class="cart-overlay" id="cartOverlay"></div>
+
+    <div class="cart-bar" id="cartBar">
+        <div class="cart-bar-info">
+            <div class="cart-bar-icon">
+                <img src="./img/shopping-car.svg" alt="Carrito">
+                <span class="cart-bar-count" id="cartBarCount">0</span>
+            </div>
+            <div class="cart-bar-details">
+                <span class="cart-bar-items"><span id="cartItemsText">0 artículos</span></span>
+                <span class="cart-bar-total">$<span id="cartTotal">0</span> COP</span>
+            </div>
+        </div>
+        <button class="cart-bar-button" id="cartBarButton">Ver Carrito</button>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <img src="./img/logo-transparent.png" alt="Elixir S&B" class="footer-logo">
+                <p class="footer-tagline">Fragancias de lujo a precios accesibles</p>
+                <div class="footer-social">
+                    <a href="https://www.instagram.com/elixirsb__/" target="_blank" aria-label="Instagram">
+                        <img src="./img/instagram_white.svg" alt="Instagram">
+                    </a>
+                    <a href="https://wa.me/57XXXXXXXXXXX" target="_blank" aria-label="WhatsApp">
+                        <img src="./img/whatsapp_white.svg" alt="WhatsApp">
+                    </a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h4>Tienda</h4>
+                    <ul>
+                        <li><a href="productos.html">Productos</a></li>
+                        <li><a href="index.html#bestsellers">Los Favoritos</a></li>
+                        <li><a href="index.html#nosotros">Nosotros</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Ayuda</h4>
+                    <ul>
+                        <li><a href="#contacto">Contacto</a></li>
+                        <li><a href="#envios">Envíos</a></li>
+                        <li><a href="#devoluciones">Devoluciones</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#terminos">Términos y Condiciones</a></li>
+                        <li><a href="#privacidad">Política de Privacidad</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-contact">
+                <a href="https://wa.me/57XXXXXXXXXXX" target="_blank" class="footer-contact-link">
+                    <img src="./img/whatsapp_white.svg" alt="" class="footer-contact-icon">
+                    <span>+57 XXX XXX XXXX</span>
+                </a>
+                <span class="footer-contact-sep">·</span>
+                <span class="footer-contact-location">Medellín, Colombia</span>
+            </div>
+            <p class="footer-copyright">© 2026 Elixir S&B. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <div class="whatsapp-float">
+        <a href="https://wa.me/57XXXXXXXXXXX" target="_blank" aria-label="Contactar por WhatsApp">
+            <img src="./img/whatsapp_white.svg" alt="WhatsApp">
+        </a>
+    </div>
+
+    <!-- Sticky buy bar (mobile only) -->
+    <div class="pd-sticky" id="pdStickyBar">
+        <div class="pd-sticky-info">
+            <p class="pd-sticky-name">Rose Noir</p>
+            <p class="pd-sticky-price" id="pdStickyPrice">$65.000 COP</p>
+        </div>
+        <button class="pd-sticky-btn" id="pdStickyAdd">Añadir al Carrito</button>
+    </div>
+
+</body>
+</html>

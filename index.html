@@ -19,54 +19,56 @@
 <body>
     <header>
         <nav>
-            <div class="nav-left">
-                <ul>
-                    <li><a href="#productos">Productos</a></li>
-                    <li><a href="#nosotros">Nosotros</a></li>
-                </ul>
-            </div>
+            <div class="nav-inner">
+                <div class="nav-left">
+                    <ul>
+                        <li><a href="productos.html">Productos</a></li>
+                        <li><a href="#nosotros">Nosotros</a></li>
+                    </ul>
+                </div>
 
-            <div class="mobile-left">
-                <button class="nav-icon-button" id="mobileSearchButton" aria-label="Buscar">
-                    <img src="./img/search.svg" class="nav-icon" alt="Buscar">
-                </button>
-                <button class="mobile-menu-toggle" id="menuButton" aria-label="Menú">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
+                <div class="mobile-left">
+                    <button class="nav-icon-button" id="mobileSearchButton" aria-label="Buscar">
+                        <img src="./img/search.svg" class="nav-icon" alt="Buscar">
+                    </button>
+                    <button class="mobile-menu-toggle" id="menuButton" aria-label="Menú">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
 
-            <div class="nav-center">
-                <a href="#">
-                    <img src="./img/logo-transparent.png" alt="Elixir S&B Logo" class="nav-logo">
-                </a>
-            </div>
+                <div class="nav-center">
+                    <a href="#">
+                        <img src="./img/logo-transparent.png" alt="Elixir S&B Logo" class="nav-logo">
+                    </a>
+                </div>
 
-            <div class="nav-right">
-                <ul>
-                    <li>
-                        <a href="https://www.instagram.com/p/DIzDB8NNuoE/" aria-label="Instagram">
-                            <img src="./img/instagram_white.svg" class="nav-icon social-icon" alt="Instagram">
-                        </a>
-                    </li>
-                    <li>
-                        <button class="nav-icon-button" aria-label="Carrito" onclick="openBasket()">
-                            <img src="./img/shopping-car.svg" class="nav-icon basket-icon" alt="Carrito">
-                            <span class="cart-count">0</span>
-                        </button>
-                    </li>
-                </ul>
-            </div>
+                <div class="nav-right">
+                    <ul>
+                        <li>
+                            <a href="https://www.instagram.com/p/DIzDB8NNuoE/" aria-label="Instagram">
+                                <img src="./img/instagram_white.svg" class="nav-icon social-icon" alt="Instagram">
+                            </a>
+                        </li>
+                        <li>
+                            <button class="nav-icon-button" aria-label="Carrito" onclick="openBasket()">
+                                <img src="./img/shopping-car.svg" class="nav-icon basket-icon" alt="Carrito">
+                                <span class="cart-count">0</span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
 
-            <div class="mobile-right">
-                <a href="https://www.instagram.com/p/DIzDB8NNuoE/" class="nav-icon-button" aria-label="Instagram">
-                    <img src="./img/instagram_white.svg" class="nav-icon" alt="Instagram">
-                </a>
-                <button class="nav-icon-button" id="mobileFavoritesButton" aria-label="Favoritos">
-                    <img src="./img/heart.svg" class="nav-icon" alt="Favoritos">
-                    <span class="favorites-count">0</span>
-                </button>
+                <div class="mobile-right">
+                    <a href="https://www.instagram.com/p/DIzDB8NNuoE/" class="nav-icon-button" aria-label="Instagram">
+                        <img src="./img/instagram_white.svg" class="nav-icon" alt="Instagram">
+                    </a>
+                    <button class="nav-icon-button" id="mobileFavoritesButton" aria-label="Favoritos">
+                        <img src="./img/heart.svg" class="nav-icon" alt="Favoritos">
+                        <span class="favorites-count">0</span>
+                    </button>
+                </div>
             </div>
         </nav>
 
@@ -76,7 +78,7 @@
                 <button class="mobile-close" id="menuClose" aria-label="Cerrar menú">&times;</button>
             </div>
             <ul>
-                <li><a href="#productos">Productos</a></li>
+                <li><a href="productos.html">Productos</a></li>
                 <li><a href="#nosotros">Nosotros</a></li>
                 <li><a href="#contacto">Contacto</a></li>
             </ul>
@@ -89,18 +91,35 @@
     </header>
 
     <main>
+        <section class="hero-section" id="inicio">
+            <div class="hero-inner">
+                <p class="hero-eyebrow">Elixir S&B · Colombia</p>
+                <h1 class="hero-title">Descubre<br>Tu Esencia</h1>
+                <p class="hero-subtitle">Fragancias de lujo inspiradas en las mejores marcas del mundo, a precios accesibles.</p>
+                <div class="hero-cta">
+                    <a href="productos.html" class="hero-btn hero-btn--primary">Explorar Productos</a>
+                    <a href="https://wa.me/57XXXXXXXXXXX" target="_blank" class="hero-btn hero-btn--secondary">
+                        <img src="./img/whatsapp_white.svg" alt=""> Escríbenos
+                    </a>
+                </div>
+            </div>
+            <div class="hero-scroll-indicator" aria-hidden="true">
+                <div class="hero-scroll-dot"></div>
+            </div>
+        </section>
+
         <section class="content-section" id="searchSection">
             <div class="search-container">
-                <h1>BUSCAR PRODUCTOS EN <br> NUESTRO SITIO</h1>
+                <p class="search-label">BUSCAR PRODUCTOS EN <br> NUESTRO SITIO</p>
                 <form class="search-form" id="searchForm">
-                    <input type="text" placeholder="¿Qué estás buscando?" aria-label="Buscar productos" id="searchInput">
+                    <input type="text" placeholder="¿Qué estás buscando?" aria-label="Buscar productos" id="searchInput" required>
                     <button type="submit" aria-label="Iniciar búsqueda">
                         <img src="./img/search.svg" alt="Buscar">
                     </button>
                 </form>
             </div>
             <div class="bestsellers">
-                <div class="bestsellers-header">
+                <div class="bestsellers-header anim-fade-up">
                     <h2 class="bestsellers-title">Los Favoritos</h2>
                     <div class="bestsellers-nav">
                         <button class="bestsellers-nav-btn" id="scrollLeft" aria-label="Anterior">
@@ -229,7 +248,7 @@
             </div>
         </section>
 
-        <section class="quote-section">
+        <section class="quote-section anim-fade-up">
             <div class="quote-container">
                 <div class="quote-decoration">✦</div>
                 <blockquote class="quote-text">
@@ -240,12 +259,12 @@
         </section>
         
         <section class="social-media-content" id="socialSection">
-            <div class="social-header">
+            <div class="social-header anim-fade-up">
                 <div class="social-title-group">
                     <img src="./img/instagram_white.svg" alt="Instagram" class="social-icon-title">
                     <h2 class="social-title">@elixirsyb</h2>
                 </div>
-                <a href="https://www.instagram.com/elixirsyb/" target="_blank" class="social-follow-btn">
+                <a href="https://www.instagram.com/elixirsb__/" target="_blank" class="social-follow-btn">
                     Seguir en Instagram
                 </a>
             </div>
@@ -302,7 +321,7 @@
         </section>
 
         <section class="testimonials-section" id="testimonials">
-            <div class="testimonials-header">
+            <div class="testimonials-header anim-fade-up">
                 <h2 class="testimonials-title">Calificaciones</h2>
                 <div class="testimonials-stars">
                     <span class="star">★</span>
@@ -412,7 +431,7 @@
     </div>
     <div class="cart-overlay" id="cartOverlay"></div>
 
-    <div class="cart-bar active" id="cartBar">
+    <div class="cart-bar" id="cartBar">
         <div class="cart-bar-info">
             <div class="cart-bar-icon">
                 <img src="./img/shopping-car.svg" alt="Carrito">
@@ -434,7 +453,7 @@
                 <img src="./img/logo-transparent.png" alt="Elixir S&B" class="footer-logo">
                 <p class="footer-tagline">Fragancias de lujo a precios accesibles</p>
                 <div class="footer-social">
-                    <a href="https://www.instagram.com/elixirsyb/" target="_blank" aria-label="Instagram">
+                    <a href="https://www.instagram.com/elixirsb__/" target="_blank" aria-label="Instagram">
                         <img src="./img/instagram_white.svg" alt="Instagram">
                     </a>
                     <a href="https://wa.me/57XXXXXXXXXXX" target="_blank" aria-label="WhatsApp">
@@ -469,11 +488,14 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p class="footer-contact">
-                <span>Medellín, Colombia</span>
-                <span class="footer-separator">•</span>
-                <span>WhatsApp: +57 XXX XXX XXXX</span>
-            </p>
+            <div class="footer-contact">
+                <a href="https://wa.me/57XXXXXXXXXXX" target="_blank" class="footer-contact-link">
+                    <img src="./img/whatsapp_white.svg" alt="" class="footer-contact-icon">
+                    <span>+57 XXX XXX XXXX</span>
+                </a>
+                <span class="footer-contact-sep">·</span>
+                <span class="footer-contact-location">Medellín, Colombia</span>
+            </div>
             <p class="footer-copyright">© 2026 Elixir S&B. Todos los derechos reservados.</p>
         </div>
     </footer>

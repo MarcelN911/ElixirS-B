@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos — Elixir S&B</title>
+
+    <link rel="icon" type="image/png" href="./img/logo-transparent.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="nav-inner">
+                <div class="nav-left">
+                    <ul>
+                        <li><a href="productos.html">Productos</a></li>
+                        <li><a href="index.html#nosotros">Nosotros</a></li>
+                    </ul>
+                </div>
+
+                <div class="mobile-left">
+                    <button class="nav-icon-button" aria-label="Buscar">
+                        <img src="./img/search.svg" class="nav-icon" alt="Buscar">
+                    </button>
+                    <button class="mobile-menu-toggle" id="menuButton" aria-label="Menú">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+
+                <div class="nav-center">
+                    <a href="index.html">
+                        <img src="./img/logo-transparent.png" alt="Elixir S&B Logo" class="nav-logo">
+                    </a>
+                </div>
+
+                <div class="nav-right">
+                    <ul>
+                        <li>
+                            <a href="https://www.instagram.com/elixirsb__/" target="_blank" aria-label="Instagram">
+                                <img src="./img/instagram_white.svg" class="nav-icon social-icon" alt="Instagram">
+                            </a>
+                        </li>
+                        <li>
+                            <button class="nav-icon-button" aria-label="Carrito">
+                                <img src="./img/shopping-car.svg" class="nav-icon basket-icon" alt="Carrito">
+                                <span class="cart-count">0</span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="mobile-right">
+                    <a href="https://www.instagram.com/elixirsb__/" target="_blank" class="nav-icon-button" aria-label="Instagram">
+                        <img src="./img/instagram_white.svg" class="nav-icon" alt="Instagram">
+                    </a>
+                    <button class="nav-icon-button" aria-label="Carrito">
+                        <img src="./img/shopping-car.svg" class="nav-icon basket-icon" alt="Carrito">
+                        <span class="cart-count">0</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <div class="mobile-menu" id="mobileMenu">
+            <div class="mobile-menu-header">
+                <img src="./img/logo-transparent.png" alt="Elixir S&B" class="mobile-logo">
+                <button class="mobile-close" id="menuClose" aria-label="Cerrar menú">&times;</button>
+            </div>
+            <ul>
+                <li><a href="productos.html">Productos</a></li>
+                <li><a href="index.html#nosotros">Nosotros</a></li>
+                <li><a href="index.html#contacto">Contacto</a></li>
+            </ul>
+            <div class="mobile-social">
+                <a href="https://www.instagram.com/elixirsb__/" target="_blank" aria-label="Instagram"><img src="./img/instagram_white.svg" alt="Instagram"></a>
+                <a href="#" aria-label="WhatsApp"><img src="./img/whatsapp_white.svg" alt="WhatsApp"></a>
+            </div>
+        </div>
+        <div class="mobile-overlay" id="mobileOverlay"></div>
+    </header>
+
+    <main>
+
+        <!-- Hero de la página -->
+        <section class="page-hero">
+            <div class="page-hero-inner">
+                <p class="page-hero-eyebrow">Colección 2026</p>
+                <h1 class="page-hero-title">Nuestros Productos</h1>
+                <p class="page-hero-subtitle">Fragancias de lujo inspiradas en los mejores perfumes del mundo</p>
+            </div>
+        </section>
+
+        <!-- Sección de productos -->
+        <section class="products-section" id="productos">
+            <div class="products-inner">
+
+                <!-- Barra de filtros -->
+                <div class="products-filter-bar">
+                    <div class="filter-tabs">
+                        <button class="filter-tab active">Todos</button>
+                        <button class="filter-tab">Para Ella</button>
+                        <button class="filter-tab">Para Él</button>
+                        <button class="filter-tab">Unisex</button>
+                    </div>
+                    <span class="products-count">24 productos</span>
+                </div>
+
+                <!-- Grid de productos -->
+                <div class="products-grid">
+
+                    <!-- Producto 1 -->
+                    <article class="product-card">
+                        <div class="product-card-image">
+                            <img src="./img/product-placeholder.svg" alt="Perfume 1">
+                            <div class="product-card-overlay"></div>
+                            <button class="product-card-favorite" aria-label="Añadir a favoritos">
+                                <img src="./img/heart.svg" alt="Favorito">
+                            </button>
+                            <span class="product-card-badge">Los Favoritos</span>
+                        </div>
+                        <div class="product-card-info">
+                            <h3 class="product-card-name">Rose Noir</h3>
+                            <p class="product-card-brand">Inspirado en Tom Ford</p>
+                            <div class="product-card-sizes">
+                                <button class="size-pill active">30 ml</button>
+                                <button class="size-pill">50 ml</button>
+                                <button class="size-pill">100 ml</button>
+                            </div>
+                            <div class="product-card-price">
+                                <span class="price-current">$65.000 COP</span>
+                            </div>
+                            <button class="product-card-button">Añadir al Carrito</button>
+                        </div>
+                    </article>
+
+                    <!-- Producto 2 -->
+                    <article class="product-card">
+                        <div class="product-card-image">
+                            <img src="./img/product-placeholder.svg" alt="Perfume 2">
+                            <div class="product-card-overlay"></div>
+                            <button class="product-card-favorite" aria-label="Añadir a favoritos">
+                                <img src="./img/heart.svg" alt="Favorito">
+                            </button>
+                            <span class="product-card-badge product-card-badge--new">Nuevo</span>
+                        </div>
+                        <div class="product-card-info">
+                            <h3 class="product-card-name">Velvet Orchid</h3>
+                            <p class="product-card-brand">Inspirado en Chanel</p>
+                            <div class="product-card-sizes">
+                                <button class="size-pill active">50 ml</button>
+                                <button class="size-pill">100 ml</button>
+                            </div>
+                            <div class="product-card-price">
+                                <span class="price-current">$85.000 COP</span>
+                            </div>
+                            <button class="product-card-button">Añadir al Carrito</button>
+                        </div>
+                    </article>
+
+                    <!-- Producto 3 -->
+                    <article class="product-card">
+                        <div class="product-card-image">
+                            <img src="./img/product-placeholder.svg" alt="Perfume 3">
+                            <div class="product-card-overlay"></div>
+                            <button class="product-card-favorite" aria-label="Añadir a favoritos">
+                                <img src="./img/heart.svg" alt="Favorito">
+                            </button>
+                            <span class="product-card-badge product-card-badge--sale">Oferta</span>
+                        </div>
+                        <div class="product-card-info">
+                            <h3 class="product-card-name">Bois de Cashmere</h3>
+                            <p class="product-card-brand">Inspirado en Dior</p>
+                            <div class="product-card-sizes">
+                                <button class="size-pill active">50 ml</button>
+                                <button class="size-pill">100 ml</button>
+                            </div>
+                            <div class="product-card-price">
+                                <span class="price-current">$70.000 COP</span>
+                                <span class="price-old">$90.000 COP</span>
+                            </div>
+                            <button class="product-card-button">Añadir al Carrito</button>
+                        </div>
+                    </article>
+
+                    <!-- Producto 4 -->
+                    <article class="product-card">
+                        <div class="product-card-image">
+                            <img src="./img/product-placeholder.svg" alt="Perfume 4">
+                            <div class="product-card-overlay"></div>
+                            <button class="product-card-favorite" aria-label="Añadir a favoritos">
+                                <img src="./img/heart.svg" alt="Favorito">
+                            </button>
+                            <span class="product-card-badge">Los Favoritos</span>
+                        </div>
+                        <div class="product-card-info">
+                            <h3 class="product-card-name">Oud Intense</h3>
+                            <p class="product-card-brand">Inspirado en Yves Saint Laurent</p>
+                            <div class="product-card-sizes">
+                                <button class="size-pill">30 ml</button>
+                                <button class="size-pill active">50 ml</button>
+                                <button class="size-pill">100 ml</button>
+                            </div>
+                            <div class="product-card-price">
+                                <span class="price-current">$95.000 COP</span>
+                            </div>
+                            <button class="product-card-button">Añadir al Carrito</button>
+                        </div>
+                    </article>
+
+                    <!-- Producto 5 -->
+                    <article class="product-card">
+                        <div class="product-card-image">
+                            <img src="./img/product-placeholder.svg" alt="Perfume 5">
+                            <div class="product-card-overlay"></div>
+                            <button class="product-card-favorite" aria-label="Añadir a favoritos">
+                                <img src="./img/heart.svg" alt="Favorito">
+                            </button>
+                        </div>
+                        <div class="product-card-info">
+                            <h3 class="product-card-name">Amber Soleil</h3>
+                            <p class="product-card-brand">Inspirado en Versace</p>
+                            <div class="product-card-sizes">
+                                <button class="size-pill active">30 ml</button>
+                                <button class="size-pill">50 ml</button>
+                            </div>
+                            <div class="product-card-price">
+                                <span class="price-current">$55.000 COP</span>
+                            </div>
+                            <button class="product-card-button">Añadir al Carrito</button>
+                        </div>
+                    </article>
+
+                    <!-- Producto 6 -->
+                    <article class="product-card">
+                        <div class="product-card-image">
+                            <img src="./img/product-placeholder.svg" alt="Perfume 6">
+                            <div class="product-card-overlay"></div>
+                            <button class="product-card-favorite" aria-label="Añadir a favoritos">
+                                <img src="./img/heart.svg" alt="Favorito">
+                            </button>
+                            <span class="product-card-badge product-card-badge--new">Nuevo</span>
+                        </div>
+                        <div class="product-card-info">
+                            <h3 class="product-card-name">Midnight Blue</h3>
+                            <p class="product-card-brand">Inspirado en Bleu de Chanel</p>
+                            <div class="product-card-sizes">
+                                <button class="size-pill active">50 ml</button>
+                                <button class="size-pill">100 ml</button>
+                            </div>
+                            <div class="product-card-price">
+                                <span class="price-current">$80.000 COP</span>
+                            </div>
+                            <button class="product-card-button">Añadir al Carrito</button>
+                        </div>
+                    </article>
+
+                    <!-- Producto 7 -->
+                    <article class="product-card">
+                        <div class="product-card-image">
+                            <img src="./img/product-placeholder.svg" alt="Perfume 7">
+                            <div class="product-card-overlay"></div>
+                            <button class="product-card-favorite" aria-label="Añadir a favoritos">
+                                <img src="./img/heart.svg" alt="Favorito">
+                            </button>
+                            <span class="product-card-badge">Los Favoritos</span>
+                        </div>
+                        <div class="product-card-info">
+                            <h3 class="product-card-name">White Jasmine</h3>
+                            <p class="product-card-brand">Inspirado en Guerlain</p>
+                            <div class="product-card-sizes">
+                                <button class="size-pill active">30 ml</button>
+                                <button class="size-pill">50 ml</button>
+                                <button class="size-pill">100 ml</button>
+                            </div>
+                            <div class="product-card-price">
+                                <span class="price-current">$75.000 COP</span>
+                            </div>
+                            <button class="product-card-button">Añadir al Carrito</button>
+                        </div>
+                    </article>
+
+                    <!-- Producto 8 -->
+                    <article class="product-card">
+                        <div class="product-card-image">
+                            <img src="./img/product-placeholder.svg" alt="Perfume 8">
+                            <div class="product-card-overlay"></div>
+                            <button class="product-card-favorite" aria-label="Añadir a favoritos">
+                                <img src="./img/heart.svg" alt="Favorito">
+                            </button>
+                            <span class="product-card-badge product-card-badge--sale">Oferta</span>
+                        </div>
+                        <div class="product-card-info">
+                            <h3 class="product-card-name">Cedar & Musk</h3>
+                            <p class="product-card-brand">Inspirado en Giorgio Armani</p>
+                            <div class="product-card-sizes">
+                                <button class="size-pill active">100 ml</button>
+                            </div>
+                            <div class="product-card-price">
+                                <span class="price-current">$88.000 COP</span>
+                                <span class="price-old">$110.000 COP</span>
+                            </div>
+                            <button class="product-card-button">Añadir al Carrito</button>
+                        </div>
+                    </article>
+
+                    <!-- Producto 9 -->
+                    <article class="product-card">
+                        <div class="product-card-image">
+                            <img src="./img/product-placeholder.svg" alt="Perfume 9">
+                            <div class="product-card-overlay"></div>
+                            <button class="product-card-favorite" aria-label="Añadir a favoritos">
+                                <img src="./img/heart.svg" alt="Favorito">
+                            </button>
+                        </div>
+                        <div class="product-card-info">
+                            <h3 class="product-card-name">Fleur Sauvage</h3>
+                            <p class="product-card-brand">Inspirado en Lancôme</p>
+                            <div class="product-card-sizes">
+                                <button class="size-pill active">30 ml</button>
+                                <button class="size-pill">50 ml</button>
+                            </div>
+                            <div class="product-card-price">
+                                <span class="price-current">$60.000 COP</span>
+                            </div>
+                            <button class="product-card-button">Añadir al Carrito</button>
+                        </div>
+                    </article>
+
+                    <!-- Producto 10 -->
+                    <article class="product-card">
+                        <div class="product-card-image">
+                            <img src="./img/product-placeholder.svg" alt="Perfume 10">
+                            <div class="product-card-overlay"></div>
+                            <button class="product-card-favorite" aria-label="Añadir a favoritos">
+                                <img src="./img/heart.svg" alt="Favorito">
+                            </button>
+                            <span class="product-card-badge product-card-badge--new">Nuevo</span>
+                        </div>
+                        <div class="product-card-info">
+                            <h3 class="product-card-name">Dark Wood</h3>
+                            <p class="product-card-brand">Inspirado en Creed</p>
+                            <div class="product-card-sizes">
+                                <button class="size-pill active">50 ml</button>
+                                <button class="size-pill">100 ml</button>
+                            </div>
+                            <div class="product-card-price">
+                                <span class="price-current">$100.000 COP</span>
+                            </div>
+                            <button class="product-card-button">Añadir al Carrito</button>
+                        </div>
+                    </article>
+
+                    <!-- Producto 11 -->
+                    <article class="product-card">
+                        <div class="product-card-image">
+                            <img src="./img/product-placeholder.svg" alt="Perfume 11">
+                            <div class="product-card-overlay"></div>
+                            <button class="product-card-favorite" aria-label="Añadir a favoritos">
+                                <img src="./img/heart.svg" alt="Favorito">
+                            </button>
+                            <span class="product-card-badge">Los Favoritos</span>
+                        </div>
+                        <div class="product-card-info">
+                            <h3 class="product-card-name">Santal Mysore</h3>
+                            <p class="product-card-brand">Inspirado en Le Labo</p>
+                            <div class="product-card-sizes">
+                                <button class="size-pill active">30 ml</button>
+                                <button class="size-pill">50 ml</button>
+                            </div>
+                            <div class="product-card-price">
+                                <span class="price-current">$85.000 COP</span>
+                            </div>
+                            <button class="product-card-button">Añadir al Carrito</button>
+                        </div>
+                    </article>
+
+                    <!-- Producto 12 -->
+                    <article class="product-card">
+                        <div class="product-card-image">
+                            <img src="./img/product-placeholder.svg" alt="Perfume 12">
+                            <div class="product-card-overlay"></div>
+                            <button class="product-card-favorite" aria-label="Añadir a favoritos">
+                                <img src="./img/heart.svg" alt="Favorito">
+                            </button>
+                            <span class="product-card-badge product-card-badge--sale">Oferta</span>
+                        </div>
+                        <div class="product-card-info">
+                            <h3 class="product-card-name">Aqua Marina</h3>
+                            <p class="product-card-brand">Inspirado en Acqua di Giò</p>
+                            <div class="product-card-sizes">
+                                <button class="size-pill active">50 ml</button>
+                                <button class="size-pill">100 ml</button>
+                            </div>
+                            <div class="product-card-price">
+                                <span class="price-current">$72.000 COP</span>
+                                <span class="price-old">$95.000 COP</span>
+                            </div>
+                            <button class="product-card-button">Añadir al Carrito</button>
+                        </div>
+                    </article>
+
+                </div>
+                <!-- / products-grid -->
+
+            </div>
+            <!-- / products-inner -->
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <img src="./img/logo-transparent.png" alt="Elixir S&B" class="footer-logo">
+                <p class="footer-tagline">Fragancias de lujo a precios accesibles</p>
+                <div class="footer-social">
+                    <a href="https://www.instagram.com/elixirsb__/" target="_blank" aria-label="Instagram">
+                        <img src="./img/instagram_white.svg" alt="Instagram">
+                    </a>
+                    <a href="https://wa.me/57XXXXXXXXXXX" target="_blank" aria-label="WhatsApp">
+                        <img src="./img/whatsapp_white.svg" alt="WhatsApp">
+                    </a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h4>Tienda</h4>
+                    <ul>
+                        <li><a href="productos.html">Productos</a></li>
+                        <li><a href="index.html#bestsellers">Los Favoritos</a></li>
+                        <li><a href="index.html#nosotros">Nosotros</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Ayuda</h4>
+                    <ul>
+                        <li><a href="#contacto">Contacto</a></li>
+                        <li><a href="#envios">Envíos</a></li>
+                        <li><a href="#devoluciones">Devoluciones</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#terminos">Términos y Condiciones</a></li>
+                        <li><a href="#privacidad">Política de Privacidad</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-contact">
+                <a href="https://wa.me/57XXXXXXXXXXX" target="_blank" class="footer-contact-link">
+                    <img src="./img/whatsapp_white.svg" alt="" class="footer-contact-icon">
+                    <span>+57 XXX XXX XXXX</span>
+                </a>
+                <span class="footer-contact-sep">·</span>
+                <span class="footer-contact-location">Medellín, Colombia</span>
+            </div>
+            <p class="footer-copyright">© 2026 Elixir S&B. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+    
+    <div class="whatsapp-float">
+        <a href="https://wa.me/57XXXXXXXXXXX" target="_blank" aria-label="Contactar por WhatsApp">
+            <img src="./img/whatsapp_white.svg" alt="WhatsApp">
+        </a>
+    </div>
+
+</body>
+</html>
