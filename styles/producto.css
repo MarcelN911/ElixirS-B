@@ -1,0 +1,749 @@
+/* ============================================
+   PRODUCTO — Product Detail Page (pd-*)
+   ============================================ */
+
+/* Breadcrumb */
+.pd-breadcrumb {
+    padding: 70px 20px 0;
+    max-width: 1440px;
+    margin: 0 auto;
+}
+
+.pd-breadcrumb-inner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 0;
+}
+
+.pd-breadcrumb-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.4);
+    text-decoration: none;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.pd-breadcrumb-sep {
+    color: rgba(255, 255, 255, 0.2);
+    font-size: 12px;
+}
+
+.pd-breadcrumb-current {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--gold);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    opacity: 0.8;
+}
+
+/* Layout */
+.pd-section {
+    padding: 16px 0 0;
+}
+
+.pd-layout {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+/* Gallery */
+.pd-gallery {
+    width: 100%;
+}
+
+.pd-image-wrap {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    background:
+        radial-gradient(ellipse 80% 60% at 50% 40%, rgba(212, 175, 125, 0.06) 0%, transparent 70%),
+        rgba(255, 255, 255, 0.03);
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(212, 175, 125, 0.12);
+}
+
+.pd-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.pd-img-badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background-color: var(--gold);
+    color: var(--primary-color);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 6px 12px;
+    border-radius: 4px;
+}
+
+.pd-img-favorite {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 44px;
+    height: 44px;
+    background-color: rgba(0, 0, 0, 0.45);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(6px);
+}
+
+.pd-img-favorite img {
+    width: 20px;
+    height: 20px;
+    opacity: 0.75;
+}
+
+.pd-img-favorite.active img {
+    filter: brightness(0) saturate(100%) invert(76%) sepia(30%) saturate(400%) hue-rotate(350deg) brightness(95%) contrast(90%);
+    opacity: 1;
+}
+
+/* Product Info */
+.pd-eyebrow {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    opacity: 0.75;
+    margin-bottom: 10px;
+}
+
+.pd-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px;
+    font-weight: 400;
+    color: white;
+    line-height: 1;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+.pd-inspiration {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.4);
+    margin-bottom: 12px;
+}
+
+.pd-inspiration em {
+    color: rgba(212, 175, 125, 0.65);
+    font-style: italic;
+}
+
+.pd-rating {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 4px;
+}
+
+.pd-stars {
+    color: var(--gold);
+    font-size: 13px;
+    letter-spacing: 2px;
+}
+
+.pd-rating-count {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.35);
+    letter-spacing: 0.5px;
+}
+
+.pd-divider {
+    height: 1px;
+    background-color: rgba(212, 175, 125, 0.1);
+    margin: 22px 0;
+}
+
+/* Size Selector */
+.pd-size-group {
+    margin-bottom: 20px;
+}
+
+.pd-size-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.pd-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.4);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.pd-size-selected {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--gold);
+    letter-spacing: 1px;
+}
+
+.pd-sizes {
+    display: flex;
+    gap: 10px;
+}
+
+.pd-size-btn {
+    flex: 1;
+    padding: 13px 8px;
+    background: transparent;
+    border: 1px solid rgba(212, 175, 125, 0.2);
+    color: rgba(255, 255, 255, 0.45);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s, background-color 0.2s;
+    text-align: center;
+}
+
+.pd-size-btn.active {
+    border-color: var(--gold);
+    color: var(--gold);
+    background-color: rgba(212, 175, 125, 0.07);
+}
+
+/* Price */
+.pd-price-row {
+    margin-bottom: 20px;
+}
+
+.pd-price-current {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 34px;
+    font-weight: 500;
+    color: var(--gold);
+    letter-spacing: 1px;
+}
+
+/* Quantity */
+.pd-quantity-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    padding: 14px 18px;
+    border: 1px solid rgba(212, 175, 125, 0.1);
+    border-radius: 8px;
+}
+
+.pd-qty-control {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+.pd-qty-btn {
+    width: 34px;
+    height: 34px;
+    background: transparent;
+    border: 1px solid rgba(212, 175, 125, 0.25);
+    color: var(--gold);
+    font-size: 20px;
+    font-weight: 300;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    transition: border-color 0.2s, background-color 0.2s;
+}
+
+.pd-qty-btn:active {
+    border-color: var(--gold);
+    background-color: rgba(212, 175, 125, 0.1);
+}
+
+.pd-qty-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    color: white;
+    min-width: 24px;
+    text-align: center;
+}
+
+/* CTAs */
+.pd-ctas {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 28px;
+}
+
+.pd-btn-primary {
+    width: 100%;
+    padding: 17px;
+    background-color: var(--gold);
+    border: none;
+    color: var(--primary-color);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.25s ease, transform 0.2s ease;
+}
+
+.pd-btn-primary:active {
+    background-color: var(--gold-light);
+    transform: scale(0.98);
+}
+
+.pd-btn-whatsapp {
+    width: 100%;
+    padding: 15px;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.6);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: border-color 0.2s, color 0.2s;
+}
+
+.pd-btn-whatsapp:active {
+    border-color: rgba(255, 255, 255, 0.3);
+    color: white;
+}
+
+.pd-btn-whatsapp img {
+    width: 17px;
+    height: 17px;
+    opacity: 0.65;
+}
+
+/* Trust Bar */
+.pd-trust {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px 0;
+    border-top: 1px solid rgba(212, 175, 125, 0.08);
+}
+
+.pd-trust-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+}
+
+.pd-trust-icon {
+    font-size: 18px;
+    color: var(--gold);
+    opacity: 0.55;
+}
+
+.pd-trust-text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.3);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+/* Scent Pyramid */
+.pd-notes {
+    padding: 55px 0;
+    border-top: 1px solid rgba(212, 175, 125, 0.08);
+}
+
+.pd-notes-inner {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.pd-notes-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: white;
+    letter-spacing: 2px;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.pd-pyramid {
+    display: flex;
+    align-items: flex-start;
+}
+
+.pd-pyramid-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    padding: 0 10px;
+}
+
+.pd-pyramid-sep {
+    width: 1px;
+    height: 120px;
+    background: linear-gradient(180deg, transparent, rgba(212, 175, 125, 0.2) 30%, rgba(212, 175, 125, 0.2) 70%, transparent);
+    flex-shrink: 0;
+    align-self: center;
+}
+
+.pd-pyramid-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    color: var(--gold);
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    opacity: 0.7;
+}
+
+.pd-pyramid-notes {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+
+.pd-note {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 0.5px;
+    text-align: center;
+    display: block;
+}
+
+/* Accordion / Details */
+.pd-details {
+    border-top: 1px solid rgba(212, 175, 125, 0.08);
+    padding: 0 0 55px;
+}
+
+.pd-details-inner {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.pd-acc-item {
+    border-bottom: 1px solid rgba(212, 175, 125, 0.1);
+}
+
+.pd-acc-trigger {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 0;
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.8);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-align: left;
+}
+
+.pd-acc-icon {
+    color: var(--gold);
+    font-size: 22px;
+    font-weight: 300;
+    line-height: 1;
+    transition: transform 0.25s ease;
+    flex-shrink: 0;
+    opacity: 0.7;
+}
+
+.pd-acc-item.open .pd-acc-icon {
+    transform: rotate(45deg);
+}
+
+.pd-acc-body {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease, padding-bottom 0.3s ease;
+    padding-bottom: 0;
+}
+
+.pd-acc-item.open .pd-acc-body {
+    max-height: 400px;
+    padding-bottom: 24px;
+}
+
+.pd-acc-body p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.5);
+    line-height: 1.75;
+    letter-spacing: 0.3px;
+}
+
+/* Related Products */
+.pd-related {
+    border-top: 1px solid rgba(212, 175, 125, 0.08);
+    padding: 55px 0 100px;
+}
+
+.pd-related-inner {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.pd-related-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 400;
+    color: white;
+    letter-spacing: 2px;
+    margin-bottom: 25px;
+}
+
+.pd-related-carousel {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 5px;
+}
+
+.pd-related-carousel::-webkit-scrollbar {
+    display: none;
+}
+
+.pd-related-carousel .product-card {
+    flex: 0 0 70%;
+    scroll-snap-align: start;
+}
+
+/* Sticky Buy Bar (mobile) */
+.pd-sticky {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 890;
+    background-color: rgba(15, 19, 42, 0.97);
+    border-top: 1px solid rgba(212, 175, 125, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 20px;
+    backdrop-filter: blur(12px);
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+}
+
+.pd-sticky.visible {
+    transform: translateY(0);
+}
+
+body:has(.cart-bar.active) .pd-sticky.visible {
+    bottom: 68px;
+}
+
+.pd-sticky-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.pd-sticky-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    color: white;
+    font-weight: 400;
+}
+
+.pd-sticky-price {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    color: var(--gold);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.pd-sticky-btn {
+    padding: 12px 22px;
+    background-color: var(--gold);
+    border: none;
+    color: var(--primary-color);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    border-radius: 5px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+/* ---- Responsive: Product Detail ---- */
+
+@media (min-width: 600px) {
+    .pd-related-carousel .product-card {
+        flex: 0 0 44%;
+    }
+
+    .pd-title {
+        font-size: 60px;
+    }
+}
+
+@media (min-width: 900px) {
+    .pd-breadcrumb {
+        padding: 80px 40px 0;
+    }
+
+    .pd-section {
+        padding: 24px 0 70px;
+    }
+
+    .pd-layout {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 70px;
+        padding: 0 40px;
+    }
+
+    .pd-gallery {
+        flex: 0 0 46%;
+        position: sticky;
+        top: 90px;
+    }
+
+    .pd-info {
+        flex: 1;
+        padding-top: 16px;
+    }
+
+    .pd-title {
+        font-size: 64px;
+    }
+
+    .pd-sticky {
+        display: none;
+    }
+
+    .pd-notes-inner {
+        padding: 0 40px;
+    }
+
+    .pd-notes-title {
+        text-align: left;
+        font-size: 34px;
+    }
+
+    .pd-pyramid {
+        max-width: 560px;
+    }
+
+    .pd-details-inner {
+        padding: 0 40px;
+        max-width: 860px;
+    }
+
+    .pd-related-inner {
+        padding: 0 40px;
+    }
+
+    .pd-related-carousel .product-card {
+        flex: 0 0 22%;
+    }
+
+    .pd-related-title {
+        font-size: 32px;
+    }
+
+    .pd-btn-primary:hover {
+        background-color: var(--gold-light);
+    }
+
+    .pd-size-btn:hover:not(.active) {
+        border-color: rgba(212, 175, 125, 0.5);
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+    .pd-btn-whatsapp:hover {
+        border-color: rgba(255, 255, 255, 0.25);
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+    .pd-qty-btn:hover {
+        border-color: var(--gold);
+        background-color: rgba(212, 175, 125, 0.08);
+    }
+
+    .pd-breadcrumb-back:hover {
+        color: var(--gold);
+    }
+}
+
+@media (min-width: 1440px) {
+    .pd-layout {
+        padding: 0 60px;
+    }
+
+    .pd-notes-inner,
+    .pd-related-inner {
+        padding: 0 60px;
+    }
+
+    .pd-details-inner {
+        padding: 0 60px;
+        max-width: 900px;
+    }
+}

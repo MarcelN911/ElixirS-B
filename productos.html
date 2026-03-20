@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Productos — Elixir S&B</title>
+    <title>Productos — Elixir S&B | Perfumes de Lujo en Colombia</title>
+    <meta name="description" content="Explora nuestra colección de perfumes inspirados en Tom Ford, Chanel, Dior y más. Fragancias de alta calidad a precios accesibles. Envíos a todo Colombia.">
+    <meta property="og:title" content="Productos — Elixir S&B">
+    <meta property="og:description" content="Colección de fragancias de lujo inspiradas en las mejores marcas. Para Ella, Para Él y Unisex.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="es_CO">
 
     <link rel="icon" type="image/png" href="./img/logo-transparent.png">
 
@@ -11,8 +16,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles/base.css">
+    <link rel="stylesheet" href="styles/nav.css">
+    <link rel="stylesheet" href="styles/cart.css">
+    <link rel="stylesheet" href="styles/product-card.css">
+    <link rel="stylesheet" href="styles/productos.css">
+    <link rel="stylesheet" href="styles/footer.css">
+    <link rel="stylesheet" href="styles/animations.css">
 
+    <script src="script.js" defer></script>
 </head>
 <body>
     <header>
@@ -120,7 +132,7 @@
                     <!-- Producto 1 -->
                     <article class="product-card">
                         <div class="product-card-image">
-                            <img src="./img/product-placeholder.svg" alt="Perfume 1">
+                            <img src="./img/product-placeholder.svg" loading="lazy" alt="Perfume 1">
                             <div class="product-card-overlay"></div>
                             <button class="product-card-favorite" aria-label="Añadir a favoritos">
                                 <img src="./img/heart.svg" alt="Favorito">
@@ -145,7 +157,7 @@
                     <!-- Producto 2 -->
                     <article class="product-card">
                         <div class="product-card-image">
-                            <img src="./img/product-placeholder.svg" alt="Perfume 2">
+                            <img src="./img/product-placeholder.svg" loading="lazy" alt="Perfume 2">
                             <div class="product-card-overlay"></div>
                             <button class="product-card-favorite" aria-label="Añadir a favoritos">
                                 <img src="./img/heart.svg" alt="Favorito">
@@ -169,7 +181,7 @@
                     <!-- Producto 3 -->
                     <article class="product-card">
                         <div class="product-card-image">
-                            <img src="./img/product-placeholder.svg" alt="Perfume 3">
+                            <img src="./img/product-placeholder.svg" loading="lazy" alt="Perfume 3">
                             <div class="product-card-overlay"></div>
                             <button class="product-card-favorite" aria-label="Añadir a favoritos">
                                 <img src="./img/heart.svg" alt="Favorito">
@@ -194,7 +206,7 @@
                     <!-- Producto 4 -->
                     <article class="product-card">
                         <div class="product-card-image">
-                            <img src="./img/product-placeholder.svg" alt="Perfume 4">
+                            <img src="./img/product-placeholder.svg" loading="lazy" alt="Perfume 4">
                             <div class="product-card-overlay"></div>
                             <button class="product-card-favorite" aria-label="Añadir a favoritos">
                                 <img src="./img/heart.svg" alt="Favorito">
@@ -219,7 +231,7 @@
                     <!-- Producto 5 -->
                     <article class="product-card">
                         <div class="product-card-image">
-                            <img src="./img/product-placeholder.svg" alt="Perfume 5">
+                            <img src="./img/product-placeholder.svg" loading="lazy" alt="Perfume 5">
                             <div class="product-card-overlay"></div>
                             <button class="product-card-favorite" aria-label="Añadir a favoritos">
                                 <img src="./img/heart.svg" alt="Favorito">
@@ -242,7 +254,7 @@
                     <!-- Producto 6 -->
                     <article class="product-card">
                         <div class="product-card-image">
-                            <img src="./img/product-placeholder.svg" alt="Perfume 6">
+                            <img src="./img/product-placeholder.svg" loading="lazy" alt="Perfume 6">
                             <div class="product-card-overlay"></div>
                             <button class="product-card-favorite" aria-label="Añadir a favoritos">
                                 <img src="./img/heart.svg" alt="Favorito">
@@ -266,7 +278,7 @@
                     <!-- Producto 7 -->
                     <article class="product-card">
                         <div class="product-card-image">
-                            <img src="./img/product-placeholder.svg" alt="Perfume 7">
+                            <img src="./img/product-placeholder.svg" loading="lazy" alt="Perfume 7">
                             <div class="product-card-overlay"></div>
                             <button class="product-card-favorite" aria-label="Añadir a favoritos">
                                 <img src="./img/heart.svg" alt="Favorito">
@@ -291,7 +303,7 @@
                     <!-- Producto 8 -->
                     <article class="product-card">
                         <div class="product-card-image">
-                            <img src="./img/product-placeholder.svg" alt="Perfume 8">
+                            <img src="./img/product-placeholder.svg" loading="lazy" alt="Perfume 8">
                             <div class="product-card-overlay"></div>
                             <button class="product-card-favorite" aria-label="Añadir a favoritos">
                                 <img src="./img/heart.svg" alt="Favorito">
@@ -315,7 +327,7 @@
                     <!-- Producto 9 -->
                     <article class="product-card">
                         <div class="product-card-image">
-                            <img src="./img/product-placeholder.svg" alt="Perfume 9">
+                            <img src="./img/product-placeholder.svg" loading="lazy" alt="Perfume 9">
                             <div class="product-card-overlay"></div>
                             <button class="product-card-favorite" aria-label="Añadir a favoritos">
                                 <img src="./img/heart.svg" alt="Favorito">
@@ -338,7 +350,7 @@
                     <!-- Producto 10 -->
                     <article class="product-card">
                         <div class="product-card-image">
-                            <img src="./img/product-placeholder.svg" alt="Perfume 10">
+                            <img src="./img/product-placeholder.svg" loading="lazy" alt="Perfume 10">
                             <div class="product-card-overlay"></div>
                             <button class="product-card-favorite" aria-label="Añadir a favoritos">
                                 <img src="./img/heart.svg" alt="Favorito">
@@ -362,7 +374,7 @@
                     <!-- Producto 11 -->
                     <article class="product-card">
                         <div class="product-card-image">
-                            <img src="./img/product-placeholder.svg" alt="Perfume 11">
+                            <img src="./img/product-placeholder.svg" loading="lazy" alt="Perfume 11">
                             <div class="product-card-overlay"></div>
                             <button class="product-card-favorite" aria-label="Añadir a favoritos">
                                 <img src="./img/heart.svg" alt="Favorito">
@@ -386,7 +398,7 @@
                     <!-- Producto 12 -->
                     <article class="product-card">
                         <div class="product-card-image">
-                            <img src="./img/product-placeholder.svg" alt="Perfume 12">
+                            <img src="./img/product-placeholder.svg" loading="lazy" alt="Perfume 12">
                             <div class="product-card-overlay"></div>
                             <button class="product-card-favorite" aria-label="Añadir a favoritos">
                                 <img src="./img/heart.svg" alt="Favorito">

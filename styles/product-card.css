@@ -7,8 +7,6 @@
     border: 1px solid rgba(212, 175, 125, 0.15);
     border-radius: 12px;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
 }
 
 .product-card-image {
@@ -16,7 +14,6 @@
     aspect-ratio: 3 / 4;
     overflow: hidden;
     background-color: rgba(255, 255, 255, 0.05);
-    flex-shrink: 0;
 }
 
 .product-card-image img {
@@ -90,12 +87,8 @@
     color: white;
 }
 
-/* Info section — flex column so button always sits at bottom */
 .product-card-info {
     padding: 15px;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
 }
 
 .product-card-name {
@@ -112,7 +105,6 @@
     margin-bottom: 10px;
 }
 
-/* Size pills */
 .product-card-sizes {
     display: flex;
     gap: 6px;
@@ -131,6 +123,7 @@
     padding: 4px 9px;
     border-radius: 3px;
     cursor: pointer;
+    transition: border-color 0.25s ease, color 0.25s ease, background-color 0.25s ease;
 }
 
 .size-pill.active {
@@ -155,7 +148,6 @@
     margin-left: 8px;
 }
 
-/* Button always at bottom via margin-top: auto */
 .product-card-button {
     width: 100%;
     padding: 10px;
@@ -169,7 +161,6 @@
     letter-spacing: 1px;
     cursor: pointer;
     border-radius: 4px;
-    margin-top: auto;
 }
 
 .product-card-button:active {
@@ -177,7 +168,8 @@
     color: var(--primary-color);
 }
 
-/* Responsive: Product Card */
+/* ---- Responsive: Product Card ---- */
+
 @media (min-width: 600px) {
     .product-card-info {
         padding: 18px;

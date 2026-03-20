@@ -3,11 +3,11 @@
    ============================================ */
 
 :root {
-    --primary-color: rgb(21, 25, 50);
-    --secondary-color: rgb(240, 190, 145);
-    --text-color: rgb(97, 3, 27);
+    --primary-color: rgb(21,25,50);
+    --secondary-color: rgb(240,190,145);
+    --text-color: rgb(97,3,27);
     --sec-text-color: rgb(255, 255, 255);
-    --background-color: rgb(21, 25, 50);
+    --background-color: rgb(21,25,50);
     --gold: rgb(212, 175, 125);
     --gold-light: rgb(240, 210, 170);
 }

@@ -14,6 +14,14 @@ nav {
     height: 60px;
     background-color: rgba(0, 0, 0, 0.9);
     border-bottom: 1px solid var(--gold);
+    transition: background-color 0.3s ease, backdrop-filter 0.3s ease, border-color 0.3s ease;
+}
+
+nav.scrolled {
+    background-color: rgba(10, 12, 28, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom-color: rgba(212, 175, 125, 0.25);
 }
 
 .nav-inner {
@@ -109,14 +117,14 @@ nav {
 
 .cart-count {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 4px;
+    right: 4px;
     background-color: var(--gold);
     color: var(--primary-color);
     font-size: 10px;
     font-weight: 600;
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -147,6 +155,7 @@ nav {
     width: 26px;
     height: 2px;
     background-color: white;
+    transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 .mobile-menu-toggle.active span:nth-child(1) {
@@ -173,6 +182,7 @@ nav {
     padding: 25px;
     display: flex;
     flex-direction: column;
+    transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .mobile-menu.active {
@@ -258,6 +268,7 @@ nav {
     z-index: 1001;
     opacity: 0;
     pointer-events: none;
+    transition: opacity 0.35s ease;
 }
 
 .mobile-overlay.active {
@@ -290,7 +301,31 @@ nav ul {
     align-items: center;
 }
 
-/* Responsive: Nav */
+.social_button {
+    height: 24px;
+    width: 24px;
+    opacity: 0.8;
+}
+
+.cart-button {
+    position: relative;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+/* Desktop nav cart-count (different sizing) */
+.cart-button .cart-count {
+    top: 0;
+    right: 0;
+    width: 18px;
+    height: 18px;
+}
+
+/* ---- Responsive: Nav ---- */
+
 @media (min-width: 900px) {
     nav {
         height: 88px;
@@ -343,18 +378,6 @@ nav ul {
         display: none;
     }
 
-    .mobile-menu-toggle {
-        display: none;
-    }
-
-    .mobile-menu {
-        display: none;
-    }
-
-    .mobile-overlay {
-        display: none;
-    }
-
     .nav-left ul a {
         position: relative;
     }
@@ -390,5 +413,17 @@ nav ul {
     .social-icon:hover {
         opacity: 1;
         filter: drop-shadow(0 0 6px rgba(212, 175, 125, 0.4));
+    }
+
+    .mobile-menu-toggle {
+        display: none;
+    }
+
+    .mobile-menu {
+        display: none;
+    }
+
+    .mobile-overlay {
+        display: none;
     }
 }

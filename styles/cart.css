@@ -1,5 +1,6 @@
 /* ============================================
-   CART — Cart Panel, Cart Bar, WhatsApp Float
+   CART — Cart Panel, Cart Overlay, Cart Bar,
+          WhatsApp Float
    ============================================ */
 
 /* Cart Panel */
@@ -14,7 +15,7 @@
     z-index: 1003;
     display: flex;
     flex-direction: column;
-    transition: right 0.3s ease;
+    transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .cart-panel.active {
@@ -231,11 +232,42 @@
     z-index: 1002;
     opacity: 0;
     pointer-events: none;
+    transition: opacity 0.35s ease;
 }
 
 .cart-overlay.active {
     opacity: 1;
     pointer-events: all;
+}
+
+/* WhatsApp Float */
+.whatsapp-float {
+    position: fixed;
+    bottom: 110px;
+    right: 20px;
+    z-index: 999;
+}
+
+.whatsapp-float a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    background-color: #25D366;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    animation: whatsappPulse 3.5s ease-in-out infinite;
+}
+
+@keyframes whatsappPulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); }
+    50% { transform: scale(1.06); box-shadow: 0 6px 20px rgba(37, 211, 102, 0.35); }
+}
+
+.whatsapp-float img {
+    width: 35px;
+    height: 35px;
 }
 
 /* Cart Bar (mobile sticky) */
@@ -253,7 +285,7 @@
     padding: 12px 20px;
     transform: translateY(100%);
     opacity: 0;
-    transition: transform 0.3s ease, opacity 0.3s ease;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease;
 }
 
 .cart-bar.active {
@@ -333,31 +365,8 @@
     background-color: var(--gold-light);
 }
 
-/* WhatsApp Float */
-.whatsapp-float {
-    position: fixed;
-    bottom: 110px;
-    right: 20px;
-    z-index: 999;
-}
+/* ---- Responsive: Cart ---- */
 
-.whatsapp-float a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 60px;
-    height: 60px;
-    background-color: #25D366;
-    border-radius: 50%;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.whatsapp-float img {
-    width: 35px;
-    height: 35px;
-}
-
-/* Responsive: Cart */
 @media (min-width: 900px) {
     .cart-bar {
         display: none;

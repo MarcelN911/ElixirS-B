@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elixir S&B</title>
+    <title>Elixir S&B — Fragancias de Lujo a Precios Accesibles | Medellín, Colombia</title>
+    <meta name="description" content="Descubre fragancias de lujo inspiradas en las mejores marcas del mundo a precios accesibles. Envíos a todo Colombia. Compra por WhatsApp.">
+    <meta property="og:title" content="Elixir S&B — Fragancias de Lujo a Precios Accesibles">
+    <meta property="og:description" content="Perfumes inspirados en las mejores marcas del mundo. Envíos a todo Colombia.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="es_CO">
 
     <link rel="icon" type="image/png" href="./img/logo-transparent.png">
 
@@ -11,7 +16,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles/base.css">
+    <link rel="stylesheet" href="styles/nav.css">
+    <link rel="stylesheet" href="styles/cart.css">
+    <link rel="stylesheet" href="styles/hero.css">
+    <link rel="stylesheet" href="styles/search.css">
+    <link rel="stylesheet" href="styles/product-card.css">
+    <link rel="stylesheet" href="styles/home.css">
+    <link rel="stylesheet" href="styles/footer.css">
+    <link rel="stylesheet" href="styles/animations.css">
 
     <script src="script.js" defer></script>
 
@@ -137,7 +150,7 @@
                 <div class="bestsellers-carousel" id="bestsellersCarousel">
                     <article class="product-card">
                         <div class="product-card-image">
-                            <img src="./img/product-placeholder.svg" alt="Perfume 1">
+                            <img src="./img/product-placeholder.svg" loading="lazy" alt="Perfume 1">
                             <div class="product-card-overlay"></div>
                             <button class="product-card-favorite" aria-label="Añadir a favoritos">
                                 <img src="./img/heart.svg" alt="Favorito">
@@ -155,7 +168,7 @@
                     </article>
                     <article class="product-card">
                         <div class="product-card-image">
-                            <img src="./img/product-placeholder.svg" alt="Perfume 2">
+                            <img src="./img/product-placeholder.svg" loading="lazy" alt="Perfume 2">
                             <div class="product-card-overlay"></div>
                             <button class="product-card-favorite" aria-label="Añadir a favoritos">
                                 <img src="./img/heart.svg" alt="Favorito">
@@ -173,7 +186,7 @@
                     </article>
                     <article class="product-card">
                         <div class="product-card-image">
-                            <img src="./img/product-placeholder.svg" alt="Perfume 3">
+                            <img src="./img/product-placeholder.svg" loading="lazy" alt="Perfume 3">
                             <div class="product-card-overlay"></div>
                             <button class="product-card-favorite" aria-label="Añadir a favoritos">
                                 <img src="./img/heart.svg" alt="Favorito">
@@ -191,7 +204,7 @@
                     </article>
                     <article class="product-card">
                         <div class="product-card-image">
-                            <img src="./img/product-placeholder.svg" alt="Perfume 4">
+                            <img src="./img/product-placeholder.svg" loading="lazy" alt="Perfume 4">
                             <div class="product-card-overlay"></div>
                             <button class="product-card-favorite" aria-label="Añadir a favoritos">
                                 <img src="./img/heart.svg" alt="Favorito">
@@ -209,7 +222,7 @@
                     </article>
                     <article class="product-card">
                         <div class="product-card-image">
-                            <img src="./img/product-placeholder.svg" alt="Perfume 5">
+                            <img src="./img/product-placeholder.svg" loading="lazy" alt="Perfume 5">
                             <div class="product-card-overlay"></div>
                             <button class="product-card-favorite" aria-label="Añadir a favoritos">
                                 <img src="./img/heart.svg" alt="Favorito">
@@ -227,7 +240,7 @@
                     </article>
                     <article class="product-card">
                         <div class="product-card-image">
-                            <img src="./img/product-placeholder.svg" alt="Perfume 6">
+                            <img src="./img/product-placeholder.svg" loading="lazy" alt="Perfume 6">
                             <div class="product-card-overlay"></div>
                             <button class="product-card-favorite" aria-label="Añadir a favoritos">
                                 <img src="./img/heart.svg" alt="Favorito">
@@ -293,25 +306,25 @@
                 </a>
                 <div class="social-photos">
                     <a href="https://www.instagram.com/p/DEIN_POST_ID_1/" target="_blank" class="social-photo-item">
-                        <img src="./img/instagram/post-2.svg" alt="Instagram Post" class="social-photo active">
+                        <img src="./img/instagram/post-2.svg" loading="lazy" alt="Instagram Post" class="social-photo active">
                         <div class="social-photo-overlay">
                             <img src="./img/instagram_white.svg" alt="" class="social-ig-icon">
                         </div>
                     </a>
                     <a href="https://www.instagram.com/p/DEIN_POST_ID_2/" target="_blank" class="social-photo-item">
-                        <img src="./img/instagram/post-2.svg" alt="Instagram Post" class="social-photo active">
+                        <img src="./img/instagram/post-2.svg" loading="lazy" alt="Instagram Post" class="social-photo active">
                         <div class="social-photo-overlay">
                             <img src="./img/instagram_white.svg" alt="" class="social-ig-icon">
                         </div>
                     </a>
                     <a href="https://www.instagram.com/p/DEIN_POST_ID_3/" target="_blank" class="social-photo-item social-photo-tablet">
-                        <img src="./img/instagram/post-2.svg" alt="Instagram Post" class="social-photo active">
+                        <img src="./img/instagram/post-2.svg" loading="lazy" alt="Instagram Post" class="social-photo active">
                         <div class="social-photo-overlay">
                             <img src="./img/instagram_white.svg" alt="" class="social-ig-icon">
                         </div>
                     </a>
                     <a href="https://www.instagram.com/p/DEIN_POST_ID_4/" target="_blank" class="social-photo-item social-photo-desktop">
-                        <img src="./img/instagram/post-2.svg" alt="Instagram Post" class="social-photo active">
+                        <img src="./img/instagram/post-2.svg" loading="lazy" alt="Instagram Post" class="social-photo active">
                         <div class="social-photo-overlay">
                             <img src="./img/instagram_white.svg" alt="" class="social-ig-icon">
                         </div>
