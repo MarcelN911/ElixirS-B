@@ -46,6 +46,18 @@
     }
 }
 
+/* Product card scroll animation */
+.fade-hidden {
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.fade-visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
 /* Scroll-driven animations (progressive enhancement) */
 @supports (animation-timeline: view()) {
     @media (prefers-reduced-motion: no-preference) {

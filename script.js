@@ -64,40 +64,186 @@ if (cartPanelClose) {
     cartPanelClose.addEventListener('click', closeBasket);
 }
 
-// =============================================================
-// SCHRITT 1: Scroll-Animationen (Intersection Observer)
-// =============================================================
-//
-// Ziel: Elemente sollen beim Scrollen sanft einblenden (fade-in + slide-up).
-//       Das gibt der Seite sofort Leben und wirkt professionell.
-//
-// So geht's:
-//
-// 1. Alle Elemente mit der Klasse "anim-fade-up" auswählen
-//    → document.querySelectorAll('.anim-fade-up')
-//
-// 2. Einen IntersectionObserver erstellen:
-//    → Beobachtet, ob ein Element im Viewport sichtbar wird
-//    → Wenn ja: füge die Klasse "visible" hinzu
-//    → Optionen: { threshold: 0.15 } (15% sichtbar = auslösen)
-//
-// 3. Im CSS brauchst du zwei Zustände:
-//    → .anim-fade-up         { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
-//    → .anim-fade-up.visible { opacity: 1; transform: translateY(0); }
-//
-// 4. Für gestaffelte Animationen (staggered):
-//    → Nutze data-delay="100", data-delay="200" etc. im HTML
-//    → Im Observer: element.style.transitionDelay = element.dataset.delay + 'ms'
-//
-// 5. Betroffene Elemente im HTML (haben schon die Klasse):
-//    → .bestsellers-header
-//    → .quote-section
-//    → .social-header
-//    → .testimonials-header
-//
-// 6. Optional: Auch .product-card und .testimonial-card animieren,
-//    wenn sie in den Viewport scrollen
-//
-// Tipp: observer.unobserve(entry.target) nach dem Einblenden aufrufen,
-//       damit die Animation nur einmal passiert.
-// =============================================================
+
+// 1) Die URL zu deinem Google Sheet (als JSON-API)
+const SHEET_ID = '1FiOCY_GIkpCCZVaZplXQtQzwLORYQOws';
+const dbUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
+
+let allActiveProducts = [];
+let shownProducts = 0;
+const PRODUCTS_PER_LOAD = 20;
+let isLoading = false;
+
+// Wie lange die gespeicherten Daten gültig sind
+const CACHE_DURATION = 24 * 60 * 60 * 1000;
+
+// Daten vom Google Sheet laden (oder aus dem Speicher holen)
+async function fetchProducts() {
+    const container = document.getElementById('productsGrid');
+    if (!container) {
+        return;
+    }
+
+    const cached = loadFromCache();
+
+    if (cached) {
+        console.log('Daten aus dem Cache geladen');
+        allActiveProducts = cached;
+    } else {
+        console.log('Daten vom Google Sheet geladen');
+        const response = await fetch(dbUrl);
+        const text = await response.text();
+        const json = JSON.parse(text.substring(47).slice(0, -2));
+        const rows = json.table.rows;
+        allActiveProducts = filterActiveProducts(rows);
+        saveToCache(allActiveProducts);
+    }
+
+    // Loader entfernen und erste 20 Produkte anzeigen
+    container.innerHTML = '';
+    loadMoreProducts();
+    startScrollObserver();
+}
+
+// Produkte im Browser speichern
+function saveToCache(products) {
+    const cacheData = {
+        products: products,
+        timestamp: Date.now()
+    };
+    const jsonString = JSON.stringify(cacheData);
+    console.log('Cache Größe:', Math.round(jsonString.length / 1024), 'KB');
+    localStorage.setItem('elixir_products', jsonString);
+    console.log('Cache gespeichert:', localStorage.getItem('elixir_products') !== null);
+}
+
+// Produkte aus dem Browser-Speicher laden
+function loadFromCache() {
+    const saved = localStorage.getItem('elixir_products');
+    if (!saved) {
+        return null;
+    }
+
+    const cacheData = JSON.parse(saved);
+    const age = Date.now() - cacheData.timestamp;
+
+    // Wenn die Daten älter als 24 Stunden sind, nicht verwenden
+    if (age > CACHE_DURATION) {
+        localStorage.removeItem('elixir_products');
+        return null;
+    }
+
+    return cacheData.products;
+}
+
+// Nur Produkte mit "Si" behalten
+function filterActiveProducts(rows) {
+    const activeProducts = [];
+    for (let i = 0; i < rows.length; i++) {
+        const data = rows[i].c;
+        if (data[9].v === 'Si') {
+            const product = createProductData(data);
+            activeProducts.push(product);
+        }
+    }
+    return activeProducts;
+}
+
+// Produkt-Daten aus einer Zeile auslesen
+function createProductData(data) {
+    const product = {
+        name: data[1].v,
+        brand: data[2].v,
+        price: data[3].v,
+        sale: '',
+        image: '',
+        badge: '',
+        gender: data[8].v,
+    };
+    if (data[4]) {
+        product.sale = data[4].v;
+    }
+    if (data[5]) {
+        product.image = data[5].v;
+    }
+    if (data[7]) {
+        product.badge = data[7].v;
+    }
+    return product;
+}
+
+// Die nächsten 20 Produkte anzeigen
+function loadMoreProducts() {
+    isLoading = true;
+    const end = Math.min(shownProducts + PRODUCTS_PER_LOAD, allActiveProducts.length);
+
+    for (let i = shownProducts; i < end; i++) {
+        createProductCard(allActiveProducts[i]);
+    }
+    shownProducts = end;
+
+    // Neue Karten animieren
+    animateCards();
+
+    // Loader am Ende hinzufügen (wenn es noch mehr Produkte gibt)
+    updateLoader();
+    isLoading = false;
+}
+
+// Loader anzeigen oder entfernen
+function updateLoader() {
+    const container = document.getElementById('productsGrid');
+    const oldLoader = document.getElementById('scrollLoader');
+    if (oldLoader) {
+        oldLoader.remove();
+    }
+
+    // Nur Loader anzeigen, wenn es noch mehr Produkte gibt
+    if (shownProducts < allActiveProducts.length) {
+        const loader = document.createElement('div');
+        loader.id = 'scrollLoader';
+        loader.className = 'loader';
+        loader.innerHTML = `
+            <div class="loader-spinner"></div>
+            <p class="loader-text">Más productos...</p>
+        `;
+        container.appendChild(loader);
+    }
+}
+
+// Beobachtet den Loader — wenn man dorthin scrollt, werden mehr Produkte geladen
+function startScrollObserver() {
+    const observer = new IntersectionObserver(function(entries) {
+        if (entries[0].isIntersecting && !isLoading) {
+            if (shownProducts < allActiveProducts.length) {
+                loadMoreProducts();
+            }
+        }
+    });
+
+    // Alle 500ms prüfen ob ein neuer Loader da ist und ihn beobachten
+    setInterval(function() {
+        const loader = document.getElementById('scrollLoader');
+        if (loader) {
+            observer.observe(loader);
+        }
+    }, 500);
+}
+
+// Scroll-Animation für die Karten
+function animateCards() {
+    const cards = document.querySelectorAll('.fade-hidden');
+    const observer = new IntersectionObserver(function(entries) {
+        for (let i = 0; i < entries.length; i++) {
+            if (entries[i].isIntersecting) {
+                entries[i].target.classList.add('fade-visible');
+                observer.unobserve(entries[i].target);
+            }
+        }
+    });
+    for (let i = 0; i < cards.length; i++) {
+        observer.observe(cards[i]);
+    }
+}
+
+fetchProducts();
