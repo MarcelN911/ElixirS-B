@@ -120,19 +120,15 @@
                 <!-- Barra de filtros -->
                 <div class="products-filter-bar">
                     <div class="filter-tabs">
-                        <button class="filter-tab active">Todos</button>
-                        <button class="filter-tab">Para Ella</button>
-                        <button class="filter-tab">Para Él</button>
+                        <button class="filter-tab active" onclick="filterProducts('Todos')">Todos</button>
+                        <button class="filter-tab" onclick="filterProducts('Dama')">Para Ella</button>
+                        <button class="filter-tab" onclick="filterProducts('Caballero')">Para Él</button>
                     </div>
                 </div>
 
                 <!-- Grid de productos -->
                 <div class="products-grid" id="productsGrid">
-                    <div class="loader" id="loader">
-                        <img src="./img/logo-transparent.png" alt="Cargando..." class="loader-logo">
-                        <div class="loader-spinner"></div>
-                        <p class="loader-text">Cargando productos...</p>
-                    </div>
+
                 </div>
                 <!-- / products-grid -->
 
