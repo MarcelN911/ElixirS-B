@@ -52,7 +52,7 @@
     color: rgba(255, 255, 255, 0.5);
 }
 
-.search-form button {
+.search-form button[type="submit"] {
     background: transparent;
     border: none;
     padding: 14px 20px;
@@ -62,10 +62,38 @@
     justify-content: center;
 }
 
-.search-form button img {
+.search-form button[type="submit"] img {
     width: 20px;
     height: 20px;
     opacity: 0.7;
+}
+
+.search-clear {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 18px;
+    padding: 0 14px;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.25s ease;
+    position: relative;
+}
+
+.search-clear.visible {
+    display: flex;
+}
+
+.search-clear.visible::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 25%;
+    height: 50%;
+    width: 1px;
+    background-color: rgba(212, 175, 125, 0.3);
 }
 
 .search-form:focus-within {
@@ -75,6 +103,36 @@
 
 .search-form:focus-within button img {
     opacity: 1;
+}
+
+.search-hint {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 1px;
+    text-align: center;
+    margin-top: 10px;
+    opacity: 0.7;
+}
+
+.no-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.no-results-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    color: white;
+    margin-bottom: 8px;
+}
+
+.no-results-text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.4);
+    letter-spacing: 1px;
 }
 
 /* ---- Responsive: Search ---- */
@@ -121,16 +179,20 @@
         font-size: 16px;
     }
 
-    .search-form button {
+    .search-form button[type="submit"] {
         padding: 18px 25px;
     }
 
-    .search-form button img {
+    .search-form button[type="submit"] img {
         width: 22px;
         height: 22px;
     }
 
-    .search-form button:hover img {
+    .search-clear:hover {
+        color: white;
+    }
+
+    .search-form button[type="submit"]:hover img {
         opacity: 1;
         filter: drop-shadow(0 0 6px rgba(212, 175, 125, 0.4));
     }

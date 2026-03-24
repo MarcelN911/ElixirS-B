@@ -1,7 +1,7 @@
 
 function createProductTemplate(product) {
     const container = document.getElementById('productsGrid');
-    container.innerHTML += ` <article class="product-card">
+    container.innerHTML += ` <article class="product-card fade-hidden">
                                 <div class="product-card-image">
                                     ${createImg(product.image)}                                    
                                     <div class="product-card-overlay"></div>

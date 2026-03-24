@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="styles/nav.css">
     <link rel="stylesheet" href="styles/cart.css">
     <link rel="stylesheet" href="styles/product-card.css">
+    <link rel="stylesheet" href="styles/search.css">
     <link rel="stylesheet" href="styles/productos.css">
     <link rel="stylesheet" href="styles/footer.css">
     <link rel="stylesheet" href="styles/animations.css">
@@ -103,8 +104,6 @@
     </header>
 
     <main>
-
-        <!-- Hero de la página -->
         <section class="page-hero">
             <div class="page-hero-inner">
                 <p class="page-hero-eyebrow">Colección 2026</p>
@@ -113,27 +112,31 @@
             </div>
         </section>
 
-        <!-- Sección de productos -->
         <section class="products-section" id="productos">
             <div class="products-inner">
 
-                <!-- Barra de filtros -->
+                <div class="search-container">
+                    <form class="search-form" id="searchForm">
+                        <input type="text" placeholder="¿Qué estás buscando?" aria-label="Buscar productos" id="searchInput">
+                        <button type="button" class="search-clear" id="searchClear" aria-label="Búsqueda borrar">&times;</button>
+                        <button type="submit" aria-label="Iniciar búsqueda">
+                            <img src="./img/search.svg" alt="Buscar">
+                        </button>
+                    </form>
+                </div>
+
                 <div class="products-filter-bar">
                     <div class="filter-tabs">
                         <button class="filter-tab active" onclick="filterProducts('Todos')">Todos</button>
-                        <button class="filter-tab" onclick="filterProducts('Dama')">Para Ella</button>
-                        <button class="filter-tab" onclick="filterProducts('Caballero')">Para Él</button>
+                        <button class="filter-tab" onclick="filterProducts('Dama')">Dama</button>
+                        <button class="filter-tab" onclick="filterProducts('Caballero')">Caballero</button>
                     </div>
                 </div>
 
-                <!-- Grid de productos -->
                 <div class="products-grid" id="productsGrid">
 
                 </div>
-                <!-- / products-grid -->
-
             </div>
-            <!-- / products-inner -->
         </section>
 
     </main>
