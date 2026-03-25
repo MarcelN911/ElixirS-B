@@ -24,12 +24,21 @@
     <link rel="stylesheet" href="styles/product-card.css">
     <link rel="stylesheet" href="styles/home.css">
     <link rel="stylesheet" href="styles/footer.css">
+    <link rel="stylesheet" href="styles/intro.css">
     <link rel="stylesheet" href="styles/animations.css">
 
+    <script src="scripts/templates.js" defer></script>
     <script src="script.js" defer></script>
 
 </head>
 <body>
+    <div class="intro-overlay" id="introOverlay">
+        <div class="intro-content">
+            <img src="./img/logo-transparent.png" alt="Elixir S&B" class="intro-logo" id="introLogo">
+            <p class="intro-slogan">El lujo que mereces, al precio que deseas</p>
+        </div>
+    </div>
+
     <header>
         <nav>
             <div class="nav-inner">
@@ -125,8 +134,8 @@
             <div class="search-container">
                 <p class="search-label">BUSCAR PRODUCTOS EN <br> NUESTRO SITIO</p>
                 <form class="search-form" id="searchForm">
-                    <input type="text" placeholder="¿Qué estás buscando?" aria-label="Buscar productos" id="searchInput" required>
-                    <button type="submit" aria-label="Iniciar búsqueda">
+                    <input type="text" placeholder="¿Qué estás buscando?" aria-label="Buscar productos" id="searchInputMain" required>
+                    <button type="submit" aria-label="Iniciar búsqueda" onclick="searchProductsMain()">
                         <img src="./img/search.svg" alt="Buscar">
                     </button>
                 </form>

@@ -1,3 +1,5 @@
+startIntro();
+
 const dbUrl = `https://docs.google.com/spreadsheets/d/1FiOCY_GIkpCCZVaZplXQtQzwLORYQOws/gviz/tq?tqx=out:json`;
 
 let data = [];
@@ -17,7 +19,15 @@ fetchProducts();
 
 function createProductCards(data) {
     for (let index = showProducts; index < showProducts + productsPerLoad && index < data.length; index++) {
-        const product = {
+        const product = createProductData(data, index);
+        createProductTemplate(product);
+    } showProducts = showProducts + productsPerLoad;
+        startScrollObserver();
+        animateCards();
+}
+
+function createProductData(data, index) {
+    const product = {
             name: data[index].c[1].v,
             brand: data[index].c[2].v,
             price: data[index].c[3].v,
@@ -28,11 +38,9 @@ function createProductCards(data) {
             categories: data[index].c[8].v,
             active: data[index].c[9].v
         };
-        createProductTemplate(product);
-    } showProducts = showProducts + productsPerLoad;
-        startScrollObserver();
-        animateCards();
+    return product;
 }
+
 
 function ifSale(data, index) {
     if (data[index].c[4]) {
@@ -113,6 +121,15 @@ function animateCards() {
     }
 }
 
+function searchProductsMain() {
+    const searchInputMain = document.getElementById('searchInputMain').value.toLowerCase();
+    if (searchInputMain.length < 3) {
+        showSearchHint('Ingresa al menos 3 letras para buscar');
+        return;
+    }
+    location.replace("productos.html");
+}
+
 function filterProducts(category) {
     const container = document.getElementById('productsGrid');
     container.innerHTML = '';
@@ -126,22 +143,13 @@ function filterProducts(category) {
     } else {
         for (let index = 0; index < data.length; index++) {
             if (data[index].c[8].v === category) {
-                const product = {
-                    name: data[index].c[1].v,
-                    brand: data[index].c[2].v,
-                    price: data[index].c[3].v,
-                    sale: ifSale(data, index),
-                    image: ifImage(data, index),
-                    description: data[index].c[6].v,
-                    badge: ifBadge(data, index),
-                    categories: data[index].c[8].v,
-                    active: data[index].c[9].v
-                };
+                const product = createProductData(data, index);
                 createProductTemplate(product);
             }
         }
     } animateCards();
 }
+
 
 function searchProducts() {
     const searchInput = document.getElementById('searchInput').value.toLowerCase();
@@ -165,17 +173,7 @@ function searchProducts() {
         const productName = data[index].c[1].v.toLowerCase();
         const brandName = data[index].c[2].v.toLowerCase();
         if (productName.includes(searchInput) || brandName.includes(searchInput)) {
-            const product = {
-                name: data[index].c[1].v,
-                brand: data[index].c[2].v,
-                price: data[index].c[3].v,
-                sale: ifSale(data, index),
-                image: ifImage(data, index),
-                description: data[index].c[6].v,
-                badge: ifBadge(data, index),
-                categories: data[index].c[8].v,
-                active: data[index].c[9].v
-            };
+            const product = createProductData(data, index);
             createProductTemplate(product);
             resultsFound = resultsFound + 1;
         }
@@ -252,5 +250,30 @@ function switchFilterTab(category) {
             tab.classList.remove('active');
         }
     });
+}
+
+function startIntro() {
+    const overlay = document.getElementById('introOverlay');
+    if (!overlay) {
+        return;
+    }
+
+    if (sessionStorage.getItem('introSeen')) {
+        overlay.classList.add('hidden');
+        return;
+    }
+
+    setTimeout(function() {
+        overlay.classList.add('slide-up');
+    }, 2000);
+
+    setTimeout(function() {
+        overlay.classList.add('fade-out');
+    }, 2900);
+
+    setTimeout(function() {
+        overlay.classList.add('hidden');
+        sessionStorage.setItem('introSeen', 'true');
+    }, 3500);
 }
 
