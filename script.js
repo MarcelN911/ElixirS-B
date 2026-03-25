@@ -14,6 +14,15 @@ async function fetchProducts() {
     json = JSON.parse(content.substring(47).slice(0, -2));
     data = json.table.rows;
     createProductCards(data);
+
+    const params = new URLSearchParams(window.location.search);
+    const searchValue = params.get('search');
+    if (searchValue) {
+        document.getElementById('searchInput').value = searchValue;
+        searchProducts();
+        searchClear.classList.add('visible');
+    }
+    
 }
 fetchProducts();
 
@@ -127,7 +136,7 @@ function searchProductsMain() {
         showSearchHint('Ingresa al menos 3 letras para buscar');
         return;
     }
-    location.replace("productos.html");
+    location.replace("productos.html?search=" + encodeURIComponent(searchInputMain));
 }
 
 function filterProducts(category) {
