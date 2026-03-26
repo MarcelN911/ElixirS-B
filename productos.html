@@ -25,8 +25,10 @@
     <link rel="stylesheet" href="styles/footer.css">
     <link rel="stylesheet" href="styles/animations.css">
 
-    <script src="scripts/templates.js" defer></script>
     <script src="script.js" defer></script>
+    <script src="scripts/templates.js" defer></script>
+    <script src="scripts/scroll.js" defer></script>
+    <script src="scripts/products.js" defer></script>
 
 </head>
 <body>
@@ -41,9 +43,6 @@
                 </div>
 
                 <div class="mobile-left">
-                    <button class="nav-icon-button" aria-label="Buscar">
-                        <img src="./img/search.svg" class="nav-icon" alt="Buscar">
-                    </button>
                     <button class="mobile-menu-toggle" id="menuButton" aria-label="Menú">
                         <span></span>
                         <span></span>
@@ -91,16 +90,17 @@
                 <button class="mobile-close" id="menuClose" aria-label="Cerrar menú">&times;</button>
             </div>
             <ul>
-                <li><a href="productos.html">Productos</a></li>
+                <li><a href="index.html">Home</a></li>
                 <li><a href="index.html#nosotros">Nosotros</a></li>
                 <li><a href="index.html#contacto">Contacto</a></li>
+                <li><a href="#contacto">Favoritos</a></li>
             </ul>
             <div class="mobile-social">
                 <a href="https://www.instagram.com/elixirsb__/" target="_blank" aria-label="Instagram"><img src="./img/instagram_white.svg" alt="Instagram"></a>
                 <a href="#" aria-label="WhatsApp"><img src="./img/whatsapp_white.svg" alt="WhatsApp"></a>
             </div>
         </div>
-        <div class="mobile-overlay" id="mobileOverlay"></div>
+        <div class="mobile-overlay" id="mobileOverlay" onclick="closeMobileMenu()"></div>
     </header>
 
     <main>

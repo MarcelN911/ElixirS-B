@@ -24,20 +24,16 @@
     <link rel="stylesheet" href="styles/product-card.css">
     <link rel="stylesheet" href="styles/home.css">
     <link rel="stylesheet" href="styles/footer.css">
-    <link rel="stylesheet" href="styles/intro.css">
+
     <link rel="stylesheet" href="styles/animations.css">
 
-    <script src="scripts/templates.js" defer></script>
     <script src="script.js" defer></script>
+    <script src="scripts/templates.js" defer></script>
+    <script src="scripts/home.js" defer></script>
 
 </head>
 <body>
-    <div class="intro-overlay" id="introOverlay">
-        <div class="intro-content">
-            <img src="./img/logo-transparent.png" alt="Elixir S&B" class="intro-logo" id="introLogo">
-            <p class="intro-slogan">El lujo que mereces, al precio que deseas</p>
-        </div>
-    </div>
+
 
     <header>
         <nav>
@@ -50,9 +46,6 @@
                 </div>
 
                 <div class="mobile-left">
-                    <button class="nav-icon-button" id="mobileSearchButton" aria-label="Buscar">
-                        <img src="./img/search.svg" class="nav-icon" alt="Buscar">
-                    </button>
                     <button class="mobile-menu-toggle" id="menuButton" aria-label="Menú">
                         <span></span>
                         <span></span>
@@ -83,12 +76,12 @@
                 </div>
 
                 <div class="mobile-right">
-                    <a href="https://www.instagram.com/p/DIzDB8NNuoE/" class="nav-icon-button" aria-label="Instagram">
+                    <a href="https://www.instagram.com/elixirsb__/" target="_blank" class="nav-icon-button" aria-label="Instagram">
                         <img src="./img/instagram_white.svg" class="nav-icon" alt="Instagram">
                     </a>
-                    <button class="nav-icon-button" id="mobileFavoritesButton" aria-label="Favoritos">
-                        <img src="./img/heart.svg" class="nav-icon" alt="Favoritos">
-                        <span class="favorites-count">0</span>
+                    <button class="nav-icon-button" aria-label="Carrito">
+                        <img src="./img/shopping-car.svg" class="nav-icon basket-icon" alt="Carrito">
+                        <span class="cart-count">0</span>
                     </button>
                 </div>
             </div>
@@ -103,6 +96,7 @@
                 <li><a href="productos.html">Productos</a></li>
                 <li><a href="#nosotros">Nosotros</a></li>
                 <li><a href="#contacto">Contacto</a></li>
+                <li><a href="#contacto">Favoritos</a></li>
             </ul>
             <div class="mobile-social">
                 <a href="https://www.instagram.com/p/DIzDB8NNuoE/" aria-label="Instagram"><img src="./img/instagram_white.svg" alt="Instagram"></a>
