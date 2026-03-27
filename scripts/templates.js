@@ -4,10 +4,7 @@ function createProductTemplate(product) {
     container.innerHTML += ` <article class="product-card fade-hidden">
                                 <div class="product-card-image">
                                     ${createImg(product.image)}                                    
-                                    <div class="product-card-overlay"></div>
-                                    <button class="product-card-favorite" aria-label="Añadir a favoritos">
-                                        <img src="./img/heart.svg" alt="Favorito">
-                                    </button>
+                                    <div class="product-card-overlay"></div> d
                                     ${createBadge(product.badge)}
                                 </div>
                                 <div class="product-card-info">
@@ -44,4 +41,26 @@ function createPrice(price, sale) {
     return `<div class="product-card-price">
                 <span class="price-current">${price}.000 COP</span>
             </div>`;
+}
+
+function createBestsellerTemplate(product) {
+    const container = document.getElementById('bestsellersCarousel');
+    container.innerHTML += `
+                    <article class="product-card">
+                        <div class="product-card-image">
+                            ${createImg(product.image)}
+                            <div class="product-card-overlay"></div>
+                            <button class="product-card-favorite" aria-label="Añadir a favoritos">
+                                <img src="./img/heart.svg" alt="Favorito">
+                            </button>
+                            ${createBadge(product.badge)}
+                        </div>
+                        <div class="product-card-info">
+                            <h3 class="product-card-name">${product.name}</h3>
+                            <p class="product-card-brand">Inspirado en ${product.brand}</p>
+                            ${createPrice(product.price, product.sale)}
+                            <button class="product-card-button">Añadir al Carrito</button>
+                        </div>
+                    </article>
+    `;
 }

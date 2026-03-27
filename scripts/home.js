@@ -31,3 +31,19 @@ function hideSearchHint() {
         hint.remove();
     }
 }
+
+async function fetchBestsellers() {
+    const db = await fetch(dbUrl);
+    const content = await db.text();
+
+    json = JSON.parse(content.substring(47).slice(0, -2));
+    data = json.table.rows;
+    for (let index = 0; index < data.length; index++) {
+        if (data[index].c[7] && data[index].c[7].v === 'Favorito') {
+            const product = createProductData(data, index);
+            createBestsellerTemplate(product);
+        }
+    }
+}
+
+fetchBestsellers();
