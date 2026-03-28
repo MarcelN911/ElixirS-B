@@ -1,4 +1,5 @@
-const dbUrl = `https://docs.google.com/spreadsheets/d/1FiOCY_GIkpCCZVaZplXQtQzwLORYQOws/gviz/tq?tqx=out:json`;
+const dbUrl = `https://docs.google.com/spreadsheets/d/1FiOCY_GIkpCCZVaZplXQtQzwLORYQOws/gviz/tq?tqx=out:json&gid=438421994&headers=1`;
+const productsUrl = `https://docs.google.com/spreadsheets/d/1FiOCY_GIkpCCZVaZplXQtQzwLORYQOws/gviz/tq?tqx=out:json&gid=664120326#gid=664120326&headers=1`;
 
 let data = [];
 
@@ -22,11 +23,11 @@ function createProductData(data, index) {
             brand: data[index].c[2].v,
             price: data[index].c[3].v,
             sale: ifSale(data, index),
-            image: ifImage(data, index),
-            description: data[index].c[6].v,
             badge: ifBadge(data, index),
-            categories: data[index].c[8].v,
-            active: data[index].c[9].v
+            categories: data[index].c[7].v,
+            active: data[index].c[8].v,
+            image: ifImage(data, index),
+            description: data[index].c[10].v
         };
     return product;
 }
@@ -40,15 +41,15 @@ function ifSale(data, index) {
 }
 
 function ifImage(data, index) {
-    if (data[index].c[5]) {
-        return data[index].c[5].v;
+    if (data[index].c[9]) {
+        return data[index].c[9].v;
     }
     return '';
 }
 
 function ifBadge(data, index) {
-    if (data[index].c[7]) {
-        return data[index].c[7].v;
+    if (data[index].c[5]) {
+        return data[index].c[5].v;
     }
     return '';
 }

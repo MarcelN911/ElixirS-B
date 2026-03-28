@@ -27,11 +27,9 @@ function onLoaderVisible(observer, loader) {
 
 function startScrollObserver() {
     removeOldLoader();
-
     if (showProducts >= data.length) {
         return;
     }
-
     const loader = createLoader();
     const observer = new IntersectionObserver(function(entries) {
         if (entries[0].isIntersecting) {

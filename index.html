@@ -34,7 +34,6 @@
 </head>
 <body>
 
-
     <header>
         <nav>
             <div class="nav-inner">
@@ -159,10 +158,10 @@
         <section class="quote-section anim-fade-up">
             <div class="quote-container">
                 <div class="quote-decoration">✦</div>
-                <blockquote class="quote-text">
+                <blockquote class="quote-text" id="quoteText">
                     "Un perfume es la forma más intensa del recuerdo."
                 </blockquote>
-                <p class="quote-author">— Jean Paul Guerlain</p>
+                <p class="quote-author" id="quoteAuthor">— Jean Paul Guerlain</p>
             </div>
         </section>
         
@@ -177,13 +176,13 @@
                 </a>
             </div>
             <div class="social-showcase">
-                <a href="https://www.instagram.com/p/DUerC3NEQKk/" target="_blank" class="social-video-container" data-video-link>
-                    <video 
-                        class="social-video" 
+                <div class="social-video-container" id="socialVideoContainer">
+                    <video
+                        class="social-video"
                         id="socialVideo"
-                        src="#" 
-                        muted 
-                        loop 
+                        src="./video/preview.mp4"
+                        muted
+                        loop
                         playsinline
                         poster="./img/instagram/post-1.svg"
                     ></video>
@@ -193,33 +192,29 @@
                                 <polygon points="5,3 19,12 5,21"/>
                             </svg>
                         </div>
-                        <div class="social-video-instagram">
-                            <img src="./img/instagram_white.svg" alt="Instagram" class="social-ig-icon">
-                            <span>Ver en Instagram</span>
-                        </div>
                     </div>
-                </a>
+                </div>
                 <div class="social-photos">
                     <a href="https://www.instagram.com/p/DEIN_POST_ID_1/" target="_blank" class="social-photo-item">
-                        <img src="./img/instagram/post-2.svg" loading="lazy" alt="Instagram Post" class="social-photo active">
+                        <img src="./img/instagram/post-2.svg" loading="lazy" alt="Instagram Post" class="social-photo active" id="socialPhoto1">
                         <div class="social-photo-overlay">
                             <img src="./img/instagram_white.svg" alt="" class="social-ig-icon">
                         </div>
                     </a>
                     <a href="https://www.instagram.com/p/DEIN_POST_ID_2/" target="_blank" class="social-photo-item">
-                        <img src="./img/instagram/post-2.svg" loading="lazy" alt="Instagram Post" class="social-photo active">
+                        <img src="./img/instagram/post-2.svg" loading="lazy" alt="Instagram Post" class="social-photo active" id="socialPhoto2">
                         <div class="social-photo-overlay">
                             <img src="./img/instagram_white.svg" alt="" class="social-ig-icon">
                         </div>
                     </a>
                     <a href="https://www.instagram.com/p/DEIN_POST_ID_3/" target="_blank" class="social-photo-item social-photo-tablet">
-                        <img src="./img/instagram/post-2.svg" loading="lazy" alt="Instagram Post" class="social-photo active">
+                        <img src="./img/instagram/post-2.svg" loading="lazy" alt="Instagram Post" class="social-photo active" id="socialPhoto3">
                         <div class="social-photo-overlay">
                             <img src="./img/instagram_white.svg" alt="" class="social-ig-icon">
                         </div>
                     </a>
                     <a href="https://www.instagram.com/p/DEIN_POST_ID_4/" target="_blank" class="social-photo-item social-photo-desktop">
-                        <img src="./img/instagram/post-2.svg" loading="lazy" alt="Instagram Post" class="social-photo active">
+                        <img src="./img/instagram/post-2.svg" loading="lazy" alt="Instagram Post" class="social-photo active" id="socialPhoto4">
                         <div class="social-photo-overlay">
                             <img src="./img/instagram_white.svg" alt="" class="social-ig-icon">
                         </div>
@@ -412,6 +407,14 @@
         <a href="https://wa.me/57XXXXXXXXXXX" target="_blank" aria-label="Contactar por WhatsApp">
             <img src="./img/whatsapp_white.svg" alt="WhatsApp">
         </a>
+    </div>
+
+    <div class="video-modal" id="videoModal">
+        <div class="video-modal-overlay" id="videoModalOverlay"></div>
+        <div class="video-modal-content">
+            <button class="video-modal-close" id="videoModalClose">&times;</button>
+            <video class="video-modal-player" id="videoModalPlayer" controls playsinline></video>
+        </div>
     </div>
 </body>
 </html>

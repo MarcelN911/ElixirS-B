@@ -1,11 +1,14 @@
 async function fetchProducts() {
-    const db = await fetch(dbUrl);
+    const db = await fetch(productsUrl);
     const content = await db.text();
-
     json = JSON.parse(content.substring(47).slice(0, -2));
     data = json.table.rows;
     createProductCards(data);
+    checkSearchOnLoad();
+}
+fetchProducts();
 
+function checkSearchOnLoad() {
     const params = new URLSearchParams(window.location.search);
     const searchValue = params.get('search');
     if (searchValue) {
@@ -13,9 +16,7 @@ async function fetchProducts() {
         searchProducts();
         searchClear.classList.add('visible');
     }
-
 }
-fetchProducts();
 
 function createProductCards(data) {
     for (let index = showProducts; index < showProducts + productsPerLoad && index < data.length; index++) {
@@ -26,55 +27,74 @@ function createProductCards(data) {
         animateCards();
 }
 
-function filterProducts(category) {
+function resetProductView(category) {
     const container = document.getElementById('productsGrid');
     container.innerHTML = '';
     showProducts = 0;
     switchFilterTab(category);
     document.getElementById('searchInput').value = '';
     document.getElementById('searchClear').classList.remove('visible');
+}
 
+function showCategoryProducts(category) {
+    for (let index = 0; index < data.length; index++) {
+        if (data[index].c[7].v === category) {
+            const product = createProductData(data, index);
+            createProductTemplate(product);
+        }
+    }
+}
+
+function filterProducts(category) {
+    resetProductView(category);
     if (category === 'Todos') {
         createProductCards(data);
     } else {
-        for (let index = 0; index < data.length; index++) {
-            if (data[index].c[8].v === category) {
-                const product = createProductData(data, index);
-                createProductTemplate(product);
-            }
-        }
-    } animateCards();
+        showCategoryProducts(category);
+    }
+    animateCards();
 }
 
+function isProductMatch(index, searchInput) {
+    const productName = data[index].c[1].v.toLowerCase();
+    const brandName = data[index].c[2].v.toLowerCase();
+    return productName.includes(searchInput) || brandName.includes(searchInput);
+}
 
-function searchProducts() {
-    const searchInput = document.getElementById('searchInput').value.toLowerCase();
-    hideSearchHint();
-    switchFilterTab('Todos');
-
-    if (searchInput === '') {
-        filterProducts('Todos');
-        return;
-    }
-    if (searchInput.length < 3) {
-        showSearchHint('Ingresa al menos 3 letras para buscar');
-        return;
-    }
-
+function findMatchingProducts(searchInput) {
     const container = document.getElementById('productsGrid');
     container.innerHTML = '';
     let resultsFound = 0;
-
     for (let index = 0; index < data.length; index++) {
-        const productName = data[index].c[1].v.toLowerCase();
-        const brandName = data[index].c[2].v.toLowerCase();
-        if (productName.includes(searchInput) || brandName.includes(searchInput)) {
+        if (isProductMatch(index, searchInput)) {
             const product = createProductData(data, index);
             createProductTemplate(product);
             resultsFound = resultsFound + 1;
         }
     }
+    return resultsFound;
+}
 
+function validateSearch(searchInput) {
+    if (searchInput === '') {
+        filterProducts('Todos');
+        return false;
+    }
+    if (searchInput.length < 3) {
+        showSearchHint('Ingresa al menos 3 letras para buscar');
+        return false;
+    }
+    return true;
+}
+
+function searchProducts() {
+    const searchInput = document.getElementById('searchInput').value.toLowerCase();
+    hideSearchHint();
+    switchFilterTab('Todos');
+    if (!validateSearch(searchInput)) {
+        return;
+    }
+    const resultsFound = findMatchingProducts(searchInput);
     if (resultsFound === 0) {
         showNoResults(searchInput);
     }

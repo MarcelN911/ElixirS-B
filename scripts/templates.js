@@ -18,10 +18,10 @@ function createProductTemplate(product) {
 }
 
 function createBadge(badge) {
-    if (badge) {
+    if (badge && badge !== 'Normal') {
         return `<span class="product-card-badge">${badge}</span>`;
     }
-    return '';
+        return '';
 }
 
 function createImg(image) {
