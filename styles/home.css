@@ -402,9 +402,35 @@
 }
 
 .testimonials-header {
-    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
     margin-bottom: 30px;
 }
+
+.testimonials-header-top {
+    text-align: center;
+    width: 100%;
+}
+
+.testimonials-nav {
+    display: none;
+}
+
+.testimonials-nav-btn {
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(212, 175, 125, 0.3);
+    border-radius: 50%;
+    color: var(--gold);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 
 .testimonials-title {
     font-family: 'Cormorant Garamond', serif;
@@ -682,10 +708,22 @@
         letter-spacing: 6px;
     }
 
+    .bestsellers-nav {
+        display: flex;
+        gap: 10px;
+    }
+
+    .bestsellers-nav-btn:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-color: var(--gold);
+        color: var(--gold);
+    }
+
     .bestsellers-carousel {
         padding: 0 40px;
         gap: 25px;
-        overflow-x: auto;
+        overflow: hidden;
+        scroll-behavior: smooth;
     }
 
     .bestsellers-carousel .product-card {
@@ -893,6 +931,21 @@
         opacity: 0.9;
     }
 
+    .testimonials-header {
+        padding: 0 40px;
+        margin-bottom: 40px;
+    }
+
+    .testimonials-nav {
+        display: flex;
+        gap: 10px;
+    }
+
+    .testimonials-nav-btn:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-color: var(--gold);
+    }
+
     .testimonials-title {
         font-size: 36px;
         letter-spacing: 2px;
@@ -909,7 +962,7 @@
     .testimonials-carousel {
         padding: 15px 10px 25px;
         gap: 25px;
-        overflow-x: auto;
+        overflow: hidden;
     }
 
     .testimonial-card {

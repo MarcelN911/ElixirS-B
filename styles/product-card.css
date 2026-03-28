@@ -1,6 +1,3 @@
-/* ============================================
-   PRODUCT CARD — Shared component (all pages)
-   ============================================ */
 
 .product-card {
     background-color: rgba(255, 255, 255, 0.03);
@@ -9,6 +6,7 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    cursor: pointer;
 }
 
 .product-card-image {
@@ -90,13 +88,17 @@
 }
 
 .product-card-info {
-    padding: 15px;
+    padding: 10px;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
 }
 
 .product-card-name {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
     font-family: 'Cormorant Garamond', serif;
     font-size: 16px;
     font-weight: 500;
@@ -105,20 +107,30 @@
 }
 
 .product-card-brand {
-    font-size: 11px;
-    color: rgba(255, 255, 255, 0.5);
-    margin-bottom: 5px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 10px;
+    font-weight: 500;
+    color: rgb(212, 174, 125);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
 }
 
 .product-card-gender {
-    font-size: 10px;
-    font-weight: 500;
-    color: var(--gold);
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: 9px;
+    font-weight: 600;
+    color: white;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    opacity: 0.6;
-    margin-top: auto;
-    margin-bottom: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 4px 8px;
+    border-radius: 3px;
 }
 
 .product-card-sizes {
@@ -148,8 +160,13 @@
 }
 
 .product-card-price {
-    min-height: 45px;
-    margin-bottom: 5px;
+    margin-top: auto;
+}
+
+.product-card-size {
+    font-size: 12px;
+    margin-bottom: 3px;
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .price-old {
@@ -165,28 +182,6 @@
     font-weight: 500;
     color: var(--gold);
 }
-
-.product-card-button {
-    width: 100%;
-    padding: 10px;
-    background-color: transparent;
-    border: 1px solid var(--gold);
-    color: var(--gold);
-    font-family: 'Montserrat', sans-serif;
-    font-size: 11px;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    cursor: pointer;
-    border-radius: 4px;
-}
-
-.product-card-button:active {
-    background-color: var(--gold);
-    color: var(--primary-color);
-}
-
-/* ---- Responsive: Product Card ---- */
 
 @media (min-width: 600px) {
     .product-card-info {
@@ -205,10 +200,6 @@
         font-size: 16px;
     }
 
-    .product-card-button {
-        padding: 12px;
-        font-size: 12px;
-    }
 }
 
 @media (min-width: 900px) {
@@ -257,17 +248,6 @@
 
     .price-current {
         font-size: 18px;
-    }
-
-    .product-card-button {
-        padding: 14px;
-        font-size: 12px;
-        transition: background-color 0.3s ease, color 0.3s ease;
-    }
-
-    .product-card-button:hover {
-        background-color: var(--gold);
-        color: var(--primary-color);
     }
 
     .size-pill:hover {

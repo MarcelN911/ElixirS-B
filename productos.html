@@ -76,7 +76,7 @@
                     <a href="https://www.instagram.com/elixirsb__/" target="_blank" class="nav-icon-button" aria-label="Instagram">
                         <img src="./img/instagram_white.svg" class="nav-icon" alt="Instagram">
                     </a>
-                    <button class="nav-icon-button" aria-label="Carrito">
+                    <button class="nav-icon-button" id="cartButton" aria-label="Carrito">
                         <img src="./img/shopping-car.svg" class="nav-icon basket-icon" alt="Carrito">
                         <span class="cart-count">0</span>
                     </button>
@@ -139,6 +139,45 @@
         </section>
 
     </main>
+
+    <div class="cart-panel" id="cartPanel">
+        <div class="cart-panel-header">
+            <h2>Tu Carrito</h2>
+            <button class="cart-panel-close" id="cartPanelClose" onclick="closeBasket()">&times;</button>
+        </div>
+        <div class="cart-panel-content" id="cartPanelContent">
+            <div class="cart-empty">
+                <img src="./img/shopping-car.svg" alt="Carrito vacío">
+                <p>Tu carrito está vacío</p>
+                <a href="productos.html" class="cart-empty-link">Ver productos</a>
+            </div>
+        </div>
+        <div class="cart-panel-footer">
+            <div class="cart-panel-subtotal">
+                <span>Subtotal</span>
+                <span class="cart-panel-total">$0 COP</span>
+            </div>
+            <button class="cart-panel-checkout">Finalizar Compra</button>
+            <p class="cart-panel-note">Envío calculado en el checkout</p>
+        </div>
+    </div>
+    <div class="cart-overlay" id="cartOverlay"></div>
+
+    <div class="cart-bar" id="cartBar">
+        <div class="cart-bar-info">
+            <div class="cart-bar-icon">
+                <img src="./img/shopping-car.svg" alt="Carrito">
+                <span class="cart-bar-count" id="cartBarCount">0</span>
+            </div>
+            <div class="cart-bar-details">
+                <span class="cart-bar-items"><span id="cartItemsText">0 artículos</span></span>
+                <span class="cart-bar-total">$<span id="cartTotal">0</span> COP</span>
+            </div>
+        </div>
+        <button class="cart-bar-button" id="cartBarButton">
+            Ver Carrito
+        </button>
+    </div>
 
     <footer class="site-footer">
         <div class="footer-content">

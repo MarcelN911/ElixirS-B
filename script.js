@@ -6,6 +6,36 @@ let data = [];
 let showProducts = 0;
 const productsPerLoad = 20;
 
+function getValue(data, index, column, fallback) {
+    if (data[index].c[column]) {
+        return data[index].c[column].v;
+    }
+    return fallback;
+}
+
+function createProductData(data, index) {
+    const product = {
+            name: getValue(data, index, 1, 'desconocido'),
+            brand: getValue(data, index, 2, 'desconocido'),
+            price: getValue(data, index, 3, 'desconocido'),
+            sale: getValue(data, index, 4, ''),
+            size: getValue(data, index, 5, 'desconocido'),
+            badge: getValue(data, index, 6, ''),
+            categories: getValue(data, index, 8, ''),
+            active: getValue(data, index, 9, 'No'),
+            image: getValue(data, index, 10, ''),
+            description: getValue(data, index, 11, '')
+        };
+    return product;
+}
+
+function createStars(count) {
+    let stars = '';
+    for (let index = 0; index < count; index++) {
+        stars += '<span>★</span>';
+    }
+    return stars;
+}
 
 function openMobileMenu() {
     document.getElementById('mobileMenu').classList.add('active');
@@ -17,46 +47,26 @@ function closeMobileMenu() {
     document.getElementById('mobileOverlay').classList.remove('active');
 }
 
-function createProductData(data, index) {
-    const product = {
-            name: data[index].c[1].v,
-            brand: data[index].c[2].v,
-            price: data[index].c[3].v,
-            sale: ifSale(data, index),
-            badge: ifBadge(data, index),
-            categories: data[index].c[7].v,
-            active: data[index].c[8].v,
-            image: ifImage(data, index),
-            description: data[index].c[10].v
-        };
-    return product;
-}
-
-
-function ifSale(data, index) {
-    if (data[index].c[4]) {
-        return data[index].c[4].v;
-    }
-    return '';
-}
-
-function ifImage(data, index) {
-    if (data[index].c[9]) {
-        return data[index].c[9].v;
-    }
-    return '';
-}
-
-function ifBadge(data, index) {
-    if (data[index].c[5]) {
-        return data[index].c[5].v;
-    }
-    return '';
-}
-
 const menuButton = document.getElementById('menuButton');
 if (menuButton) {
     document.getElementById('menuButton').addEventListener('click', openMobileMenu);
     document.getElementById('menuClose').addEventListener('click', closeMobileMenu);
     document.getElementById('mobileOverlay').addEventListener('click', closeMobileMenu);
+}
+
+function openBasket() {
+    document.getElementById('cartPanel').classList.add('active');
+    document.getElementById('cartOverlay').classList.add('active');
+}
+
+function closeBasket() {
+    document.getElementById('cartPanel').classList.remove('active');
+    document.getElementById('cartOverlay').classList.remove('active');
+}
+
+const cartButton = document.getElementById('cartButton');
+if (cartButton) {
+    cartButton.addEventListener('click', openBasket);
+    document.getElementById('cartPanelClose').addEventListener('click', closeBasket);
+    document.getElementById('cartOverlay').addEventListener('click', closeBasket);
 }

@@ -20,6 +20,7 @@ function checkSearchOnLoad() {
 
 function createProductCards(data) {
     for (let index = showProducts; index < showProducts + productsPerLoad && index < data.length; index++) {
+        if (data[index].c[9].v === 'No') continue;
         const product = createProductData(data, index);
         createProductTemplate(product);
     } showProducts = showProducts + productsPerLoad;
@@ -38,7 +39,8 @@ function resetProductView(category) {
 
 function showCategoryProducts(category) {
     for (let index = 0; index < data.length; index++) {
-        if (data[index].c[7].v === category) {
+        if (data[index].c[9].v === 'No') continue;
+        if (data[index].c[8].v === category) {
             const product = createProductData(data, index);
             createProductTemplate(product);
         }
@@ -66,6 +68,7 @@ function findMatchingProducts(searchInput) {
     container.innerHTML = '';
     let resultsFound = 0;
     for (let index = 0; index < data.length; index++) {
+        if (data[index].c[9].v === 'No') continue;
         if (isProductMatch(index, searchInput)) {
             const product = createProductData(data, index);
             createProductTemplate(product);

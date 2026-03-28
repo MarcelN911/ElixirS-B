@@ -39,7 +39,8 @@ async function fetchBestsellers() {
     json = JSON.parse(content.substring(47).slice(0, -2));
     data = json.table.rows;
     for (let index = 0; index < data.length; index++) {
-        if (data[index].c[6] && data[index].c[6].v === 'Si') {
+        if (data[index].c[7].v === 'No') continue;
+        if (data[index].c[7] && data[index].c[7].v === 'Si') {
             const product = createProductData(data, index);
             createBestsellerTemplate(product);
         }
@@ -55,14 +56,27 @@ function updateQuote(row) {
     }
 }
 
-function collectPhotos(rows) {
-    const photos = [];
-    for (let i = 0; i < rows.length; i++) {
-        if (rows[i].c[4] && rows[i].c[4].v) {
-            photos.push(rows[i].c[4].v);
+function collectReviews(rows) {
+    const reviews = [];
+    for (let index = 0; index < rows.length; index++) {
+        if (rows[index].c[7] && rows[index].c[7].v) {
+            reviews.push({
+                stars: rows[index].c[6] ? rows[index].c[6].v : 5,
+                text: rows[index].c[7].v,
+                name: rows[index].c[8] ? rows[index].c[8].v : 'Anónimo',
+                city: rows[index].c[9] ? rows[index].c[9].v : ''
+            });
         }
     }
-    return photos;
+    return reviews;
+}
+
+function loadReviews(reviews) {
+    const container = document.getElementById('testimonialsCarousel');
+    container.innerHTML = '';
+    for (let i = 0; i < reviews.length; i++) {
+        createReviewTemplate(reviews[i]);
+    }
 }
 
 async function fetchContent() {
@@ -72,116 +86,47 @@ async function fetchContent() {
     const rows = json.table.rows;
     if (rows.length === 0) return;
     updateQuote(rows[0].c);
-    const photos = collectPhotos(rows);
-    if (photos.length > 0) {
-        loadPhotos(photos);
-    }
+    const reviews = collectReviews(rows);
+    if (reviews.length > 0) loadReviews(reviews);
 }
 
-function setPhotoWithFallback(img, src, fallback) {
-    img.onerror = function() {
-        img.onerror = null;
-        img.src = fallback;
-    };
-    img.src = src;
+function getScrollAmount(carousel) {
+    const card = carousel.querySelector('.product-card');
+    if (!card) return 300;
+    return card.offsetWidth + 25;
 }
 
-function loadPhotos(photos) {
-    const photoIds = ['socialPhoto1', 'socialPhoto2', 'socialPhoto3', 'socialPhoto4'];
-    const fallback = './img/instagram/post-2.svg';
-    for (let i = 0; i < photoIds.length; i++) {
-        if (photos[i]) {
-            const img = document.getElementById(photoIds[i]);
-            setPhotoWithFallback(img, photos[i], fallback);
-        }
-    }
-    if (photos.length > 4) {
-        startSlideshow(photos, photoIds, fallback);
-    }
-}
-
-function swapPhoto(photoIds, photos, currentBox, currentIndex, fallback) {
-    const img = document.getElementById(photoIds[currentBox]);
-    img.style.opacity = '0';
-    setTimeout(function() {
-        setPhotoWithFallback(img, photos[currentIndex], fallback);
-        img.style.opacity = '1';
-    }, 800);
-}
-
-function startSlideshow(photos, photoIds, fallback) {
-    let currentIndex = 4;
-    let currentBox = 0;
-    setInterval(function() {
-        swapPhoto(photoIds, photos, currentBox, currentIndex, fallback);
-        currentBox = (currentBox + 1) % photoIds.length;
-        currentIndex = (currentIndex + 1) % photos.length;
-    }, 3500);
-}
-
-function handleVideoVisibility(entry, video, container) {
-    if (entry.isIntersecting) {
-        video.play().then(function() {
-            container.classList.add('playing');
-        }).catch(function() {});
-    } else {
-        video.pause();
-        container.classList.remove('playing');
-    }
-}
-
-function setupVideoAutoplay() {
-    const video = document.getElementById('socialVideo');
-    const container = document.getElementById('socialVideoContainer');
-    const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-            handleVideoVisibility(entry, video, container);
-        });
-    }, { threshold: 0.3 });
-    observer.observe(container);
-}
-
-function openVideoModal(modal, modalPlayer, inlineVideo, container) {
-    modalPlayer.src = inlineVideo.src;
-    modal.classList.add('active');
-    modalPlayer.play();
-    inlineVideo.pause();
-    container.classList.remove('playing');
-    document.body.style.overflow = 'hidden';
-}
-
-function closeVideoModal(modal, modalPlayer) {
-    modal.classList.remove('active');
-    modalPlayer.pause();
-    modalPlayer.currentTime = 0;
-    document.body.style.overflow = '';
-}
-
-function setupModalCloseEvents(modal, modalPlayer) {
-    document.getElementById('videoModalClose').addEventListener('click', function() {
-        closeVideoModal(modal, modalPlayer);
+function setupBestsellersNav() {
+    const carousel = document.getElementById('bestsellersCarousel');
+    const btnLeft = document.getElementById('scrollLeft');
+    const btnRight = document.getElementById('scrollRight');
+    btnLeft.addEventListener('click', function() {
+        carousel.scrollBy({ left: -getScrollAmount(carousel), behavior: 'smooth' });
     });
-    document.getElementById('videoModalOverlay').addEventListener('click', function() {
-        closeVideoModal(modal, modalPlayer);
-    });
-    document.addEventListener('keydown', function(event) {
-        if (event.key === 'Escape' && modal.classList.contains('active')) {
-            closeVideoModal(modal, modalPlayer);
-        }
+    btnRight.addEventListener('click', function() {
+        carousel.scrollBy({ left: getScrollAmount(carousel), behavior: 'smooth' });
     });
 }
 
-function setupVideoModal() {
-    const container = document.getElementById('socialVideoContainer');
-    const modal = document.getElementById('videoModal');
-    const modalPlayer = document.getElementById('videoModalPlayer');
-    const inlineVideo = document.getElementById('socialVideo');
-    container.addEventListener('click', function() {
-        openVideoModal(modal, modalPlayer, inlineVideo, container);
-    });
-    setupModalCloseEvents(modal, modalPlayer);
+setupBestsellersNav();
+
+function getReviewScrollAmount(carousel) {
+    const card = carousel.querySelector('.testimonial-card');
+    if (!card) return 300;
+    return card.offsetWidth + 25;
 }
 
+function setupReviewsNav() {
+    const carousel = document.getElementById('testimonialsCarousel');
+    const btnLeft = document.getElementById('reviewScrollLeft');
+    const btnRight = document.getElementById('reviewScrollRight');
+    btnLeft.addEventListener('click', function() {
+        carousel.scrollBy({ left: -getReviewScrollAmount(carousel), behavior: 'smooth' });
+    });
+    btnRight.addEventListener('click', function() {
+        carousel.scrollBy({ left: getReviewScrollAmount(carousel), behavior: 'smooth' });
+    });
+}
+
+setupReviewsNav();
 fetchContent();
-setupVideoAutoplay();
-setupVideoModal();
