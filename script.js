@@ -15,6 +15,7 @@ function getValue(data, index, column, fallback) {
 
 function createProductData(data, index) {
     const product = {
+            id: getValue(data, index, 0, ''),
             name: getValue(data, index, 1, 'desconocido'),
             brand: getValue(data, index, 2, 'desconocido'),
             price: getValue(data, index, 3, 'desconocido'),
@@ -57,11 +58,13 @@ if (menuButton) {
 function openBasket() {
     document.getElementById('cartPanel').classList.add('active');
     document.getElementById('cartOverlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
 }
 
 function closeBasket() {
     document.getElementById('cartPanel').classList.remove('active');
     document.getElementById('cartOverlay').classList.remove('active');
+    document.body.style.overflow = '';
 }
 
 const cartButton = document.getElementById('cartButton');

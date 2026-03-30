@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página no encontrada — Elixir S&B</title>
+    <meta name="robots" content="noindex">
+
+    <link rel="icon" type="image/png" href="./img/logo-transparent.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="styles/base.css">
+    <link rel="stylesheet" href="styles/nav.css">
+    <link rel="stylesheet" href="styles/cart.css">
+    <link rel="stylesheet" href="styles/footer.css">
+    <link rel="stylesheet" href="styles/animations.css">
+
+    <script src="script.js" defer></script>
+
+    <style>
+        .error-section {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .error-inner {
+            max-width: 560px;
+        }
+
+        .error-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(100px, 20vw, 180px);
+            font-weight: 300;
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(212, 175, 125, 0.3);
+            line-height: 1;
+            letter-spacing: 10px;
+            margin-bottom: 0;
+        }
+
+        .error-divider {
+            width: 40px;
+            height: 1px;
+            background-color: rgba(212, 175, 125, 0.4);
+            margin: 20px auto 28px;
+        }
+
+        .error-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(24px, 5vw, 36px);
+            font-weight: 400;
+            color: white;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .error-text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.5);
+            line-height: 1.8;
+            letter-spacing: 0.3px;
+            margin-bottom: 40px;
+        }
+
+        .error-actions {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .error-btn-primary {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--primary-color);
+            background-color: var(--gold);
+            border: none;
+            padding: 14px 28px;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.2s ease;
+        }
+
+        .error-btn-secondary {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.7);
+            background-color: transparent;
+            border: 1px solid rgba(212, 175, 125, 0.3);
+            padding: 14px 28px;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: border-color 0.2s ease, color 0.2s ease;
+        }
+
+        @media (min-width: 900px) {
+            .error-btn-primary:hover {
+                background-color: rgba(240, 210, 170, 1);
+            }
+
+            .error-btn-secondary:hover {
+                border-color: rgba(212, 175, 125, 0.6);
+                color: white;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="nav-inner">
+                <div class="nav-left">
+                    <ul>
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="index.html#nosotros">Nosotros</a></li>
+                    </ul>
+                </div>
+
+                <div class="mobile-left">
+                    <a href="index.html" class="nav-icon-button" aria-label="Volver al inicio">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="15 18 9 12 15 6"/>
+                        </svg>
+                    </a>
+                    <button class="mobile-menu-toggle" id="menuButton" aria-label="Menú">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+
+                <div class="nav-center">
+                    <a href="index.html">
+                        <img src="./img/logo-transparent.png" alt="Elixir S&B Logo" class="nav-logo">
+                    </a>
+                </div>
+
+                <div class="nav-right">
+                    <ul>
+                        <li>
+                            <a href="https://www.instagram.com/elixirsb__/" target="_blank" aria-label="Instagram">
+                                <img src="./img/instagram_white.svg" class="nav-icon social-icon" alt="Instagram">
+                            </a>
+                        </li>
+                        <li>
+                            <button class="nav-icon-button" aria-label="Carrito" id="cartNavBtn">
+                                <img src="./img/shopping-car.svg" class="nav-icon basket-icon" alt="Carrito">
+                                <span class="cart-count">0</span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="mobile-right">
+                    <button class="nav-icon-button" aria-label="Carrito" id="cartNavBtnMobile">
+                        <img src="./img/shopping-car.svg" class="nav-icon basket-icon" alt="Carrito">
+                        <span class="cart-count">0</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <div class="mobile-menu" id="mobileMenu">
+            <div class="mobile-menu-header">
+                <img src="./img/logo-transparent.png" alt="Elixir S&B" class="mobile-logo">
+                <button class="mobile-close" id="menuClose" aria-label="Cerrar menú">&times;</button>
+            </div>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="productos.html">Productos</a></li>
+                <li><a href="index.html#nosotros">Nosotros</a></li>
+                <li><a href="index.html#contacto">Contacto</a></li>
+            </ul>
+            <div class="mobile-social">
+                <a href="https://www.instagram.com/elixirsb__/" target="_blank" aria-label="Instagram">
+                    <img src="./img/instagram_white.svg" alt="Instagram">
+                </a>
+                <a href="https://wa.me/57XXXXXXXXXXX" target="_blank" aria-label="WhatsApp">
+                    <img src="./img/whatsapp_white.svg" alt="WhatsApp">
+                </a>
+            </div>
+        </div>
+        <div class="mobile-overlay" id="mobileOverlay"></div>
+    </header>
+
+    <main>
+        <section class="error-section">
+            <div class="error-inner">
+                <p class="error-number">404</p>
+                <div class="error-divider"></div>
+                <h1 class="error-title">Página no encontrada</h1>
+                <p class="error-text">
+                    La fragancia que buscas no está aquí.<br>
+                    Puede que la página haya sido movida o ya no exista.
+                </p>
+                <div class="error-actions">
+                    <a href="productos.html" class="error-btn-primary">Ver productos</a>
+                    <a href="index.html" class="error-btn-secondary">Volver al inicio</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="cart-panel" id="cartPanel">
+        <div class="cart-panel-header">
+            <h2>Tu Carrito</h2>
+            <button class="cart-panel-close" id="cartPanelClose">&times;</button>
+        </div>
+        <div class="cart-panel-content" id="cartPanelContent">
+            <div class="cart-empty">
+                <img src="./img/shopping-car.svg" alt="Carrito vacío">
+                <p>Tu carrito está vacío</p>
+                <a href="productos.html" class="cart-empty-link">Ver productos</a>
+            </div>
+        </div>
+        <div class="cart-panel-footer">
+            <div class="cart-panel-subtotal">
+                <span>Subtotal</span>
+                <span class="cart-panel-total">$0 COP</span>
+            </div>
+            <button class="cart-panel-checkout">Finalizar Compra</button>
+            <p class="cart-panel-note">Envío calculado en el checkout</p>
+        </div>
+    </div>
+    <div class="cart-overlay" id="cartOverlay"></div>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <img src="./img/logo-transparent.png" alt="Elixir S&B" class="footer-logo">
+                <p class="footer-tagline">Fragancias de lujo a precios accesibles</p>
+                <div class="footer-social">
+                    <a href="https://www.instagram.com/elixirsb__/" target="_blank" aria-label="Instagram">
+                        <img src="./img/instagram_white.svg" alt="Instagram">
+                    </a>
+                    <a href="https://wa.me/57XXXXXXXXXXX" target="_blank" aria-label="WhatsApp">
+                        <img src="./img/whatsapp_white.svg" alt="WhatsApp">
+                    </a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h4>Tienda</h4>
+                    <ul>
+                        <li><a href="productos.html">Productos</a></li>
+                        <li><a href="index.html#bestsellers">Los Favoritos</a></li>
+                        <li><a href="nosotros.html">Nosotros</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Ayuda</h4>
+                    <ul>
+                        <li><a href="contacto.html">Contacto</a></li>
+                        <li><a href="#envios">Envíos</a></li>
+                        <li><a href="#devoluciones">Devoluciones</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#terminos">Términos y Condiciones</a></li>
+                        <li><a href="#privacidad">Política de Privacidad</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-contact">
+                <a href="https://wa.me/57XXXXXXXXXXX" target="_blank" class="footer-contact-link">
+                    <img src="./img/whatsapp_white.svg" alt="" class="footer-contact-icon">
+                    <span>+57 XXX XXX XXXX</span>
+                </a>
+                <span class="footer-contact-sep">·</span>
+                <span class="footer-contact-location">Medellín, Colombia</span>
+            </div>
+            <p class="footer-copyright">© 2026 Elixir S&B. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

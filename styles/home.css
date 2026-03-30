@@ -67,9 +67,14 @@
     display: none;
 }
 
-.bestsellers-carousel .product-card {
+.bestsellers-carousel .product-link {
     flex: 0 0 80%;
     scroll-snap-align: start;
+    display: flex;
+}
+
+.bestsellers-carousel .product-card {
+    width: 100%;
 }
 
 .bestsellers-dots {
@@ -185,95 +190,58 @@
     border-radius: 25px;
 }
 
-.social-showcase {
+/* Mobile: Peek-Carousel, Video 2 mittig */
+.social-reels {
     display: flex;
-    flex-direction: column;
-    gap: 15px;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 15%;
 }
 
-.social-video-container {
+.social-reels::-webkit-scrollbar {
+    display: none;
+}
+
+.social-reel-item {
     position: relative;
-    width: 100%;
+    flex: 0 0 70%;
+    scroll-snap-align: center;
     aspect-ratio: 9 / 16;
-    max-height: 500px;
     border-radius: 12px;
     overflow: hidden;
     background-color: rgba(255, 255, 255, 0.05);
-    display: block;
-    text-decoration: none;
+    transition: opacity 0.3s ease;
 }
 
-.social-video {
+/* Seiten-Videos auf Mobile abdunkeln */
+.social-reel-item[data-role="side"] .social-reel-overlay {
+    background: rgba(0, 0, 0, 0.45);
+}
+
+.social-reel-video {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.social-video-overlay {
+.social-reel-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.4);
+    background: linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.5) 100%);
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    cursor: pointer;
-    transition: background 0.3s ease;
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding: 12px;
+    transition: opacity 0.3s ease;
 }
 
-.social-video-overlay.hidden {
-    opacity: 0;
-    pointer-events: none;
-}
-
-.social-play-btn {
-    width: 60px;
-    height: 60px;
-    background: rgba(212, 175, 125, 0.9);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-left: 4px;
-}
-
-.social-play-btn svg {
-    width: 24px;
-    height: 24px;
-}
-
-.social-video-instagram {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 16px;
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 25px;
-}
-
-.social-ig-icon {
-    width: 20px;
-    height: 20px;
-}
-
-.social-video-instagram span {
-    color: white;
-    font-size: 11px;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-/* Video: Overlay ausblenden wenn Video spielt */
-.social-video-container.playing .social-video-overlay {
-    opacity: 0;
-    pointer-events: none;
-}
-
-.social-video-container.playing:hover .social-video-overlay {
-    opacity: 1;
-    pointer-events: auto;
+.social-reel-ig {
+    width: 22px;
+    height: 22px;
+    opacity: 0.9;
 }
 
 /* Video Modal */
@@ -581,7 +549,7 @@
         gap: 20px;
     }
 
-    .bestsellers-carousel .product-card {
+    .bestsellers-carousel .product-link {
         flex: 0 0 45%;
     }
 
@@ -621,36 +589,18 @@
         display: block;
     }
 
-    .social-showcase {
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .social-video-container {
-        max-height: 450px;
-        border-radius: 16px;
-    }
-
-    .social-photos {
+    /* Tablet: 3 nebeneinander, kein Scroll */
+    .social-reels {
+        display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
+        gap: 16px;
+        overflow: visible;
+        padding: 0;
     }
 
-    .social-photo-tablet {
-        display: block;
-    }
-
-    .social-photo-item {
+    .social-reel-item {
+        flex: unset;
         border-radius: 16px;
-    }
-
-    .social-photo-item:hover {
-        transform: scale(1.03);
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-    }
-
-    .social-photo-item:hover .social-photo-overlay {
-        opacity: 1;
     }
 
     .testimonials-section {
@@ -726,7 +676,7 @@
         scroll-behavior: smooth;
     }
 
-    .bestsellers-carousel .product-card {
+    .bestsellers-carousel .product-link {
         flex: 0 0 calc(22% - 19px);
     }
 
@@ -826,89 +776,49 @@
         box-shadow: 0 15px 35px rgba(212, 175, 125, 0.3);
     }
 
-    .social-showcase {
-        flex-direction: column;
-        gap: 30px;
+    /* Desktop: 3 nebeneinander, Mitte autoplay, Seiten abgedunkelt */
+    .social-reels {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        max-width: 1100px;
+        margin: 0 auto;
+        overflow: visible;
+        padding: 0;
     }
 
-    .social-video-container {
-        max-height: 750px;
+    .social-reel-item {
         border-radius: 20px;
-        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         transition: transform 0.4s ease, box-shadow 0.4s ease;
     }
 
-    .social-video-container:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 35px 70px rgba(0, 0, 0, 0.5);
+    /* Seiten-Videos abgedunkelt */
+    .social-reel-item[data-role="side"] .social-reel-overlay {
+        background: rgba(0, 0, 0, 0.45);
     }
 
-    .social-video-container:hover .social-video-overlay {
-        background: rgba(0, 0, 0, 0.3);
+    /* Mitte kein Overlay */
+    .social-reel-item[data-role="center"] .social-reel-overlay {
+        background: linear-gradient(180deg, transparent 70%, rgba(0,0,0,0.4) 100%);
     }
 
-    .social-video-container:hover .social-play-btn {
-        transform: scale(1.15);
-        box-shadow: 0 10px 30px rgba(212, 175, 125, 0.5);
+    /* Hover auf Seite: dieses heller, andere dunkler */
+    .social-reels:has(.social-reel-item[data-role="side"]:hover) .social-reel-item[data-role="center"] .social-reel-overlay {
+        background: rgba(0, 0, 0, 0.55);
     }
 
-    .social-video-overlay {
-        transition: background 0.4s ease;
+    .social-reel-item[data-role="side"]:hover .social-reel-overlay {
+        background: linear-gradient(180deg, transparent 70%, rgba(0,0,0,0.4) 100%);
     }
 
-    .social-play-btn {
-        width: 80px;
-        height: 80px;
-        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease;
+    .social-reel-item[data-role="side"]:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
     }
 
-    .social-play-btn svg {
-        width: 32px;
-        height: 32px;
-    }
-
-    .social-video-instagram {
-        padding: 12px 20px;
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-    }
-
-    .social-photos {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 25px;
-    }
-
-    .social-photo-tablet {
-        display: block;
-    }
-
-    .social-photo-desktop {
-        display: block;
-    }
-
-    .social-photo-item {
-        border-radius: 20px;
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-    }
-
-    .social-photo-item:hover {
-        transform: scale(1.05) translateY(-8px);
-        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
-        z-index: 10;
-    }
-
-    .social-photo-item:hover .social-photo-overlay {
-        opacity: 1;
-    }
-
-    .social-photo-overlay {
-        background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.5) 100%);
-    }
-
-    .social-ig-icon {
-        width: 36px;
-        height: 36px;
-        filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    .social-reel-ig {
+        width: 28px;
+        height: 28px;
     }
 
     .testimonials-section {

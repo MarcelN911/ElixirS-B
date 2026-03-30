@@ -59,12 +59,12 @@ function updateQuote(row) {
 function collectReviews(rows) {
     const reviews = [];
     for (let index = 0; index < rows.length; index++) {
-        if (rows[index].c[7] && rows[index].c[7].v) {
+        if (rows[index].c[4] && rows[index].c[4].v) {
             reviews.push({
-                stars: rows[index].c[6] ? rows[index].c[6].v : 5,
-                text: rows[index].c[7].v,
-                name: rows[index].c[8] ? rows[index].c[8].v : 'Anónimo',
-                city: rows[index].c[9] ? rows[index].c[9].v : ''
+                stars: rows[index].c[3] ? rows[index].c[3].v : 5,
+                text: rows[index].c[4].v,
+                name: rows[index].c[5] ? rows[index].c[5].v : 'Anónimo',
+                city: rows[index].c[6] ? rows[index].c[6].v : ''
             });
         }
     }
@@ -74,8 +74,8 @@ function collectReviews(rows) {
 function loadReviews(reviews) {
     const container = document.getElementById('testimonialsCarousel');
     container.innerHTML = '';
-    for (let i = 0; i < reviews.length; i++) {
-        createReviewTemplate(reviews[i]);
+    for (let index = 0; index < reviews.length; index++) {
+        createReviewTemplate(reviews[index]);
     }
 }
 
@@ -130,3 +130,46 @@ function setupReviewsNav() {
 
 setupReviewsNav();
 fetchContent();
+
+function setupReels() {
+    const reels = document.getElementById('socialReels');
+    if (!reels) return;
+
+    const centerItem = reels.querySelector('[data-role="center"]');
+    const centerVideo = centerItem ? centerItem.querySelector('.social-reel-video') : null;
+    const sideItems = reels.querySelectorAll('[data-role="side"]');
+
+    if (centerVideo) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && window.innerWidth >= 900) {
+                    centerVideo.play();
+                } else {
+                    centerVideo.pause();
+                }
+            });
+        }, { threshold: 0.5 });
+        observer.observe(centerItem);
+    }
+
+    if (window.innerWidth < 600) {
+        setupMobileCarousel(reels);
+        return;
+    }
+
+    // Desktop: Hover-Logik für Seiten-Videos
+    sideItems.forEach(item => {
+        const video = item.querySelector('.social-reel-video');
+        item.addEventListener('mouseenter', () => {
+            if (window.innerWidth < 900) return;
+            video.play();
+            if (centerVideo) centerVideo.pause();
+        });
+        item.addEventListener('mouseleave', () => {
+            if (window.innerWidth < 900) return;
+            video.pause();
+            video.currentTime = 0;
+            if (centerVideo && window.innerWidth >= 900) centerVideo.play();
+        });
+    });
+}

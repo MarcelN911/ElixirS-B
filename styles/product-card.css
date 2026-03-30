@@ -94,6 +94,13 @@
     flex-direction: column;
 }
 
+.product-card-name-wrap {
+    min-height: 2.5em;
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
 .product-card-name {
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -103,7 +110,6 @@
     font-size: 16px;
     font-weight: 500;
     color: white;
-    margin-bottom: 4px;
 }
 
 .product-card-brand {
@@ -150,17 +156,26 @@
     letter-spacing: 0.5px;
     padding: 4px 9px;
     border-radius: 3px;
-    cursor: pointer;
-    transition: border-color 0.25s ease, color 0.25s ease, background-color 0.25s ease;
-}
-
-.size-pill.active {
-    border-color: var(--gold);
-    color: var(--gold);
 }
 
 .product-card-price {
     margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.price-sale-badge {
+    align-self: flex-start;
+    background-color: rgba(180, 60, 60, 0.12);
+    color: rgba(220, 90, 90, 0.95);
+    border: 1px solid rgba(180, 60, 60, 0.3);
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 3px;
 }
 
 .product-card-size {
@@ -183,6 +198,11 @@
     color: var(--gold);
 }
 
+.product-link {
+    text-decoration: none;
+    color: inherit;
+}
+
 @media (min-width: 600px) {
     .product-card-info {
         padding: 18px;
@@ -203,12 +223,7 @@
 }
 
 @media (min-width: 900px) {
-    .product-card {
-        transition: transform 0.3s ease, border-color 0.3s ease;
-    }
-
     .product-card:hover {
-        transform: translateY(-8px);
         border-color: rgba(212, 175, 125, 0.4);
     }
 
@@ -250,8 +265,4 @@
         font-size: 18px;
     }
 
-    .size-pill:hover {
-        border-color: var(--gold);
-        color: var(--gold);
-    }
 }

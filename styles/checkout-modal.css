@@ -1,0 +1,244 @@
+/* ============================================
+   CHECKOUT MODAL — Elixir S&B
+   WhatsApp Checkout Form Overlay
+   ============================================ */
+
+.checkout-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: flex;
+    align-items: flex-end; /* slides up from bottom on mobile */
+    justify-content: center;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.checkout-modal.active {
+    pointer-events: all;
+    opacity: 1;
+}
+
+/* ---- Overlay ---- */
+
+.checkout-modal-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.78);
+    backdrop-filter: blur(4px);
+}
+
+/* ---- Card ---- */
+
+.checkout-modal-card {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 480px;
+    background: rgb(21, 25, 50);
+    border: 1px solid rgba(212, 175, 125, 0.2);
+    border-top: 3px solid rgb(212, 175, 125);
+    border-radius: 16px 16px 0 0;
+    padding: 32px 28px 40px;
+    overflow-y: auto;
+    transform: translateY(40px);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    scrollbar-width: none;
+}
+
+.checkout-modal-card::-webkit-scrollbar {
+    display: none;
+}
+
+.checkout-modal.active .checkout-modal-card {
+    transform: translateY(0);
+}
+
+/* ---- Close Button ---- */
+
+.checkout-modal-close {
+    position: absolute;
+    top: 18px;
+    right: 22px;
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 28px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 4px 8px;
+    transition: color 0.2s;
+}
+
+.checkout-modal-close:hover {
+    color: white;
+}
+
+/* ---- Header ---- */
+
+.checkout-modal-header {
+    margin-bottom: 24px;
+    padding-right: 32px;
+}
+
+.checkout-modal-eyebrow {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    color: rgb(212, 175, 125);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.checkout-modal-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: white;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+}
+
+.checkout-modal-subtitle {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.45);
+}
+
+/* ---- Notice Box ---- */
+
+.checkout-notice {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(212, 175, 125, 0.12);
+    border-left: 3px solid rgba(212, 175, 125, 0.5);
+    padding: 14px 16px;
+    margin-bottom: 28px;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.checkout-notice p {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.55;
+}
+
+.checkout-notice strong {
+    color: rgba(255, 255, 255, 0.82);
+}
+
+/* ---- Form ---- */
+
+.checkout-form {
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+}
+
+.checkout-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.checkout-field label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    color: rgb(212, 175, 125);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.checkout-field input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+    padding: 10px 0;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+}
+
+.checkout-field input::placeholder {
+    color: rgba(255, 255, 255, 0.22);
+    font-size: 13px;
+}
+
+.checkout-field input:focus {
+    border-bottom-color: rgb(212, 175, 125);
+}
+
+/* ---- Error ---- */
+
+.checkout-error {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    color: #ff7070;
+    min-height: 16px;
+    margin-top: -14px;
+}
+
+.checkout-optional {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.35);
+    font-weight: 300;
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+/* ---- Submit Button ---- */
+
+.checkout-submit-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    background-color: #25D366;
+    color: white;
+    border: none;
+    padding: 16px 24px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 6px;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.checkout-submit-btn:hover {
+    background-color: #1fb957;
+}
+
+.checkout-submit-btn:active {
+    transform: scale(0.98);
+}
+
+.checkout-submit-btn img {
+    width: 20px;
+    height: 20px;
+}
+
+/* ---- Responsive ---- */
+
+@media (min-width: 600px) {
+    .checkout-modal {
+        align-items: center;
+    }
+
+    .checkout-modal-card {
+        border-radius: 16px;
+        transform: translateY(20px);
+    }
+}
