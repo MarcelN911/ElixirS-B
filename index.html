@@ -167,7 +167,7 @@
             <div class="social-header anim-fade-up">
                 <div class="social-title-group">
                     <img src="./img/instagram_white.svg" alt="Instagram" class="social-icon-title">
-                    <h2 class="social-title">@elixirsb__</h2>
+                    <h2 class="social-title">ElixirS&B</h2>
                 </div>
                 <a href="https://www.instagram.com/elixirsb__/" target="_blank" class="social-follow-btn">
                     Seguir en Instagram
@@ -175,19 +175,19 @@
             </div>
             <div class="social-reels" id="socialReels">
                 <div class="social-reel-item" data-role="side">
-                    <video src="./video/placeholder_video.mp4" muted loop playsinline class="social-reel-video"></video>
+                    <video src="./video/video3.mp4" muted loop playsinline class="social-reel-video"></video>
                     <div class="social-reel-overlay">
                         <img src="./img/instagram_white.svg" alt="Instagram" class="social-reel-ig">
                     </div>
                 </div>
                 <div class="social-reel-item" data-role="center">
-                    <video src="./video/placeholder_video.mp4" muted loop playsinline class="social-reel-video"></video>
+                    <video src="./video/video1.mp4" muted loop playsinline class="social-reel-video"></video>
                     <div class="social-reel-overlay">
                         <img src="./img/instagram_white.svg" alt="Instagram" class="social-reel-ig">
                     </div>
                 </div>
                 <div class="social-reel-item" data-role="side">
-                    <video src="./video/placeholder_video.mp4" muted loop playsinline class="social-reel-video"></video>
+                    <video src="./video/video2.mp4" muted loop playsinline class="social-reel-video"></video>
                     <div class="social-reel-overlay">
                         <img src="./img/instagram_white.svg" alt="Instagram" class="social-reel-ig">
                     </div>
@@ -206,7 +206,7 @@
                         <span class="star">★</span>
                         <span class="star">★</span>
                     </div>
-                    <p class="testimonials-subtitle">+500 clientes satisfechos en Colombia</p>
+                    <p class="testimonials-subtitle">+100 clientes satisfechos en Colombia</p>
                 </div>
                 <div class="testimonials-nav">
                     <button class="testimonials-nav-btn" id="reviewScrollLeft" aria-label="Anterior">
@@ -259,7 +259,7 @@
                 <span class="cart-panel-total" id="cartFinalTotal">$0 COP</span>
             </div>
             <button class="cart-panel-checkout" id="cartCheckoutBtn" disabled>Finalizar Compra</button>
-            <p class="cart-panel-note">Solo envíos dentro de Medellín</p>
+            <p class="cart-panel-note">Serán redirigidos automáticamente a WhatsApp</p>
         </div>
     </div>
     <div class="cart-overlay" id="cartOverlay"></div>
@@ -334,12 +334,11 @@
     </footer>
 
     <div class="whatsapp-float">
-        <a href="https://wa.me/57XXXXXXXXXXX" target="_blank" aria-label="Contactar por WhatsApp">
+        <a href="#" onclick="openWhatsAppContact(); return false;" aria-label="Contactar por WhatsApp">
             <img src="./img/whatsapp_white.svg" alt="WhatsApp">
         </a>
     </div>
 
-    <!-- Checkout Modal -->
     <div class="checkout-modal" id="checkoutModal">
         <div class="checkout-modal-overlay" id="checkoutModalOverlay"></div>
         <div class="checkout-modal-card">
@@ -350,7 +349,6 @@
                 <p class="checkout-modal-subtitle">Un paso más y tu fragancia estará en camino ✨</p>
             </div>
             <div class="checkout-notice">
-                <p>📍 <strong>Solo realizamos envíos dentro de Medellín.</strong></p>
                 <p>🔒 Tus datos solo se usan para generar el mensaje de WhatsApp y <strong>no se almacenan</strong>.</p>
             </div>
             <form class="checkout-form" id="checkoutForm" novalidate>
@@ -393,12 +391,6 @@
         </div>
     </div>
 
-    <div class="video-modal" id="videoModal">
-        <div class="video-modal-overlay" id="videoModalOverlay"></div>
-        <div class="video-modal-content">
-            <button class="video-modal-close" id="videoModalClose">&times;</button>
-            <video class="video-modal-player" id="videoModalPlayer" controls playsinline></video>
-        </div>
-    </div>
+
 </body>
 </html>

@@ -1,6 +1,12 @@
 const dbUrl = `https://docs.google.com/spreadsheets/d/1FiOCY_GIkpCCZVaZplXQtQzwLORYQOws/gviz/tq?tqx=out:json&gid=438421994&headers=1`;
 const productsUrl = `https://docs.google.com/spreadsheets/d/1FiOCY_GIkpCCZVaZplXQtQzwLORYQOws/gviz/tq?tqx=out:json&gid=664120326#gid=664120326&headers=1`;
 
+function openWhatsAppContact() {
+    const phone = '573003150038';
+    const message = encodeURIComponent('Hola 👋, quiero información y asesoría sobre sus perfumes.');
+    window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
+}
+
 let data = [];
 
 let showProducts = 0;
@@ -59,12 +65,14 @@ function openBasket() {
     document.getElementById('cartPanel').classList.add('active');
     document.getElementById('cartOverlay').classList.add('active');
     document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
 }
 
 function closeBasket() {
     document.getElementById('cartPanel').classList.remove('active');
     document.getElementById('cartOverlay').classList.remove('active');
     document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
 }
 
 const cartButton = document.getElementById('cartButton');

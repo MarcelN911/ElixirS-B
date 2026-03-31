@@ -134,42 +134,228 @@ fetchContent();
 function setupReels() {
     const reels = document.getElementById('socialReels');
     if (!reels) return;
+    setupMobileCarousel(reels);
+}
 
-    const centerItem = reels.querySelector('[data-role="center"]');
-    const centerVideo = centerItem ? centerItem.querySelector('.social-reel-video') : null;
-    const sideItems = reels.querySelectorAll('[data-role="side"]');
+function setupMobileCarousel(reels) {
+    const items = [...reels.querySelectorAll('.social-reel-item')];
+    const N = items.length;
+    if (N < 3) return;
 
-    if (centerVideo) {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && window.innerWidth >= 900) {
-                    centerVideo.play();
-                } else {
-                    centerVideo.pause();
-                }
-            });
-        }, { threshold: 0.5 });
-        observer.observe(centerItem);
+    // centerIndex: welches item gerade in der Mitte ist
+    // Start bei 1, damit items[0]=links, items[1]=mitte, items[2]=rechts (wie vorher)
+    let centerIndex = 1;
+    let isAnimating = false;
+    let centerHasSound = false;
+    let preventNextClick = false;
+
+    const T = {
+        offLeft:  'translateX(-200%) scale(0.85)',
+        left:     'translateX(-100%) scale(0.85)',
+        center:   'translateX(0) scale(1)',
+        right:    'translateX(100%) scale(0.85)',
+        offRight: 'translateX(200%) scale(0.85)',
+        hidden:   'translateX(400%) scale(0.85)',  // weit außerhalb, unsichtbar
+    };
+
+    // Hilfs-Funktion: Index mit Wrap-Around berechnen
+    function idx(offset) {
+        return ((centerIndex + offset) % N + N) % N;
     }
 
-    if (window.innerWidth < 600) {
-        setupMobileCarousel(reels);
-        return;
+    function setTransitions(enabled, targetItems) {
+        const val = enabled
+            ? 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease'
+            : 'none';
+        (targetItems || items).forEach(item => item.style.transition = val);
     }
 
-    // Desktop: Hover-Logik für Seiten-Videos
-    sideItems.forEach(item => {
-        const video = item.querySelector('.social-reel-video');
-        item.addEventListener('mouseenter', () => {
-            if (window.innerWidth < 900) return;
-            video.play();
-            if (centerVideo) centerVideo.pause();
+    function updateOverlays() {
+        items.forEach((item, i) => {
+            item.classList.toggle('is-center', i === centerIndex);
+            item.classList.toggle('is-side',   i !== centerIndex);
         });
-        item.addEventListener('mouseleave', () => {
-            if (window.innerWidth < 900) return;
-            video.pause();
-            video.currentTime = 0;
-            if (centerVideo && window.innerWidth >= 900) centerVideo.play();
+    }
+
+    function centerVideo() {
+        return items[centerIndex].querySelector('.social-reel-video');
+    }
+
+    function rotateRight(withSound) {
+        if (isAnimating) return;
+        isAnimating = true;
+
+        const iLeft     = idx(-1);
+        const iCenter   = centerIndex;
+        const iRight    = idx(1);
+        const iNewRight = idx(2);
+
+        const oldLeft   = items[iLeft];
+        const oldCenter = items[iCenter];
+        const oldRight  = items[iRight];
+        const newRight  = items[iNewRight];
+
+        // Bei N>3: neues rechtes Item aus dem Verborgenen holen (instant, kein Transition)
+        if (iNewRight !== iLeft) {
+            setTransitions(false, [newRight]);
+            newRight.style.transform = T.offRight;
+            newRight.getBoundingClientRect(); // reflow erzwingen
+        }
+
+        setTransitions(true);
+        oldLeft.style.transform   = T.offLeft;
+        oldCenter.style.transform = T.left;
+        oldRight.style.transform  = T.center;
+        if (iNewRight !== iLeft) {
+            newRight.style.transform = T.right;
+        }
+
+        oldCenter.querySelector('.social-reel-video').pause();
+        const newCenterVideo = oldRight.querySelector('.social-reel-video');
+        newCenterVideo.currentTime = 0;
+        newCenterVideo.muted = !withSound;
+        newCenterVideo.play().catch(() => {});
+        centerHasSound = withSound;
+
+        oldRight.classList.replace('is-side', 'is-center');
+        oldCenter.classList.replace('is-center', 'is-side');
+
+        setTimeout(() => {
+            setTransitions(false);
+            // Bei N=3: teleportieren (gleiche Item wird rechts wieder gebraucht)
+            // Bei N>3: verstecken
+            oldLeft.style.transform = iNewRight === iLeft ? T.right : T.hidden;
+            centerIndex = idx(1);
+            updateOverlays();
+            isAnimating = false;
+            requestAnimationFrame(() => requestAnimationFrame(() => setTransitions(true)));
+        }, 420);
+    }
+
+    function rotateLeft(withSound) {
+        if (isAnimating) return;
+        isAnimating = true;
+
+        const iLeft    = idx(-1);
+        const iCenter  = centerIndex;
+        const iRight   = idx(1);
+        const iNewLeft = idx(-2);
+
+        const oldLeft   = items[iLeft];
+        const oldCenter = items[iCenter];
+        const oldRight  = items[iRight];
+        const newLeft   = items[iNewLeft];
+
+        // Bei N>3: neues linkes Item aus dem Verborgenen holen (instant, kein Transition)
+        if (iNewLeft !== iRight) {
+            setTransitions(false, [newLeft]);
+            newLeft.style.transform = T.offLeft;
+            newLeft.getBoundingClientRect(); // reflow erzwingen
+        }
+
+        setTransitions(true);
+        oldLeft.style.transform   = T.center;
+        oldCenter.style.transform = T.right;
+        oldRight.style.transform  = T.offRight;
+        if (iNewLeft !== iRight) {
+            newLeft.style.transform = T.left;
+        }
+
+        oldCenter.querySelector('.social-reel-video').pause();
+        const newCenterVideo = oldLeft.querySelector('.social-reel-video');
+        newCenterVideo.currentTime = 0;
+        newCenterVideo.muted = !withSound;
+        newCenterVideo.play().catch(() => {});
+        centerHasSound = withSound;
+
+        oldLeft.classList.replace('is-side', 'is-center');
+        oldCenter.classList.replace('is-center', 'is-side');
+
+        setTimeout(() => {
+            setTransitions(false);
+            oldRight.style.transform = iNewLeft === iRight ? T.left : T.hidden;
+            centerIndex = idx(-1);
+            updateOverlays();
+            isAnimating = false;
+            requestAnimationFrame(() => requestAnimationFrame(() => setTransitions(true)));
+        }, 420);
+    }
+
+    // Klick-Handler für alle Items
+    items.forEach(item => {
+        item.addEventListener('click', () => {
+            if (preventNextClick) { preventNextClick = false; return; }
+            if (item === items[centerIndex]) {
+                // Mitte: Ton an/aus
+                centerHasSound = !centerHasSound;
+                const cv = centerVideo();
+                cv.muted = !centerHasSound;
+                if (centerHasSound && cv.paused) cv.play().catch(() => {});
+            } else if (item === items[idx(1)]) {
+                rotateRight(true);
+            } else if (item === items[idx(-1)]) {
+                rotateLeft(true);
+            }
+            // Klicks auf versteckte Items werden ignoriert
         });
     });
+
+    // Swipe-Unterstützung (kein Ton beim Wischen)
+    let touchStartX = 0;
+    reels.addEventListener('touchstart', e => {
+        touchStartX = e.touches[0].clientX;
+    }, { passive: true });
+
+    reels.addEventListener('touchend', e => {
+        const dx = e.changedTouches[0].clientX - touchStartX;
+        if (Math.abs(dx) > 50) {
+            preventNextClick = true;
+            if (dx < 0) rotateRight(false);
+            else rotateLeft(false);
+        }
+    }, { passive: true });
+
+    // Autoplay wenn section sichtbar wird
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            const cv = centerVideo();
+            if (entry.isIntersecting) {
+                cv.muted = true;
+                centerHasSound = false;
+                cv.play().catch(() => {});
+            } else {
+                items.forEach(item => item.querySelector('.social-reel-video').pause());
+            }
+        });
+    }, { threshold: 0.4 });
+
+    observer.observe(reels);
+
+    // Pfeil-Buttons erstellen (CSS steuert Sichtbarkeit: nur ab 900px)
+    const prevBtn = document.createElement('button');
+    prevBtn.className = 'social-carousel-btn social-carousel-prev';
+    prevBtn.setAttribute('aria-label', 'Anterior');
+    prevBtn.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>`;
+
+    const nextBtn = document.createElement('button');
+    nextBtn.className = 'social-carousel-btn social-carousel-next';
+    nextBtn.setAttribute('aria-label', 'Siguiente');
+    nextBtn.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>`;
+
+    reels.appendChild(prevBtn);
+    reels.appendChild(nextBtn);
+
+    prevBtn.addEventListener('click', () => rotateLeft(false));
+    nextBtn.addEventListener('click', () => rotateRight(false));
+
+    // Initialisierung: alle Items verstecken, dann die 3 sichtbaren positionieren
+    setTransitions(false);
+    items.forEach(item => { item.style.transform = T.hidden; });
+    items[idx(-1)].style.transform = T.left;
+    items[centerIndex].style.transform = T.center;
+    items[idx(1)].style.transform  = T.right;
+    updateOverlays();
+    requestAnimationFrame(() => requestAnimationFrame(() => setTransitions(true)));
 }
+
+setupReels();

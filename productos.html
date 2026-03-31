@@ -170,7 +170,7 @@
                 <span class="cart-panel-total" id="cartFinalTotal">$0 COP</span>
             </div>
             <button class="cart-panel-checkout" id="cartCheckoutBtn" disabled>Finalizar Compra</button>
-            <p class="cart-panel-note">Solo envíos dentro de Medellín</p>
+            <p class="cart-panel-note">Serán redirigidos automáticamente a WhatsApp</p>
         </div>
     </div>
     <div class="cart-overlay" id="cartOverlay"></div>
@@ -245,7 +245,7 @@
     </footer>
     
     <div class="whatsapp-float">
-        <a href="https://wa.me/57XXXXXXXXXXX" target="_blank" aria-label="Contactar por WhatsApp">
+        <a href="#" onclick="openWhatsAppContact(); return false;" aria-label="Contactar por WhatsApp">
             <img src="./img/whatsapp_white.svg" alt="WhatsApp">
         </a>
     </div>
@@ -261,7 +261,6 @@
                 <p class="checkout-modal-subtitle">Un paso más y tu fragancia estará en camino ✨</p>
             </div>
             <div class="checkout-notice">
-                <p>📍 <strong>Solo realizamos envíos dentro de Medellín.</strong></p>
                 <p>🔒 Tus datos solo se usan para generar el mensaje de WhatsApp y <strong>no se almacenan</strong>.</p>
             </div>
             <form class="checkout-form" id="checkoutForm" novalidate>

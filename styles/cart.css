@@ -56,6 +56,7 @@
 .cart-panel-content {
     flex: 1;
     overflow-y: auto;
+    overscroll-behavior: contain;
     padding: 25px;
 }
 
@@ -608,6 +609,12 @@
 }
 
 /* ---- Responsive: Cart ---- */
+
+@media (max-width: 599px) {
+    .cart-panel {
+        max-width: 100%;
+    }
+}
 
 @media (min-width: 900px) {
     .cart-bar {
