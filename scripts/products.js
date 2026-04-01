@@ -1,52 +1,93 @@
+// ============================================
+// PRODUCTS.JS — Elixir S&B
+// Products grid page: fetch products,
+// render cards, filter by category,
+// search by name/brand, infinite scroll
+// ============================================
+
+// ── Init ──────────────────────────────────────
+
+/**
+ * Entry point: fetches all products and renders the initial grid.
+ * Also checks if a search term was passed in the URL from the home page.
+ */
 async function fetchProducts() {
-    const db = await fetch(productsUrl);
+    const db      = await fetch(productsUrl);
     const content = await db.text();
     json = JSON.parse(content.substring(47).slice(0, -2));
     data = json.table.rows;
     createProductCards(data);
     checkSearchOnLoad();
 }
+
 fetchProducts();
 
+/**
+ * Reads the `?search=` URL parameter set by the home page search bar.
+ * If present, pre-fills the input field and runs the search automatically.
+ */
 function checkSearchOnLoad() {
-    const params = new URLSearchParams(window.location.search);
-    const searchValue = params.get('search');
-    if (searchValue) {
-        document.getElementById('searchInput').value = searchValue;
-        searchProducts();
-        searchClear.classList.add('visible');
+    const searchValue = new URLSearchParams(window.location.search).get('search');
+
+    if (!searchValue) {
+        return;
     }
+
+    document.getElementById('searchInput').value = searchValue;
+    searchProducts();
+    searchClear.classList.add('visible');
 }
 
+// ── Render ────────────────────────────────────
+
+/**
+ * Renders the next batch of product cards into the grid.
+ * Skips products marked as inactive (column 9 = 'No').
+ * Pagination is managed via the shared `showProducts` counter.
+ */
 function createProductCards(data) {
-    for (let index = showProducts; index < showProducts + productsPerLoad && index < data.length; index++) {
-        if (data[index].c[9].v === 'No') continue;
-        const product = createProductData(data, index);
-        createProductTemplate(product);
-    } showProducts = showProducts + productsPerLoad;
-        startScrollObserver();
-        animateCards();
+    const end = Math.min(showProducts + productsPerLoad, data.length);
+    for (let i = showProducts; i < end; i++) {
+        if (data[i].c[9].v === 'No') {
+            continue;
+        }
+        createProductTemplate(createProductData(data, i));
+    }
+    showProducts += productsPerLoad;
+    startScrollObserver();
+    animateCards();
 }
 
+/**
+ * Clears the grid and resets all state before applying a filter or search.
+ * Also resets the active filter tab and clears the search input.
+ */
 function resetProductView(category) {
-    const container = document.getElementById('productsGrid');
-    container.innerHTML = '';
+    document.getElementById('productsGrid').innerHTML = '';
     showProducts = 0;
     switchFilterTab(category);
     document.getElementById('searchInput').value = '';
     document.getElementById('searchClear').classList.remove('visible');
 }
 
+/** Renders all active products that belong to the given category. */
 function showCategoryProducts(category) {
-    for (let index = 0; index < data.length; index++) {
-        if (data[index].c[9].v === 'No') continue;
-        if (data[index].c[8].v === category) {
-            const product = createProductData(data, index);
-            createProductTemplate(product);
+    for (let i = 0; i < data.length; i++) {
+        if (data[i].c[9].v === 'No') {
+            continue;
+        }
+        if (data[i].c[8].v === category) {
+            createProductTemplate(createProductData(data, i));
         }
     }
 }
 
+// ── Filter ────────────────────────────────────
+
+/**
+ * Filters the product grid by category.
+ * Passing 'Todos' shows all products with normal pagination.
+ */
 function filterProducts(category) {
     resetProductView(category);
     if (category === 'Todos') {
@@ -57,27 +98,52 @@ function filterProducts(category) {
     animateCards();
 }
 
-function isProductMatch(index, searchInput) {
-    const productName = data[index].c[1].v.toLowerCase();
-    const brandName = data[index].c[2].v.toLowerCase();
-    return productName.includes(searchInput) || brandName.includes(searchInput);
+/**
+ * Highlights the selected filter tab and deactivates all others.
+ * Matches tabs by their visible text content.
+ */
+function switchFilterTab(category) {
+    document.querySelectorAll('.filter-tab').forEach(function(tab) {
+        if (tab.textContent === category) {
+            tab.classList.add('active');
+        } else {
+            tab.classList.remove('active');
+        }
+    });
 }
 
+// ── Search ────────────────────────────────────
+
+/** Returns true if a product's name or brand contains the search term. */
+function isProductMatch(index, searchInput) {
+    const name  = data[index].c[1].v.toLowerCase();
+    const brand = data[index].c[2].v.toLowerCase();
+    return name.includes(searchInput) || brand.includes(searchInput);
+}
+
+/**
+ * Clears the grid and renders every product that matches the search term.
+ * Returns the total number of results found.
+ */
 function findMatchingProducts(searchInput) {
-    const container = document.getElementById('productsGrid');
-    container.innerHTML = '';
-    let resultsFound = 0;
-    for (let index = 0; index < data.length; index++) {
-        if (data[index].c[9].v === 'No') continue;
-        if (isProductMatch(index, searchInput)) {
-            const product = createProductData(data, index);
-            createProductTemplate(product);
-            resultsFound = resultsFound + 1;
+    document.getElementById('productsGrid').innerHTML = '';
+    let count = 0;
+    for (let i = 0; i < data.length; i++) {
+        if (data[i].c[9].v === 'No') {
+            continue;
+        }
+        if (isProductMatch(i, searchInput)) {
+            createProductTemplate(createProductData(data, i));
+            count++;
         }
     }
-    return resultsFound;
+    return count;
 }
 
+/**
+ * Validates the search input before running a search.
+ * Shows a hint and returns false if the input is too short or empty.
+ */
 function validateSearch(searchInput) {
     if (searchInput === '') {
         filterProducts('Todos');
@@ -90,30 +156,36 @@ function validateSearch(searchInput) {
     return true;
 }
 
+/** Runs the full search: validate → find matches → show results or empty state. */
 function searchProducts() {
-    const searchInput = document.getElementById('searchInput').value.toLowerCase();
+    const input = document.getElementById('searchInput').value.toLowerCase();
     hideSearchHint();
     switchFilterTab('Todos');
-    if (!validateSearch(searchInput)) {
+
+    if (!validateSearch(input)) {
         return;
     }
-    const resultsFound = findMatchingProducts(searchInput);
-    if (resultsFound === 0) {
-        showNoResults(searchInput);
+
+    const count = findMatchingProducts(input);
+    if (count === 0) {
+        showNoResults(input);
     }
     animateCards();
 }
 
+// ── Search Hints ──────────────────────────────
+
+/** Displays a hint message below the search form. Removes any previous hint first. */
 function showSearchHint(message) {
     hideSearchHint();
-    const form = document.getElementById('searchForm');
-    const hint = document.createElement('p');
-    hint.className = 'search-hint';
-    hint.id = 'searchHint';
+    const hint       = document.createElement('p');
+    hint.className   = 'search-hint';
+    hint.id          = 'searchHint';
     hint.textContent = message;
-    form.parentNode.appendChild(hint);
+    document.getElementById('searchForm').parentNode.appendChild(hint);
 }
 
+/** Removes the search hint from the DOM if it exists. */
 function hideSearchHint() {
     const hint = document.getElementById('searchHint');
     if (hint) {
@@ -121,15 +193,17 @@ function hideSearchHint() {
     }
 }
 
+/** Shows a "no results" message inside the products grid container. */
 function showNoResults(searchInput) {
-    const container = document.getElementById('productsGrid');
-    container.innerHTML = `
+    document.getElementById('productsGrid').innerHTML = `
         <div class="no-results">
             <p class="no-results-title">No encontramos "${searchInput}"</p>
             <p class="no-results-text">Intenta con otro nombre o marca</p>
         </div>
     `;
 }
+
+// ── Event Listeners ───────────────────────────
 
 const searchForm = document.getElementById('searchForm');
 if (searchForm) {
@@ -143,6 +217,7 @@ const searchInput = document.getElementById('searchInput');
 const searchClear = document.getElementById('searchClear');
 
 if (searchInput && searchClear) {
+    // Show/hide the clear (×) button based on whether the input has text
     searchInput.addEventListener('input', function() {
         if (searchInput.value.length > 0) {
             searchClear.classList.add('visible');
@@ -151,22 +226,11 @@ if (searchInput && searchClear) {
         }
     });
 
+    // Clicking the clear button resets the search and shows all products
     searchClear.addEventListener('click', function() {
         searchInput.value = '';
         searchClear.classList.remove('visible');
         hideSearchHint();
         filterProducts('Todos');
-    });
-}
-
-
-function switchFilterTab(category) {
-    const tabs = document.querySelectorAll('.filter-tab');
-    tabs.forEach(tab => {
-        if (tab.textContent === category) {
-            tab.classList.add('active');
-        } else {
-            tab.classList.remove('active');
-        }
     });
 }

@@ -1,3 +1,45 @@
+// ============================================
+// HOME.JS — Elixir S&B
+// Home page logic:
+// hero search bar, bestsellers carousel,
+// testimonials carousel, video reels carousel,
+// content fetch (quote + reviews)
+// ============================================
+
+// ── Hero Search ───────────────────────────────
+
+/**
+ * Reads the search input on the home page and redirects to the products page.
+ * The search term is passed as a URL parameter (?search=...) so that
+ * products.js can pick it up and run the search automatically.
+ */
+function searchProductsMain() {
+    const input = document.getElementById('searchInputMain').value.toLowerCase();
+    if (input.length < 3) {
+        showSearchHint('Ingresa al menos 3 letras para buscar');
+        return;
+    }
+    location.replace('productos.html?search=' + encodeURIComponent(input));
+}
+
+/** Appends a hint message below the search form. Removes any previous hint first. */
+function showSearchHint(message) {
+    hideSearchHint();
+    const hint     = document.createElement('p');
+    hint.className = 'search-hint';
+    hint.id        = 'searchHint';
+    hint.textContent = message;
+    document.getElementById('searchForm').parentNode.appendChild(hint);
+}
+
+/** Removes the search hint from the DOM if it exists. */
+function hideSearchHint() {
+    const hint = document.getElementById('searchHint');
+    if (hint) {
+        hint.remove();
+    }
+}
+
 const searchForm = document.getElementById('searchForm');
 if (searchForm) {
     searchForm.addEventListener('submit', function(event) {
@@ -6,170 +48,185 @@ if (searchForm) {
     });
 }
 
-function searchProductsMain() {
-    const searchInputMain = document.getElementById('searchInputMain').value.toLowerCase();
-    if (searchInputMain.length < 3) {
-        showSearchHint('Ingresa al menos 3 letras para buscar');
-        return;
-    }
-    location.replace("productos.html?search=" + encodeURIComponent(searchInputMain));
-}
+// ── Bestsellers Carousel ──────────────────────
 
-function showSearchHint(message) {
-    hideSearchHint();
-    const form = document.getElementById('searchForm');
-    const hint = document.createElement('p');
-    hint.className = 'search-hint';
-    hint.id = 'searchHint';
-    hint.textContent = message;
-    form.parentNode.appendChild(hint);
-}
-
-function hideSearchHint() {
-    const hint = document.getElementById('searchHint');
-    if (hint) {
-        hint.remove();
-    }
-}
-
+/**
+ * Fetches products from the spreadsheet and renders only the bestsellers
+ * (column 7 = 'Si') into the bestsellers carousel on the home page.
+ */
 async function fetchBestsellers() {
-    const db = await fetch(productsUrl);
+    const db      = await fetch(productsUrl);
     const content = await db.text();
-
     json = JSON.parse(content.substring(47).slice(0, -2));
     data = json.table.rows;
-    for (let index = 0; index < data.length; index++) {
-        if (data[index].c[7].v === 'No') continue;
-        if (data[index].c[7] && data[index].c[7].v === 'Si') {
-            const product = createProductData(data, index);
-            createBestsellerTemplate(product);
+    for (let i = 0; i < data.length; i++) {
+        if (data[i].c[7] && data[i].c[7].v === 'Si') {
+            createBestsellerTemplate(createProductData(data, i));
         }
     }
 }
 
 fetchBestsellers();
 
-function updateQuote(row) {
-    if (row[0] && row[0].v && row[1] && row[1].v) {
-        document.getElementById('quoteText').textContent = '"' + row[0].v + '"';
-        document.getElementById('quoteAuthor').textContent = '— ' + row[1].v;
-    }
-}
-
-function collectReviews(rows) {
-    const reviews = [];
-    for (let index = 0; index < rows.length; index++) {
-        if (rows[index].c[4] && rows[index].c[4].v) {
-            reviews.push({
-                stars: rows[index].c[3] ? rows[index].c[3].v : 5,
-                text: rows[index].c[4].v,
-                name: rows[index].c[5] ? rows[index].c[5].v : 'Anónimo',
-                city: rows[index].c[6] ? rows[index].c[6].v : ''
-            });
-        }
-    }
-    return reviews;
-}
-
-function loadReviews(reviews) {
-    const container = document.getElementById('testimonialsCarousel');
-    container.innerHTML = '';
-    for (let index = 0; index < reviews.length; index++) {
-        createReviewTemplate(reviews[index]);
-    }
-}
-
-async function fetchContent() {
-    const db = await fetch(dbUrl);
-    const content = await db.text();
-    const json = JSON.parse(content.substring(47).slice(0, -2));
-    const rows = json.table.rows;
-    if (rows.length === 0) return;
-    updateQuote(rows[0].c);
-    const reviews = collectReviews(rows);
-    if (reviews.length > 0) loadReviews(reviews);
-}
-
+/**
+ * Returns how many pixels the bestsellers carousel should scroll per click.
+ * Based on the actual card width so it always scrolls exactly one card.
+ */
 function getScrollAmount(carousel) {
     const card = carousel.querySelector('.product-card');
-    if (!card) return 300;
-    return card.offsetWidth + 25;
+    if (card) {
+        return card.offsetWidth + 25;
+    }
+    return 300;
 }
 
+/** Wires up the left/right scroll buttons for the bestsellers carousel. */
 function setupBestsellersNav() {
     const carousel = document.getElementById('bestsellersCarousel');
-    const btnLeft = document.getElementById('scrollLeft');
+    const btnLeft  = document.getElementById('scrollLeft');
     const btnRight = document.getElementById('scrollRight');
-    btnLeft.addEventListener('click', function() {
-        carousel.scrollBy({ left: -getScrollAmount(carousel), behavior: 'smooth' });
-    });
-    btnRight.addEventListener('click', function() {
-        carousel.scrollBy({ left: getScrollAmount(carousel), behavior: 'smooth' });
-    });
+    btnLeft.addEventListener('click',  () => carousel.scrollBy({ left: -getScrollAmount(carousel), behavior: 'smooth' }));
+    btnRight.addEventListener('click', () => carousel.scrollBy({ left:  getScrollAmount(carousel), behavior: 'smooth' }));
 }
 
 setupBestsellersNav();
 
-function getReviewScrollAmount(carousel) {
-    const card = carousel.querySelector('.testimonial-card');
-    if (!card) return 300;
-    return card.offsetWidth + 25;
+// ── Content Fetch (Quote + Reviews) ──────────
+
+/** Updates the quote section with the text and author from the spreadsheet. */
+function updateQuote(row) {
+    if (row[0] && row[0].v && row[1] && row[1].v) {
+        document.getElementById('quoteText').textContent   = '"' + row[0].v + '"';
+        document.getElementById('quoteAuthor').textContent = '— ' + row[1].v;
+    }
 }
 
+/**
+ * Filters the spreadsheet rows and returns only those that have a review text.
+ * Columns: 3=stars, 4=text, 5=name, 6=city.
+ */
+function collectReviews(rows) {
+    return rows
+        .filter(row => row.c[4] && row.c[4].v)
+        .map(row => ({
+            stars: row.c[3] ? row.c[3].v : 5,
+            text:  row.c[4].v,
+            name:  row.c[5] ? row.c[5].v : 'Anónimo',
+            city:  row.c[6] ? row.c[6].v : ''
+        }));
+}
+
+/** Clears the testimonials carousel and renders each review card. */
+function loadReviews(reviews) {
+    const container     = document.getElementById('testimonialsCarousel');
+    container.innerHTML = '';
+    reviews.forEach(review => createReviewTemplate(review));
+}
+
+/**
+ * Fetches the content tab of the spreadsheet (quotes and reviews)
+ * and updates the home page sections accordingly.
+ */
+async function fetchContent() {
+    const db      = await fetch(dbUrl);
+    const content = await db.text();
+    const json    = JSON.parse(content.substring(47).slice(0, -2));
+    const rows    = json.table.rows;
+    if (rows.length === 0) {
+        return;
+    }
+    updateQuote(rows[0].c);
+    const reviews = collectReviews(rows);
+    if (reviews.length > 0) {
+        loadReviews(reviews);
+    }
+}
+
+// ── Reviews Carousel ──────────────────────────
+
+/**
+ * Returns the scroll amount for the reviews carousel.
+ * Same logic as bestsellers — one card width + gap.
+ */
+function getReviewScrollAmount(carousel) {
+    const card = carousel.querySelector('.testimonial-card');
+    if (card) {
+        return card.offsetWidth + 25;
+    }
+    return 300;
+}
+
+/** Wires up the left/right scroll buttons for the testimonials carousel. */
 function setupReviewsNav() {
     const carousel = document.getElementById('testimonialsCarousel');
-    const btnLeft = document.getElementById('reviewScrollLeft');
+    const btnLeft  = document.getElementById('reviewScrollLeft');
     const btnRight = document.getElementById('reviewScrollRight');
-    btnLeft.addEventListener('click', function() {
-        carousel.scrollBy({ left: -getReviewScrollAmount(carousel), behavior: 'smooth' });
-    });
-    btnRight.addEventListener('click', function() {
-        carousel.scrollBy({ left: getReviewScrollAmount(carousel), behavior: 'smooth' });
-    });
+    btnLeft.addEventListener('click',  () => carousel.scrollBy({ left: -getReviewScrollAmount(carousel), behavior: 'smooth' }));
+    btnRight.addEventListener('click', () => carousel.scrollBy({ left:  getReviewScrollAmount(carousel), behavior: 'smooth' }));
 }
 
 setupReviewsNav();
 fetchContent();
 
+// ── Video Reels Carousel ──────────────────────
+
+/** Entry point for the video carousel — finds the container and starts setup. */
 function setupReels() {
     const reels = document.getElementById('socialReels');
-    if (!reels) return;
+    if (!reels) {
+        return;
+    }
     setupMobileCarousel(reels);
 }
 
+/**
+ * Infinite video carousel that works with 3 or more videos.
+ * Always shows 3 slots: left (side), center, right (side).
+ * A central index tracks which video is currently in the center.
+ * When the carousel rotates, the exiting video is instantly moved
+ * off-screen so it can re-enter from the other side.
+ */
 function setupMobileCarousel(reels) {
     const items = [...reels.querySelectorAll('.social-reel-item')];
-    const N = items.length;
-    if (N < 3) return;
+    const N     = items.length;
+    if (N < 3) {
+        return;
+    }
 
-    // centerIndex: welches item gerade in der Mitte ist
-    // Start bei 1, damit items[0]=links, items[1]=mitte, items[2]=rechts (wie vorher)
-    let centerIndex = 1;
-    let isAnimating = false;
-    let centerHasSound = false;
-    let preventNextClick = false;
+    // --- Shared state ---
+    let centerIndex    = 1;     // which item index is currently in the center slot
+    let isAnimating    = false; // prevents overlapping animations
+    let centerHasSound = false; // tracks whether the center video is unmuted
+    let preventNextClick = false; // prevents a click firing right after a swipe
 
+    // CSS transform values for each slot position
     const T = {
-        offLeft:  'translateX(-200%) scale(0.85)',
-        left:     'translateX(-100%) scale(0.85)',
-        center:   'translateX(0) scale(1)',
-        right:    'translateX(100%) scale(0.85)',
-        offRight: 'translateX(200%) scale(0.85)',
-        hidden:   'translateX(400%) scale(0.85)',  // weit außerhalb, unsichtbar
+        offLeft:  'translateX(-200%) scale(0.85)', // fully off-screen left
+        left:     'translateX(-100%) scale(0.85)', // visible left side
+        center:   'translateX(0)     scale(1)',    // center (full size)
+        right:    'translateX(100%)  scale(0.85)', // visible right side
+        offRight: 'translateX(200%)  scale(0.85)', // fully off-screen right
+        hidden:   'translateX(400%)  scale(0.85)', // hidden far right (for N > 3)
     };
 
-    // Hilfs-Funktion: Index mit Wrap-Around berechnen
+    // ── Inner Helpers ─────────────────────────
+
+    /**
+     * Calculates a wrapped index relative to `centerIndex`.
+     * Example: idx(1) = the item to the right of center.
+     * The modulo formula handles wrapping at both ends of the array.
+     */
     function idx(offset) {
         return ((centerIndex + offset) % N + N) % N;
     }
 
+    /** Enables or disables CSS transitions on items. Pass a subset via `targetItems`. */
     function setTransitions(enabled, targetItems) {
-        const val = enabled
-            ? 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease'
-            : 'none';
+        const val = enabled ? 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease' : 'none';
         (targetItems || items).forEach(item => item.style.transition = val);
     }
 
+    /** Syncs the `is-center` and `is-side` CSS classes to match the current centerIndex. */
     function updateOverlays() {
         items.forEach((item, i) => {
             item.classList.toggle('is-center', i === centerIndex);
@@ -177,116 +234,99 @@ function setupMobileCarousel(reels) {
         });
     }
 
+    /** Returns the <video> element that is currently in the center slot. */
     function centerVideo() {
         return items[centerIndex].querySelector('.social-reel-video');
     }
 
+    /**
+     * Instantly moves an incoming item to an off-screen position before
+     * the transition starts. This is only needed when the item is genuinely
+     * new (not the same item recycled from the other side, which happens with N=3).
+     * `getBoundingClientRect()` forces the browser to apply the position before
+     * we re-enable transitions — without it, the instant move would animate.
+     */
+    function prepareItemFromHidden(item, offScreenPos, isNew) {
+        if (!isNew) return;
+        setTransitions(false, [item]);
+        item.style.transform = offScreenPos;
+        item.getBoundingClientRect(); // force reflow
+    }
+
+    /** Pauses the old center video and starts playing the new center video. */
+    function switchActiveVideo(oldCenterItem, newCenterItem, withSound) {
+        oldCenterItem.querySelector('.social-reel-video').pause();
+        const video        = newCenterItem.querySelector('.social-reel-video');
+        video.currentTime  = 0;
+        video.muted        = !withSound;
+        video.play().catch(() => {});
+        centerHasSound     = withSound;
+    }
+
+    /**
+     * Runs after the rotation animation finishes (420ms timeout).
+     * Moves the exiting item to its new off-screen resting position,
+     * advances the centerIndex, and re-enables transitions.
+     * The double requestAnimationFrame ensures the instant move is painted
+     * by the browser before transitions are switched back on.
+     */
+    function finishRotation(exitItem, newTransform, direction) {
+        setTransitions(false);
+        exitItem.style.transform = newTransform;
+        centerIndex = idx(direction);
+        updateOverlays();
+        isAnimating = false;
+        requestAnimationFrame(() => requestAnimationFrame(() => setTransitions(true)));
+    }
+
+    // ── Rotation ──────────────────────────────
+
+    /** Rotates the carousel to the right: the right item becomes the new center. */
     function rotateRight(withSound) {
         if (isAnimating) return;
         isAnimating = true;
-
-        const iLeft     = idx(-1);
-        const iCenter   = centerIndex;
-        const iRight    = idx(1);
-        const iNewRight = idx(2);
-
-        const oldLeft   = items[iLeft];
-        const oldCenter = items[iCenter];
-        const oldRight  = items[iRight];
-        const newRight  = items[iNewRight];
-
-        // Bei N>3: neues rechtes Item aus dem Verborgenen holen (instant, kein Transition)
-        if (iNewRight !== iLeft) {
-            setTransitions(false, [newRight]);
-            newRight.style.transform = T.offRight;
-            newRight.getBoundingClientRect(); // reflow erzwingen
-        }
-
+        const iLeft = idx(-1), iCenter = centerIndex, iRight = idx(1), iNewRight = idx(2);
+        prepareItemFromHidden(items[iNewRight], T.offRight, iNewRight !== iLeft);
         setTransitions(true);
-        oldLeft.style.transform   = T.offLeft;
-        oldCenter.style.transform = T.left;
-        oldRight.style.transform  = T.center;
-        if (iNewRight !== iLeft) {
-            newRight.style.transform = T.right;
-        }
-
-        oldCenter.querySelector('.social-reel-video').pause();
-        const newCenterVideo = oldRight.querySelector('.social-reel-video');
-        newCenterVideo.currentTime = 0;
-        newCenterVideo.muted = !withSound;
-        newCenterVideo.play().catch(() => {});
-        centerHasSound = withSound;
-
-        oldRight.classList.replace('is-side', 'is-center');
-        oldCenter.classList.replace('is-center', 'is-side');
-
-        setTimeout(() => {
-            setTransitions(false);
-            // Bei N=3: teleportieren (gleiche Item wird rechts wieder gebraucht)
-            // Bei N>3: verstecken
-            oldLeft.style.transform = iNewRight === iLeft ? T.right : T.hidden;
-            centerIndex = idx(1);
-            updateOverlays();
-            isAnimating = false;
-            requestAnimationFrame(() => requestAnimationFrame(() => setTransitions(true)));
-        }, 420);
+        items[iLeft].style.transform   = T.offLeft;
+        items[iCenter].style.transform = T.left;
+        items[iRight].style.transform  = T.center;
+        if (iNewRight !== iLeft) items[iNewRight].style.transform = T.right;
+        switchActiveVideo(items[iCenter], items[iRight], withSound);
+        items[iRight].classList.replace('is-side', 'is-center');
+        items[iCenter].classList.replace('is-center', 'is-side');
+        setTimeout(() => finishRotation(items[iLeft], iNewRight === iLeft ? T.right : T.hidden, 1), 420);
     }
 
+    /** Rotates the carousel to the left: the left item becomes the new center. */
     function rotateLeft(withSound) {
         if (isAnimating) return;
         isAnimating = true;
-
-        const iLeft    = idx(-1);
-        const iCenter  = centerIndex;
-        const iRight   = idx(1);
-        const iNewLeft = idx(-2);
-
-        const oldLeft   = items[iLeft];
-        const oldCenter = items[iCenter];
-        const oldRight  = items[iRight];
-        const newLeft   = items[iNewLeft];
-
-        // Bei N>3: neues linkes Item aus dem Verborgenen holen (instant, kein Transition)
-        if (iNewLeft !== iRight) {
-            setTransitions(false, [newLeft]);
-            newLeft.style.transform = T.offLeft;
-            newLeft.getBoundingClientRect(); // reflow erzwingen
-        }
-
+        const iLeft = idx(-1), iCenter = centerIndex, iRight = idx(1), iNewLeft = idx(-2);
+        prepareItemFromHidden(items[iNewLeft], T.offLeft, iNewLeft !== iRight);
         setTransitions(true);
-        oldLeft.style.transform   = T.center;
-        oldCenter.style.transform = T.right;
-        oldRight.style.transform  = T.offRight;
-        if (iNewLeft !== iRight) {
-            newLeft.style.transform = T.left;
-        }
-
-        oldCenter.querySelector('.social-reel-video').pause();
-        const newCenterVideo = oldLeft.querySelector('.social-reel-video');
-        newCenterVideo.currentTime = 0;
-        newCenterVideo.muted = !withSound;
-        newCenterVideo.play().catch(() => {});
-        centerHasSound = withSound;
-
-        oldLeft.classList.replace('is-side', 'is-center');
-        oldCenter.classList.replace('is-center', 'is-side');
-
-        setTimeout(() => {
-            setTransitions(false);
-            oldRight.style.transform = iNewLeft === iRight ? T.left : T.hidden;
-            centerIndex = idx(-1);
-            updateOverlays();
-            isAnimating = false;
-            requestAnimationFrame(() => requestAnimationFrame(() => setTransitions(true)));
-        }, 420);
+        items[iLeft].style.transform   = T.center;
+        items[iCenter].style.transform = T.right;
+        items[iRight].style.transform  = T.offRight;
+        if (iNewLeft !== iRight) items[iNewLeft].style.transform = T.left;
+        switchActiveVideo(items[iCenter], items[iLeft], withSound);
+        items[iLeft].classList.replace('is-side', 'is-center');
+        items[iCenter].classList.replace('is-center', 'is-side');
+        setTimeout(() => finishRotation(items[iRight], iNewLeft === iRight ? T.left : T.hidden, -1), 420);
     }
 
-    // Klick-Handler für alle Items
+    // ── Interaction Handlers ──────────────────
+
+    /**
+     * Click handler for all reel items:
+     * - Clicking the center video toggles its sound on/off.
+     * - Clicking a side video rotates it to the center (with sound).
+     * - Clicks on hidden items (N > 3) are ignored.
+     */
     items.forEach(item => {
         item.addEventListener('click', () => {
             if (preventNextClick) { preventNextClick = false; return; }
             if (item === items[centerIndex]) {
-                // Mitte: Ton an/aus
                 centerHasSound = !centerHasSound;
                 const cv = centerVideo();
                 cv.muted = !centerHasSound;
@@ -296,42 +336,47 @@ function setupMobileCarousel(reels) {
             } else if (item === items[idx(-1)]) {
                 rotateLeft(true);
             }
-            // Klicks auf versteckte Items werden ignoriert
         });
     });
 
-    // Swipe-Unterstützung (kein Ton beim Wischen)
+    /**
+     * Swipe support: a horizontal swipe of more than 50px triggers a rotation.
+     * Swipes do not activate sound (only taps do).
+     * `preventNextClick` stops the touchend from also firing a click event.
+     */
     let touchStartX = 0;
-    reels.addEventListener('touchstart', e => {
-        touchStartX = e.touches[0].clientX;
-    }, { passive: true });
-
+    reels.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
     reels.addEventListener('touchend', e => {
         const dx = e.changedTouches[0].clientX - touchStartX;
         if (Math.abs(dx) > 50) {
             preventNextClick = true;
-            if (dx < 0) rotateRight(false);
-            else rotateLeft(false);
+            if (dx < 0) rotateRight(false); else rotateLeft(false);
         }
     }, { passive: true });
 
-    // Autoplay wenn section sichtbar wird
+    /**
+     * Autoplay: the center video starts playing (muted) when the section
+     * scrolls into view. All videos pause when the section is out of view.
+     * threshold: 0.4 means 40% of the section must be visible to trigger.
+     */
     const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
             const cv = centerVideo();
             if (entry.isIntersecting) {
-                cv.muted = true;
-                centerHasSound = false;
+                cv.muted = true; centerHasSound = false;
                 cv.play().catch(() => {});
             } else {
                 items.forEach(item => item.querySelector('.social-reel-video').pause());
             }
         });
     }, { threshold: 0.4 });
-
     observer.observe(reels);
 
-    // Pfeil-Buttons erstellen (CSS steuert Sichtbarkeit: nur ab 900px)
+    // ── Arrow Buttons (Desktop Only) ──────────
+    // Buttons are always created in the DOM.
+    // CSS `display: none` / `display: flex` controls when they are visible
+    // (only shown at screen widths ≥ 900px via a media query in home.css).
+
     const prevBtn = document.createElement('button');
     prevBtn.className = 'social-carousel-btn social-carousel-prev';
     prevBtn.setAttribute('aria-label', 'Anterior');
@@ -344,16 +389,18 @@ function setupMobileCarousel(reels) {
 
     reels.appendChild(prevBtn);
     reels.appendChild(nextBtn);
-
     prevBtn.addEventListener('click', () => rotateLeft(false));
     nextBtn.addEventListener('click', () => rotateRight(false));
 
-    // Initialisierung: alle Items verstecken, dann die 3 sichtbaren positionieren
+    // ── Initialization ────────────────────────
+    // Hide all items, then position the first three in their slots.
+    // Transitions are disabled during init to prevent an animated entry.
+
     setTransitions(false);
     items.forEach(item => { item.style.transform = T.hidden; });
-    items[idx(-1)].style.transform = T.left;
+    items[idx(-1)].style.transform    = T.left;
     items[centerIndex].style.transform = T.center;
-    items[idx(1)].style.transform  = T.right;
+    items[idx(1)].style.transform     = T.right;
     updateOverlays();
     requestAnimationFrame(() => requestAnimationFrame(() => setTransitions(true)));
 }

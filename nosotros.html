@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elixir S&B — Fragancias de Lujo a Precios Accesibles | Medellín, Colombia</title>
+    <meta name="description" content="Descubre fragancias de lujo inspiradas en las mejores marcas del mundo a precios accesibles. Envíos a todo Colombia. Compra por WhatsApp.">
+    <meta property="og:title" content="Elixir S&B — Fragancias de Lujo a Precios Accesibles">
+    <meta property="og:description" content="Perfumes inspirados en las mejores marcas del mundo. Envíos a todo Colombia.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="es_CO">
+
+    <link rel="icon" type="image/png" href="./img/logo-transparent.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="styles/base.css">
+    <link rel="stylesheet" href="styles/nav.css">
+    <link rel="stylesheet" href="styles/cart.css">
+    <link rel="stylesheet" href="styles/hero.css">
+    <link rel="stylesheet" href="styles/search.css">
+    <link rel="stylesheet" href="styles/product-card.css">
+    <link rel="stylesheet" href="styles/home.css">
+    <link rel="stylesheet" href="styles/footer.css">
+
+    <link rel="stylesheet" href="styles/animations.css">
+    <link rel="stylesheet" href="styles/checkout-modal.css">
+
+    <script src="script.js" defer></script>
+    <script src="scripts/templates.js" defer></script>
+    <script src="scripts/cart.js" defer></script>
+    <script src="scripts/home.js" defer></script>
+
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="nav-inner">
+                <div class="nav-left">
+                    <ul>
+                        <li><a href="productos.html">Productos</a></li>
+                        <li><a href="#nosotros">Nosotros</a></li>
+                    </ul>
+                </div>
+
+                <div class="mobile-left">
+                    <button class="mobile-menu-toggle" id="menuButton" aria-label="Menú">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+
+                <div class="nav-center">
+                    <a href="index.html" aria-label="Photo from Shop-Logo">
+                        <img src="./img/logo-transparent.png" alt="Elixir S&B Logo" class="nav-logo">
+                    </a>
+                </div>
+
+                <div class="nav-right">
+                    <ul>
+                        <li>
+                            <a href="https://www.instagram.com/p/DIzDB8NNuoE/" aria-label="Instagram">
+                                <img src="./img/instagram_white.svg" class="nav-icon social-icon" alt="Instagram">
+                            </a>
+                        </li>
+                        <li>
+                            <button class="nav-icon-button" id="cartButton" aria-label="Carrito">
+                                <img src="./img/shopping-car.svg" class="nav-icon basket-icon" alt="Carrito">
+                                <span class="cart-count">0</span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="mobile-right">
+                    <a href="https://www.instagram.com/elixirsb__/" target="_blank" class="nav-icon-button" aria-label="Instagram">
+                        <img src="./img/instagram_white.svg" class="nav-icon" alt="Instagram">
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="mobile-menu" id="mobileMenu">
+            <div class="mobile-menu-header">
+                <img src="./img/logo-transparent.png" alt="Elixir S&B" class="mobile-logo">
+                <button class="mobile-close" id="menuClose" aria-label="Cerrar menú">&times;</button>
+            </div>
+            <ul>
+                <li><a href="productos.html">Productos</a></li>
+                <li><a href="nosotros.html">Nosotros</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+            </ul>
+            <div class="mobile-social">
+                <a href="https://www.instagram.com/p/DIzDB8NNuoE/" aria-label="Instagram"><img src="./img/instagram_white.svg" alt="Instagram"></a>
+                <a href="#" aria-label="WhatsApp"><img src="./img/whatsapp_white.svg" alt="WhatsApp"></a>
+            </div>
+        </div>
+        <div class="mobile-overlay" id="mobileOverlay"></div>
+    </header>
+
+    <main>
+
+    </main>
+
+    <div class="cart-panel" id="cartPanel">
+        <div class="cart-panel-header">
+            <h2>Tu Carrito</h2>
+            <button class="cart-panel-close" id="cartPanelClose" onclick="closeBasket()">&times;</button>
+        </div>
+        <div class="cart-panel-content" id="cartPanelContent">
+            <div class="cart-empty">
+                <img src="./img/shopping-car.svg" alt="Carrito vacío">
+                <p>Tu carrito está vacío</p>
+                <a href="#productos" class="cart-empty-link">Ver productos</a>
+            </div>
+        </div>
+        <div class="cart-panel-footer">
+            <div class="cart-shipping">
+                <div class="cart-shipping-track">
+                    <div class="cart-shipping-fill" id="cartShippingProgress"></div>
+                </div>
+                <p class="cart-shipping-text" id="cartShippingText">Envío gratis desde $300.000 COP</p>
+            </div>
+            <div class="cart-price-row">
+                <span>Subtotal</span>
+                <span id="cartSubtotal">$0 COP</span>
+            </div>
+            <div class="cart-price-row cart-discount-row" id="cartDiscountRow" style="display:none">
+                <span>Descuento ✨</span>
+                <span id="cartDiscount" class="cart-discount-val">−$0 COP</span>
+            </div>
+            <div class="cart-price-row cart-total-row">
+                <span>Total</span>
+                <span class="cart-panel-total" id="cartFinalTotal">$0 COP</span>
+            </div>
+            <button class="cart-panel-checkout" id="cartCheckoutBtn" disabled>Finalizar Compra</button>
+            <p class="cart-panel-note">Serán redirigidos automáticamente a WhatsApp</p>
+        </div>
+    </div>
+    <div class="cart-overlay" id="cartOverlay"></div>
+
+    <div class="cart-bar" id="cartBar">
+        <div class="cart-bar-info">
+            <div class="cart-bar-icon">
+                <img src="./img/shopping-car.svg" alt="Carrito">
+                <span class="cart-bar-count" id="cartBarCount">0</span>
+            </div>
+            <div class="cart-bar-details">
+                <span class="cart-bar-items"><span id="cartItemsText">0 artículos</span></span>
+                <span class="cart-bar-total">$<span id="cartTotal">0</span> COP</span>
+            </div>
+        </div>
+        <button class="cart-bar-button" id="cartBarButton">
+            Ver Carrito
+        </button>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <img src="./img/logo-transparent.png" alt="Elixir S&B" class="footer-logo">
+                <p class="footer-tagline">Fragancias de lujo a precios accesibles</p>
+                <div class="footer-social">
+                    <a href="https://www.instagram.com/elixirsb__/" target="_blank" aria-label="Instagram">
+                        <img src="./img/instagram_white.svg" alt="Instagram">
+                    </a>
+                    <a href="https://wa.me/57XXXXXXXXXXX" target="_blank" aria-label="WhatsApp">
+                        <img src="./img/whatsapp_white.svg" alt="WhatsApp">
+                    </a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h4>Tienda</h4>
+                    <ul>
+                        <li><a href="productos.html">Productos</a></li>
+                        <li><a href="#bestsellers">Los Favoritos</a></li>
+                        <li><a href="nosotros.html">Nosotros</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Ayuda</h4>
+                    <ul>
+                        <li><a href="contacto.html">Contacto</a></li>
+                        <li><a href="#envios">Envíos</a></li>
+                        <li><a href="#devoluciones">Devoluciones</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#terminos">Términos y Condiciones</a></li>
+                        <li><a href="#privacidad">Política de Privacidad</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-contact">
+                <a href="https://wa.me/57XXXXXXXXXXX" target="_blank" class="footer-contact-link">
+                    <img src="./img/whatsapp_white.svg" alt="" class="footer-contact-icon">
+                    <span>+57 XXX XXX XXXX</span>
+                </a>
+                <span class="footer-contact-sep">·</span>
+                <span class="footer-contact-location">Medellín, Colombia</span>
+            </div>
+            <p class="footer-copyright">© 2026 Elixir S&B. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <div class="whatsapp-float">
+        <a href="#" onclick="openWhatsAppContact(); return false;" aria-label="Contactar por WhatsApp">
+            <img src="./img/whatsapp_white.svg" alt="WhatsApp">
+        </a>
+    </div>
+
+    <div class="checkout-modal" id="checkoutModal">
+        <div class="checkout-modal-overlay" id="checkoutModalOverlay"></div>
+        <div class="checkout-modal-card">
+            <button class="checkout-modal-close" id="checkoutModalClose" aria-label="Cerrar">&times;</button>
+            <div class="checkout-modal-header">
+                <p class="checkout-modal-eyebrow">Elixir S&amp;B · Pedido</p>
+                <h2 class="checkout-modal-title">Finalizar pedido</h2>
+                <p class="checkout-modal-subtitle">Un paso más y tu fragancia estará en camino ✨</p>
+            </div>
+            <div class="checkout-notice">
+                <p>🔒 Tus datos solo se usan para generar el mensaje de WhatsApp y <strong>no se almacenan</strong>.</p>
+            </div>
+            <form class="checkout-form" id="checkoutForm" novalidate>
+                <div class="checkout-field">
+                    <label for="checkoutName">Nombre completo</label>
+                    <input type="text" id="checkoutName" name="name"
+                           placeholder="Ej. María García" autocomplete="name">
+                </div>
+                <div class="checkout-field">
+                    <label for="checkoutCelular">Celular</label>
+                    <input type="tel" id="checkoutCelular" name="celular"
+                           placeholder="Ej. 300 123 4567" autocomplete="tel">
+                </div>
+                <div class="checkout-field">
+                    <label for="checkoutCiudad">Ciudad</label>
+                    <input type="text" id="checkoutCiudad" name="ciudad"
+                           placeholder="Ej. Medellín" autocomplete="address-level2">
+                </div>
+                <div class="checkout-field">
+                    <label for="checkoutBarrio">Barrio / Sector</label>
+                    <input type="text" id="checkoutBarrio" name="barrio"
+                           placeholder="Ej. El Poblado, Laureles, Envigado...">
+                </div>
+                <div class="checkout-field">
+                    <label for="checkoutDireccion">Dirección</label>
+                    <input type="text" id="checkoutDireccion" name="direccion"
+                           placeholder="Ej. Calle 10 # 43-25" autocomplete="street-address">
+                </div>
+                <div class="checkout-field">
+                    <label for="checkoutReferencia">Lugar de referencia <span class="checkout-optional">(opcional)</span></label>
+                    <input type="text" id="checkoutReferencia" name="referencia"
+                           placeholder="Ej. Frente al parque, edificio azul...">
+                </div>
+                <p class="checkout-error" id="checkoutError"></p>
+                <button type="submit" class="checkout-submit-btn">
+                    <img src="./img/whatsapp_white.svg" alt="">
+                    Enviar pedido por WhatsApp
+                </button>
+            </form>
+        </div>
+    </div>
+
+
+</body>
+</html>
