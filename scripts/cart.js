@@ -6,7 +6,7 @@
 // ============================================
 
 const WHATSAPP_NUMBER         = '+573003150038';
-const FREE_SHIPPING_THRESHOLD = 300000;   // COP — orders above this get free shipping
+const FREE_SHIPPING_THRESHOLD = 500000;
 const CART_STORAGE_KEY        = 'elixir_cart';
 
 let cart = [];

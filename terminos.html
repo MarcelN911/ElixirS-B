@@ -3,10 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Productos — Elixir S&B | Perfumes de Lujo en Colombia</title>
-    <meta name="description" content="Explora nuestra colección de perfumes inspirados en Tom Ford, Chanel, Dior y más. Fragancias de alta calidad a precios accesibles. Envíos a todo Colombia.">
-    <meta property="og:title" content="Productos — Elixir S&B">
-    <meta property="og:description" content="Colección de fragancias de lujo inspiradas en las mejores marcas. Para Ella, Para Él y Unisex.">
+    <title>Términos y Condiciones — Elixir S&B</title>
+    <meta name="description" content="Términos y condiciones de compra en Elixir S&B. Proceso de pedido por WhatsApp, precios en COP y derecho de retracto conforme a la Ley 1480 de 2011.">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="es_CO">
 
@@ -19,9 +17,7 @@
     <link rel="stylesheet" href="styles/base.css">
     <link rel="stylesheet" href="styles/nav.css">
     <link rel="stylesheet" href="styles/cart.css">
-    <link rel="stylesheet" href="styles/product-card.css">
-    <link rel="stylesheet" href="styles/search.css">
-    <link rel="stylesheet" href="styles/productos.css">
+    <link rel="stylesheet" href="styles/page.css">
     <link rel="stylesheet" href="styles/footer.css">
     <link rel="stylesheet" href="styles/animations.css">
     <link rel="stylesheet" href="styles/checkout-modal.css">
@@ -29,19 +25,17 @@
     <script src="script.js" defer></script>
     <script src="scripts/templates.js" defer></script>
     <script src="scripts/cart.js" defer></script>
-    <script src="scripts/scroll.js" defer></script>
-    <script src="scripts/products.js" defer></script>
 
 </head>
 <body>
+
     <header>
         <nav>
             <div class="nav-inner">
                 <div class="nav-left">
                     <ul>
-                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="productos.html">Productos</a></li>
                         <li><a href="nosotros.html">Nosotros</a></li>
-                        <li><a href="contacto.html">Contacto</a></li>
                     </ul>
                 </div>
 
@@ -54,7 +48,7 @@
                 </div>
 
                 <div class="nav-center">
-                    <a href="index.html">
+                    <a href="index.html" aria-label="Ir al inicio">
                         <img src="./img/logo-transparent.png" alt="Elixir S&B Logo" class="nav-logo">
                     </a>
                 </div>
@@ -89,53 +83,106 @@
                 <button class="mobile-close" id="menuClose" aria-label="Cerrar menú">&times;</button>
             </div>
             <ul>
-                <li><a href="index.html">Inicio</a></li>
+                <li><a href="productos.html">Productos</a></li>
                 <li><a href="nosotros.html">Nosotros</a></li>
                 <li><a href="contacto.html">Contacto</a></li>
             </ul>
             <div class="mobile-social">
                 <a href="https://www.instagram.com/elixirsb__/" target="_blank" aria-label="Instagram"><img src="./img/instagram_white.svg" alt="Instagram"></a>
-                <a href="#" aria-label="WhatsApp"><img src="./img/whatsapp_white.svg" alt="WhatsApp"></a>
+                <a href="https://wa.me/57XXXXXXXXXXX" target="_blank" aria-label="WhatsApp"><img src="./img/whatsapp_white.svg" alt="WhatsApp"></a>
             </div>
         </div>
         <div class="mobile-overlay" id="mobileOverlay"></div>
     </header>
 
     <main>
+
         <section class="page-hero">
-            <div class="page-hero-inner">
-                <p class="page-hero-eyebrow">Colección 2026</p>
-                <h1 class="page-hero-title">Nuestros Productos</h1>
-                <p class="page-hero-subtitle">Fragancias de lujo inspiradas en los mejores perfumes del mundo</p>
-            </div>
+            <p class="page-hero-eyebrow">Elixir S&amp;B · Legal</p>
+            <h1 class="page-hero-title">Términos y Condiciones</h1>
         </section>
 
-        <section class="products-section" id="productos">
-            <div class="products-inner">
+        <div class="page-content">
 
-                <div class="search-container">
-                    <form class="search-form" id="searchForm">
-                        <input type="text" placeholder="¿Qué estás buscando?" aria-label="Buscar productos" id="searchInput">
-                        <button type="button" class="search-clear" id="searchClear" aria-label="Búsqueda borrar">&times;</button>
-                        <button type="submit" aria-label="Iniciar búsqueda">
-                            <img src="./img/search.svg" alt="Buscar">
-                        </button>
-                    </form>
-                </div>
+            <p class="legal-date">Última actualización: abril de 2026</p>
 
-                <div class="products-filter-bar">
-                    <div class="filter-tabs">
-                        <button class="filter-tab active" onclick="filterProducts('Todos')">Todos</button>
-                        <button class="filter-tab" onclick="filterProducts('Dama')">Dama</button>
-                        <button class="filter-tab" onclick="filterProducts('Caballero')">Caballero</button>
-                    </div>
-                </div>
-
-                <div class="products-grid" id="productsGrid">
-
-                </div>
+            <div class="legal-section">
+                <h2>1. Sobre Elixir S&amp;B</h2>
+                <p>Elixir S&amp;B es una tienda de fragancias con sede en Medellín, Colombia, operada por <strong>[Nombre 1] y [Nombre 2]</strong>. Ofrecemos fragancias inspiradas en perfumes de marcas de lujo a precios accesibles. Al realizar un pedido o contactarnos, el cliente acepta estos términos.</p>
             </div>
-        </section>
+
+            <div class="legal-section">
+                <h2>2. Proceso de compra y formación del contrato</h2>
+                <p>Elixir S&amp;B opera exclusivamente a través de pedidos por WhatsApp. El proceso es el siguiente:</p>
+                <ul>
+                    <li>El cliente selecciona productos en nuestro sitio web y completa el formulario de pedido, que genera un mensaje precompuesto enviado a nuestro WhatsApp.</li>
+                    <li>El pedido <strong>no constituye un contrato de compraventa</strong> hasta que Elixir S&amp;B lo confirme expresamente por escrito vía WhatsApp.</li>
+                    <li>La confirmación incluirá el detalle de los productos, el precio total en pesos colombianos (COP) y las instrucciones de pago.</li>
+                    <li>En caso de que algún producto no esté disponible, informaremos al cliente antes de confirmar el pedido.</li>
+                </ul>
+                <p>Nos reservamos el derecho de rechazar cualquier pedido por razones de stock, error en el precio publicado u otras circunstancias justificadas.</p>
+            </div>
+
+            <div class="legal-section">
+                <h2>3. Precios y medios de pago</h2>
+                <p>Todos los precios publicados en nuestro sitio web están expresados en <strong>pesos colombianos (COP)</strong> e incluyen IVA cuando aplica. Los precios pueden cambiar sin previo aviso; el precio definitivo es el confirmado vía WhatsApp en el momento del pedido.</p>
+
+                <h3>Medios de pago aceptados</h3>
+                <ul>
+                    <li>Nequi</li>
+                    <li>Bancolombia (transferencia o botón de pago)</li>
+                    <li>Efectivo (para entregas locales en Medellín)</li>
+                    <li>[Otros medios según disponibilidad — completar]</li>
+                </ul>
+                <p>El pago deberá realizarse según las indicaciones comunicadas por WhatsApp. El envío se coordina una vez confirmado el pago.</p>
+            </div>
+
+            <div class="legal-section">
+                <h2>4. Envíos</h2>
+                <p>Realizamos envíos a todo Colombia a través de operadores logísticos. Los tiempos de entrega estimados y los costos de envío se informan en el momento de confirmar el pedido por WhatsApp.</p>
+                <p>El envío es gratuito para pedidos que superen <strong>$300.000 COP</strong>. Para pedidos por debajo de este valor, se cobrará un costo de envío que será informado al cliente antes de confirmar el pedido.</p>
+                <p>Elixir S&amp;B no se responsabiliza por demoras causadas por terceros (operadores logísticos, situaciones de fuerza mayor) una vez el paquete haya sido despachado.</p>
+            </div>
+
+            <div class="legal-section">
+                <h2>5. Derecho de retracto</h2>
+                <p>De conformidad con el <strong>Artículo 47 de la Ley 1480 de 2011</strong> (Estatuto del Consumidor de Colombia), el cliente tiene derecho a retractarse de la compra dentro de los <strong>cinco (5) días hábiles</strong> siguientes a la entrega del producto, sin necesidad de justificación.</p>
+
+                <h3>Condiciones para ejercer el retracto</h3>
+                <ul>
+                    <li>El producto debe estar en perfectas condiciones, sin uso y con su <strong>empaque o sello original sin abrir</strong>.</li>
+                    <li>Los perfumes cuyo precinto o sello de seguridad haya sido roto o manipulado <strong>no serán aceptados</strong> por razones de higiene, conforme a las excepciones contempladas por la ley.</li>
+                    <li>El cliente deberá notificar su intención de retracto por WhatsApp dentro del plazo indicado.</li>
+                    <li>Los gastos de devolución corren por cuenta del cliente, salvo que el producto presente un defecto de fábrica.</li>
+                </ul>
+                <p>Una vez recibida y verificada la devolución, reembolsaremos el valor pagado en un plazo máximo de <strong>30 días calendario</strong>, por el mismo medio de pago utilizado.</p>
+            </div>
+
+            <div class="legal-section">
+                <h2>6. Garantía y productos defectuosos</h2>
+                <p>Si el producto llega en condiciones diferentes a las pactadas (dañado, con fuga o incorrecto), el cliente deberá notificarnos por WhatsApp dentro de las <strong>48 horas</strong> siguientes a la recepción, adjuntando evidencia fotográfica o en video. En ese caso, asumiremos los costos de reenvío y reposición o reembolso, según corresponda.</p>
+            </div>
+
+            <div class="legal-section">
+                <h2>7. Propiedad intelectual</h2>
+                <p>Las fragancias de Elixir S&amp;B son productos propios inspirados en aromas de marcas de lujo. No somos representantes, distribuidores ni afiliados de ninguna marca de lujo mencionada como referencia. Cualquier similitud de nombre o aroma tiene únicamente propósito informativo para el consumidor.</p>
+            </div>
+
+            <div class="legal-section">
+                <h2>8. Modificaciones</h2>
+                <p>Elixir S&amp;B se reserva el derecho de modificar estos términos en cualquier momento. Los cambios serán publicados en esta página con indicación de la fecha de actualización. El uso continuado del sitio web o la realización de un nuevo pedido implican la aceptación de los términos vigentes.</p>
+            </div>
+
+            <div class="legal-section">
+                <h2>9. Contacto</h2>
+                <p>Para cualquier consulta relacionada con estos términos, puedes escribirnos a:</p>
+                <ul>
+                    <li><strong>WhatsApp:</strong> +57 XXX XXX XXXX</li>
+                    <li><strong>Correo:</strong> [correo@elixirsb.com]</li>
+                </ul>
+            </div>
+
+        </div>
 
     </main>
 
@@ -242,14 +289,13 @@
             <p class="footer-copyright">© 2026 Elixir S&B. Todos los derechos reservados.</p>
         </div>
     </footer>
-    
+
     <div class="whatsapp-float">
-        <a href="#" onclick="openWhatsAppContact(); return false;" aria-label="Contactar por WhatsApp">
+        <a href="https://wa.me/57XXXXXXXXXXX" target="_blank" aria-label="Contactar por WhatsApp">
             <img src="./img/whatsapp_white.svg" alt="WhatsApp">
         </a>
     </div>
 
-    <!-- Checkout Modal -->
     <div class="checkout-modal" id="checkoutModal">
         <div class="checkout-modal-overlay" id="checkoutModalOverlay"></div>
         <div class="checkout-modal-card">
