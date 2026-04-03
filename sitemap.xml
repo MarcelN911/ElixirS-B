@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    sitemap.xml — Elixir S&B
+    Perfumería online | Medellín, Colombia
+    TODO: Reemplazar TUDOMINIO.COM con el dominio real en todos los <loc>
+-->
+<urlset
+    xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+    <!-- Inicio / Home -->
+    <url>
+        <loc>https://TUDOMINIO.COM/</loc>
+        <xhtml:link rel="alternate" hreflang="es-CO" href="https://TUDOMINIO.COM/"/>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+
+    <!-- Catálogo de productos -->
+    <url>
+        <loc>https://TUDOMINIO.COM/productos.html</loc>
+        <xhtml:link rel="alternate" hreflang="es-CO" href="https://TUDOMINIO.COM/productos.html"/>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+
+    <!-- Quiénes somos -->
+    <url>
+        <loc>https://TUDOMINIO.COM/nosotros.html</loc>
+        <xhtml:link rel="alternate" hreflang="es-CO" href="https://TUDOMINIO.COM/nosotros.html"/>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+
+    <!-- Contacto -->
+    <url>
+        <loc>https://TUDOMINIO.COM/contacto.html</loc>
+        <xhtml:link rel="alternate" hreflang="es-CO" href="https://TUDOMINIO.COM/contacto.html"/>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <!-- Términos y Condiciones -->
+    <url>
+        <loc>https://TUDOMINIO.COM/terminos.html</loc>
+        <xhtml:link rel="alternate" hreflang="es-CO" href="https://TUDOMINIO.COM/terminos.html"/>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.3</priority>
+    </url>
+
+    <!-- Política de Privacidad -->
+    <url>
+        <loc>https://TUDOMINIO.COM/privacidad.html</loc>
+        <xhtml:link rel="alternate" hreflang="es-CO" href="https://TUDOMINIO.COM/privacidad.html"/>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.3</priority>
+    </url>
+
+</urlset>

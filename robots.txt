@@ -1,0 +1,16 @@
+# robots.txt — Elixir S&B
+# Perfumería online | Medellín, Colombia
+# Actualizado: abril 2026
+
+# Permitir todos los rastreadores
+User-agent: *
+Allow: /
+
+# Excluir recursos que no necesitan indexación
+Disallow: /assets/
+Disallow: /video/
+Disallow: /img/
+
+# Apuntar al sitemap
+# TODO: Reemplazar TUDOMINIO.COM con el dominio real
+Sitemap: https://TUDOMINIO.COM/sitemap.xml

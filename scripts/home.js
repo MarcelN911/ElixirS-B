@@ -50,19 +50,36 @@ if (searchForm) {
 
 // ── Bestsellers Carousel ──────────────────────
 
+/** Shows skeleton placeholder cards in the bestsellers carousel while data is loading. */
+function showBestsellerSkeletons() {
+    const carousel = document.getElementById('bestsellersCarousel');
+    if (!carousel) return;
+    let html = '';
+    for (let i = 0; i < 5; i++) {
+        html += '<div class="product-card-skeleton"></div>';
+    }
+    carousel.innerHTML = html;
+}
+
 /**
  * Fetches products from the spreadsheet and renders only the bestsellers
  * (column 7 = 'Si') into the bestsellers carousel on the home page.
  */
 async function fetchBestsellers() {
-    const db      = await fetch(productsUrl);
-    const content = await db.text();
-    json = JSON.parse(content.substring(47).slice(0, -2));
-    data = json.table.rows;
-    for (let i = 0; i < data.length; i++) {
-        if (data[i].c[7] && data[i].c[7].v === 'Si') {
-            createBestsellerTemplate(createProductData(data, i));
+    showBestsellerSkeletons();
+    try {
+        const db      = await fetch(productsUrl);
+        const content = await db.text();
+        json = JSON.parse(content.substring(47).slice(0, -2));
+        data = json.table.rows;
+        document.getElementById('bestsellersCarousel').innerHTML = '';
+        for (let i = 0; i < data.length; i++) {
+            if (data[i].c[7] && data[i].c[7].v === 'Si') {
+                createBestsellerTemplate(createProductData(data, i));
+            }
         }
+    } catch (e) {
+        document.getElementById('bestsellersCarousel').innerHTML = '';
     }
 }
 

@@ -5,7 +5,7 @@
 // and WhatsApp checkout
 // ============================================
 
-const WHATSAPP_NUMBER         = '+573003150038';
+const WHATSAPP_NUMBER         = '+573205826414';
 const FREE_SHIPPING_THRESHOLD = 500000;
 const CART_STORAGE_KEY        = 'elixir_cart';
 
@@ -333,12 +333,13 @@ function renderShippingBar(summary) {
     if (!progressEl || !shippingText) {
         return;
     }
-    let pct;
     if (cart.length === 0) {
-        pct = 0;
-    } else {
-        pct = Math.min(100, (summary.finalTotal / FREE_SHIPPING_THRESHOLD) * 100);
+        progressEl.style.width = '0%';
+        shippingText.textContent = `Envío gratis desde $${formatCOP(FREE_SHIPPING_THRESHOLD)} COP`;
+        shippingText.classList.remove('is-free');
+        return;
     }
+    const pct = Math.min(100, (summary.finalTotal / FREE_SHIPPING_THRESHOLD) * 100);
     progressEl.style.width = `${pct}%`;
     if (summary.hasFreeShipping) {
         shippingText.textContent = '¡Envío gratis incluido! 🎉';

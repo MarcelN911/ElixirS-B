@@ -86,3 +86,25 @@
         }
     }
 }
+
+/* ── Skeleton Loader ──────────────────────────── */
+
+@keyframes skeleton-pulse {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.3; }
+}
+
+.product-card-skeleton {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 4px;
+    animation: skeleton-pulse 1.6s ease-in-out infinite;
+    min-height: 340px;
+}
+
+/* Carousel variant — fixed width so it doesn't collapse */
+.bestsellers-carousel .product-card-skeleton {
+    min-width: 210px;
+    min-height: 300px;
+    flex-shrink: 0;
+}

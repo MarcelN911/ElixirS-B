@@ -7,17 +7,49 @@
 
 // ── Init ──────────────────────────────────────
 
+/** Shows 8 skeleton placeholder cards in the products grid while data is loading. */
+function showSkeletonGrid() {
+    const grid = document.getElementById('productsGrid');
+    if (!grid) return;
+    let html = '';
+    for (let i = 0; i < 8; i++) {
+        html += '<div class="product-card-skeleton"></div>';
+    }
+    grid.innerHTML = html;
+}
+
+/** Shows an inline error message if the product catalog fails to load. */
+function showProductsLoadError() {
+    const grid = document.getElementById('productsGrid');
+    if (!grid) return;
+    grid.innerHTML = `
+        <div class="no-results">
+            <p class="no-results-title">No pudimos cargar los productos</p>
+            <p class="no-results-text">Verifica tu conexión e intenta recargar la página, o escríbenos directamente.</p>
+            <a href="#" onclick="openWhatsAppContact(); return false;"
+               style="display:inline-block;margin-top:24px;padding:12px 28px;background:#25D366;color:white;border-radius:6px;font-family:Montserrat,sans-serif;font-size:12px;font-weight:500;text-decoration:none;letter-spacing:1px;">
+                Escribir por WhatsApp
+            </a>
+        </div>`;
+}
+
 /**
  * Entry point: fetches all products and renders the initial grid.
  * Also checks if a search term was passed in the URL from the home page.
  */
 async function fetchProducts() {
-    const db      = await fetch(productsUrl);
-    const content = await db.text();
-    json = JSON.parse(content.substring(47).slice(0, -2));
-    data = json.table.rows;
-    createProductCards(data);
-    checkSearchOnLoad();
+    showSkeletonGrid();
+    try {
+        const db      = await fetch(productsUrl);
+        const content = await db.text();
+        json = JSON.parse(content.substring(47).slice(0, -2));
+        data = json.table.rows;
+        document.getElementById('productsGrid').innerHTML = '';
+        createProductCards(data);
+        checkSearchOnLoad();
+    } catch (e) {
+        showProductsLoadError();
+    }
 }
 
 fetchProducts();
