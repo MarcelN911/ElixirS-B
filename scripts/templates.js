@@ -35,7 +35,7 @@ function createImg(image) {
     if (image) {
         return `<img src="${image}" loading="lazy" alt="Imagen del producto">`;
     }
-    return '<img src="./img/product-placeholder.svg" loading="lazy" alt="Imagen del producto">';
+    return '<img src="./assets/img/product-placeholder.svg" loading="lazy" alt="Imagen del producto">';
 }
 
 function formatSize(value) {

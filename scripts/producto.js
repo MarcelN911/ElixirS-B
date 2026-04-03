@@ -67,7 +67,7 @@ function buildCurrentProductMeta(product) {
     if (product.c[10]) {
         image = product.c[10].v;
     } else {
-        image = './img/product-placeholder.svg';
+        image = './assets/img/product-placeholder.svg';
     }
     return {
         id:    product.c[0].v,
@@ -125,7 +125,7 @@ function renderImage(product) {
     if (product.c[10]) {
         imgEl.src = product.c[10].v;
     } else {
-        imgEl.src = './img/product-placeholder.svg';
+        imgEl.src = './assets/img/product-placeholder.svg';
     }
 }
 

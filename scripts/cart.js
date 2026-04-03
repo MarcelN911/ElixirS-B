@@ -140,7 +140,7 @@ function showEmptyCartState() {
     }
     content.innerHTML = `
         <div class="cart-empty">
-            <img src="./img/shopping-car.svg" alt="Carrito vacío">
+            <img src="./assets/img/shopping-car.svg" alt="Carrito vacío">
             <p>Tu carrito está vacío</p>
             <a href="productos.html" class="cart-empty-link">Ver productos</a>
         </div>`;
@@ -214,7 +214,7 @@ function buildCartItemHtml(item) {
     return `
         <div class="cart-item" data-sku="${item.sku}">
             <div class="cart-item-image">
-                <img src="${item.image || './img/product-placeholder.svg'}"
+                <img src="${item.image || './assets/img/product-placeholder.svg'}"
                      alt="${item.name}" loading="lazy">
             </div>
             <div class="cart-item-details">
