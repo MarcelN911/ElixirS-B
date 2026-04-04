@@ -65,7 +65,7 @@ function buildCurrentProductMeta(product) {
     }
     let image;
     if (product.c[10]) {
-        image = product.c[10].v;
+        image = transformImageUrl(product.c[10].v);
     } else {
         image = './assets/img/product-placeholder.svg';
     }
@@ -123,7 +123,7 @@ function renderInfo(product) {
 function renderImage(product) {
     const imgEl = document.querySelector('.pd-image');
     if (product.c[10]) {
-        imgEl.src = product.c[10].v;
+        imgEl.src = transformImageUrl(product.c[10].v);
     } else {
         imgEl.src = './assets/img/product-placeholder.svg';
     }

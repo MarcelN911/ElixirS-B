@@ -27,6 +27,38 @@ function openWhatsAppContact() {
     window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
 }
 
+// ── Image URL ─────────────────────────────────
+
+/**
+ * Converts a Google Drive thumbnail URL into a directly embeddable image URL.
+ * Input:  https://drive.google.com/thumbnail?id=FILE_ID&sz=w800
+ * Output: https://lh3.googleusercontent.com/d/FILE_ID=w800
+ * Returns the placeholder image if the URL is missing or not a Drive URL.
+ */
+function transformImageUrl(url, width) {
+    if (width === undefined) width = 800;
+    if (!url) return './assets/img/product-placeholder.svg';
+    try {
+        const parsed = new URL(url);
+        if (!parsed.hostname.includes('drive.google.com')) {
+            return './assets/img/product-placeholder.svg';
+        }
+        // Format: https://drive.google.com/file/d/FILE_ID/view?usp=sharing
+        const pathMatch = parsed.pathname.match(/\/d\/([^/]+)/);
+        if (pathMatch) {
+            return `https://drive.google.com/thumbnail?id=${pathMatch[1]}&sz=w${width}`;
+        }
+        // Format: https://drive.google.com/thumbnail?id=FILE_ID&sz=w800
+        const fileId = parsed.searchParams.get('id');
+        if (fileId) {
+            return `https://drive.google.com/thumbnail?id=${fileId}&sz=w${width}`;
+        }
+        return './assets/img/product-placeholder.svg';
+    } catch (e) {
+        return './assets/img/product-placeholder.svg';
+    }
+}
+
 // ── Data Helpers ──────────────────────────────
 
 /**
@@ -57,7 +89,7 @@ function createProductData(data, index) {
         badge:       getValue(data, index, 6,  ''),
         categories:  getValue(data, index, 8,  ''),
         active:      getValue(data, index, 9,  'No'),
-        image:       getValue(data, index, 10, ''),
+        image:       transformImageUrl(getValue(data, index, 10, '')),
         description: getValue(data, index, 11, '')
     };
 }
