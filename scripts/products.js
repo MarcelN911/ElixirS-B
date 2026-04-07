@@ -42,7 +42,7 @@ async function fetchProducts() {
     try {
         const db      = await fetch(productsUrl);
         const content = await db.text();
-        json = JSON.parse(content.substring(47).slice(0, -2));
+        const json = JSON.parse(content.substring(47).slice(0, -2));
         data = json.table.rows;
         document.getElementById('productsGrid').innerHTML = '';
         createProductCards(data);

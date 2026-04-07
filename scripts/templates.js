@@ -38,12 +38,6 @@ function createImg(image) {
     return '<img src="./assets/img/product-placeholder.svg" loading="lazy" alt="Imagen del producto">';
 }
 
-function formatSize(value) {
-    if (typeof value === 'number') {
-        return value + ' ml';
-    }
-    return value;
-}
 
 function formatPrice(value) {
     if (typeof value === 'string') {
