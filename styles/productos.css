@@ -233,3 +233,92 @@
         gap: 25px;
     }
 }
+
+/* ── Perfil Olfativo Alert ───────────────── */
+
+.pf-alert {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(120px);
+    z-index: 900;
+    width: calc(100% - 32px);
+    max-width: 480px;
+    background: rgb(28, 32, 58);
+    border: 1px solid rgba(212, 175, 125, 0.3);
+    border-radius: 12px;
+    padding: 20px 20px 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+    transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.pf-alert.pf-alert--visible {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.pf-alert-body {
+    flex: 1;
+    min-width: 0;
+}
+
+.pf-alert-eyebrow {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    color: var(--gold);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+.pf-alert-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: white;
+    line-height: 1.2;
+    margin-bottom: 12px;
+}
+
+.pf-alert-btn {
+    display: inline-block;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--background-color);
+    background: var(--gold);
+    padding: 9px 18px;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.pf-alert-btn:hover {
+    background: var(--gold-light);
+}
+
+.pf-alert-close {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 20px;
+    cursor: pointer;
+    padding: 4px;
+    line-height: 1;
+    flex-shrink: 0;
+    align-self: flex-start;
+    transition: color 0.2s;
+}
+
+.pf-alert-close:hover {
+    color: white;
+}

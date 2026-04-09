@@ -97,6 +97,7 @@
                 <li><a href="index.html">Inicio</a></li>
                 <li><a href="nosotros.html">Nosotros</a></li>
                 <li><a href="contacto.html">Contacto</a></li>
+                <li><a href="formulario.html">Test Olfativo</a></li>
             </ul>
             <div class="mobile-social">
                 <a href="https://www.instagram.com/elixirsb__/" target="_blank" aria-label="Instagram"><img src="./assets/img/instagram_white.svg" alt="Instagram"></a>
@@ -143,6 +144,49 @@
         </section>
 
     </main>
+
+    <div class="pf-alert" id="pfAlert" role="complementary" aria-label="Test olfativo">
+        <div class="pf-alert-body">
+            <p class="pf-alert-eyebrow">Test Olfativo</p>
+            <p class="pf-alert-title">¿No sabes cuál elegir?</p>
+            <a href="formulario.html" class="pf-alert-btn">Descubre tu Aroma Ideal</a>
+        </div>
+        <button class="pf-alert-close" id="pfAlertClose" aria-label="Cerrar">&times;</button>
+    </div>
+
+    <script>
+        (function () {
+            if (sessionStorage.getItem('pfAlertShown')) return;
+
+            const grid  = document.getElementById('productsGrid');
+            const alert = document.getElementById('pfAlert');
+            const close = document.getElementById('pfAlertClose');
+
+            close.addEventListener('click', function () {
+                alert.classList.remove('pf-alert--visible');
+                sessionStorage.setItem('pfAlertShown', '1');
+            });
+
+            const gridObserver = new MutationObserver(function () {
+                const cards = grid.children;
+                if (cards.length < 50) return;
+
+                gridObserver.disconnect();
+
+                const cardObserver = new IntersectionObserver(function (entries) {
+                    if (entries[0].isIntersecting) {
+                        cardObserver.disconnect();
+                        alert.classList.add('pf-alert--visible');
+                        sessionStorage.setItem('pfAlertShown', '1');
+                    }
+                }, { threshold: 0.3 });
+
+                cardObserver.observe(cards[49]);
+            });
+
+            gridObserver.observe(grid, { childList: true });
+        })();
+    </script>
 
     <div class="cart-panel" id="cartPanel">
         <div class="cart-panel-header">
@@ -224,6 +268,7 @@
                     <h4>Ayuda</h4>
                     <ul>
                         <li><a href="contacto.html">Contacto</a></li>
+                        <li><a href="formulario.html">Test Olfativo</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
