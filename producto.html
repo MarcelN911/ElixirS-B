@@ -42,7 +42,6 @@
                 <div class="nav-left">
                     <ul>
                         <li><a href="index.html">Inicio</a></li>
-                        <li><a href="productos.html">Productos</a></li>
                         <li><a href="nosotros.html">Nosotros</a></li>
                         <li><a href="contacto.html">Contacto</a></li>
                     </ul>
@@ -134,7 +133,6 @@
                 <div class="pd-gallery">
                     <div class="pd-image-wrap">
                         <img src="./assets/img/product-placeholder.svg" loading="lazy" alt="Rose Noir" class="pd-image">
-                        <span class="pd-image-badge">Nuevo</span>
                     </div>
                 </div>
 
@@ -145,6 +143,19 @@
                     <p class="pd-inspiration">Inspirado en <em>Tom Ford Black Orchid</em></p>
 
                     <div class="pd-divider"></div>
+
+                    <!-- Price + Quantity -->
+                    <div class="pd-price-row">
+                        <div class="pd-price-group">
+                            <span class="pd-price-old" id="pdPriceOld">$80.000 COP</span>
+                            <span class="pd-price-current" id="pdPrice">$65.000 COP</span>
+                        </div>
+                        <div class="pd-qty-control">
+                            <button class="pd-qty-btn" id="pdQtyMinus" aria-label="Reducir cantidad">−</button>
+                            <span class="pd-qty-value" id="pdQtyValue">1</span>
+                            <button class="pd-qty-btn" id="pdQtyPlus" aria-label="Aumentar cantidad">+</button>
+                        </div>
+                    </div>
 
                     <!-- Size selector -->
                     <div class="pd-size-group">
@@ -159,6 +170,11 @@
                         </div>
                     </div>
 
+                    <!-- CTAs -->
+                    <div class="pd-ctas">
+                        <button class="pd-btn-primary" id="pdAddCart">Añadir al Carrito</button>
+                    </div>
+
                     <!-- Description -->
                     <div class="pd-acc-item open">
                         <button class="pd-acc-trigger" aria-expanded="true">
@@ -167,27 +183,6 @@
                         <div class="pd-acc-body" id="pdDescription">
                             <p>Rose Noir es una fragancia oscura y seductora que evoca el misterio de la noche. Su apertura especiada con bergamota y cardamomo da paso a un corazón floral profundo, dominado por la rosa negra y la orquídea, antes de asentarse en una base cálida de maderas oscuras y patchouli. Una fragancia para quienes no temen destacar.</p>
                         </div>
-                    </div>
-
-                    <!-- Price -->
-                    <div class="pd-price-row">
-                        <span class="pd-price-old" id="pdPriceOld">$80.000 COP</span>
-                        <span class="pd-price-current" id="pdPrice">$65.000 COP</span>
-                    </div>
-
-                    <!-- Quantity -->
-                    <div class="pd-quantity-row">
-                        <span class="pd-label">Cantidad</span>
-                        <div class="pd-qty-control">
-                            <button class="pd-qty-btn" id="pdQtyMinus" aria-label="Reducir cantidad">−</button>
-                            <span class="pd-qty-value" id="pdQtyValue">1</span>
-                            <button class="pd-qty-btn" id="pdQtyPlus" aria-label="Aumentar cantidad">+</button>
-                        </div>
-                    </div>
-
-                    <!-- CTAs -->
-                    <div class="pd-ctas">
-                        <button class="pd-btn-primary" id="pdAddCart">Añadir al Carrito</button>
                     </div>
                 </div>
 

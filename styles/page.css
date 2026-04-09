@@ -7,7 +7,7 @@
 /* ── Page Hero (title section) ────────────── */
 
 .page-hero {
-    padding: 120px 20px 64px;
+    padding: 150px 20px 64px;
     text-align: center;
     border-bottom: 1px solid rgba(212, 175, 125, 0.15);
 }
@@ -36,7 +36,7 @@
 .page-content {
     max-width: 860px;
     margin: 0 auto;
-    padding: 64px 20px 100px;
+    padding: 40px 20px 50px;
 }
 
 /* ── Generic Section Block ────────────────── */
@@ -162,7 +162,6 @@
 /* ── CTA Banner ───────────────────────────── */
 
 .page-cta {
-    margin-top: 72px;
     background: rgba(212, 175, 125, 0.06);
     border: 1px solid rgba(212, 175, 125, 0.2);
     border-radius: 8px;
@@ -418,6 +417,6 @@
     }
 
     .page-content {
-        padding: 80px 40px 120px;
+        padding: 80px 40px;
     }
 }
