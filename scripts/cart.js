@@ -269,6 +269,7 @@ function updateCartCounts() {
     const summary = getCartSummary();
     document.querySelectorAll('.cart-count').forEach(function(el) {
         el.textContent = summary.itemCount;
+        el.classList.toggle('active', summary.itemCount > 0);
     });
     const barCount = document.getElementById('cartBarCount');
     if (barCount) {
