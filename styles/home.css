@@ -105,6 +105,8 @@
 
 .quote-section {
     padding: 50px 20px;
+    border-top: 1px solid rgba(212, 175, 125, 0.1);
+    border-bottom: 1px solid rgba(212, 175, 125, 0.1);
     background: linear-gradient(180deg, rgba(212, 175, 125, 0.03) 0%, transparent 50%, rgba(212, 175, 125, 0.03) 100%);
 }
 
@@ -306,7 +308,6 @@
 
 .testimonials-section {
     padding: 50px 0 50px;
-    background: linear-gradient(180deg, transparent 0%, rgba(212, 175, 125, 0.03) 50%, transparent 100%);
 }
 
 .testimonials-header {
