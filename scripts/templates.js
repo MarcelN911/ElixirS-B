@@ -59,6 +59,12 @@ function createSizePills(size) {
 }
 
 function createPrice(price) {
+    if (!price || price === 'desconocido') {
+        return `<div class="product-card-price">
+                    <span class="price-current">desconocido</span>
+                </div>`;
+    }
+
     const prices = price.toString().split(',');
     const lowestPrice = getLowestPrice(price);
     const prefix = prices.length > 1 ? 'Desde ' : '';
