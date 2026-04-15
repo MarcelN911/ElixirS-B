@@ -10,5 +10,4 @@ Allow: /
 Disallow: /assets/
 
 # Apuntar al sitemap
-# TODO: Reemplazar TUDOMINIO.COM con el dominio real
-Sitemap: https://TUDOMINIO.COM/sitemap.xml
+Sitemap: https://elixirsb.netlify.app/sitemap.xml

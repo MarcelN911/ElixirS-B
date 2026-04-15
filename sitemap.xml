@@ -2,7 +2,7 @@
 <!--
     sitemap.xml — Elixir S&B
     Perfumería online | Medellín, Colombia
-    TODO: Reemplazar TUDOMINIO.COM con el dominio real en todos los <loc>
+    TODO: Reemplazar elixirsb.netlify.app con el dominio real en todos los <loc>
 -->
 <urlset
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
@@ -10,8 +10,8 @@
 
     <!-- Inicio / Home -->
     <url>
-        <loc>https://TUDOMINIO.COM/</loc>
-        <xhtml:link rel="alternate" hreflang="es-CO" href="https://TUDOMINIO.COM/"/>
+        <loc>https://elixirsb.netlify.app/</loc>
+        <xhtml:link rel="alternate" hreflang="es-CO" href="https://elixirsb.netlify.app/"/>
         <lastmod>2026-04-03</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
@@ -19,8 +19,8 @@
 
     <!-- Catálogo de productos -->
     <url>
-        <loc>https://TUDOMINIO.COM/productos.html</loc>
-        <xhtml:link rel="alternate" hreflang="es-CO" href="https://TUDOMINIO.COM/productos.html"/>
+        <loc>https://elixirsb.netlify.app/productos.html</loc>
+        <xhtml:link rel="alternate" hreflang="es-CO" href="https://elixirsb.netlify.app/productos.html"/>
         <lastmod>2026-04-03</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
@@ -28,8 +28,8 @@
 
     <!-- Quiénes somos -->
     <url>
-        <loc>https://TUDOMINIO.COM/nosotros.html</loc>
-        <xhtml:link rel="alternate" hreflang="es-CO" href="https://TUDOMINIO.COM/nosotros.html"/>
+        <loc>https://elixirsb.netlify.app/nosotros.html</loc>
+        <xhtml:link rel="alternate" hreflang="es-CO" href="https://elixirsb.netlify.app/nosotros.html"/>
         <lastmod>2026-04-03</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
@@ -37,8 +37,8 @@
 
     <!-- Contacto -->
     <url>
-        <loc>https://TUDOMINIO.COM/contacto.html</loc>
-        <xhtml:link rel="alternate" hreflang="es-CO" href="https://TUDOMINIO.COM/contacto.html"/>
+        <loc>https://elixirsb.netlify.app/contacto.html</loc>
+        <xhtml:link rel="alternate" hreflang="es-CO" href="https://elixirsb.netlify.app/contacto.html"/>
         <lastmod>2026-04-03</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
@@ -46,8 +46,8 @@
 
     <!-- Términos y Condiciones -->
     <url>
-        <loc>https://TUDOMINIO.COM/terminos.html</loc>
-        <xhtml:link rel="alternate" hreflang="es-CO" href="https://TUDOMINIO.COM/terminos.html"/>
+        <loc>https://elixirsb.netlify.app/terminos.html</loc>
+        <xhtml:link rel="alternate" hreflang="es-CO" href="https://elixirsb.netlify.app/terminos.html"/>
         <lastmod>2026-04-03</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.3</priority>
@@ -55,8 +55,8 @@
 
     <!-- Política de Privacidad -->
     <url>
-        <loc>https://TUDOMINIO.COM/privacidad.html</loc>
-        <xhtml:link rel="alternate" hreflang="es-CO" href="https://TUDOMINIO.COM/privacidad.html"/>
+        <loc>https://elixirsb.netlify.app/privacidad.html</loc>
+        <xhtml:link rel="alternate" hreflang="es-CO" href="https://elixirsb.netlify.app/privacidad.html"/>
         <lastmod>2026-04-03</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.3</priority>
