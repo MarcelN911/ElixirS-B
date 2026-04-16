@@ -44,6 +44,10 @@ async function fetchProducts() {
         const content = await db.text();
         const json = JSON.parse(content.substring(47).slice(0, -2));
         data = json.table.rows;
+        for (let i = data.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [data[i], data[j]] = [data[j], data[i]];
+        }
         document.getElementById('productsGrid').innerHTML = '';
         createProductCards(data);
         checkSearchOnLoad();
