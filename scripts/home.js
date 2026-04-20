@@ -111,12 +111,47 @@ setupBestsellersNav();
 
 // ── Content Fetch (Quote + Reviews) ──────────
 
-/** Updates the quote section with the text and author from the spreadsheet. */
-function updateQuote(row) {
-    if (row[0] && row[0].v && row[1] && row[1].v) {
-        document.getElementById('quoteText').textContent   = '"' + row[0].v + '"';
-        document.getElementById('quoteAuthor').textContent = '— ' + row[1].v;
-    }
+/** Updates the quote section with a quote object { text, author }. */
+function updateQuote(quote) {
+    document.getElementById('quoteText').textContent   = '"' + quote.text + '"';
+    document.getElementById('quoteAuthor').textContent = '— ' + quote.author;
+}
+
+/** Filters the spreadsheet rows and returns only those that have a quote text and author. */
+function collectQuotes(rows) {
+    return rows
+        .filter(row => row.c[0] && row.c[0].v && row.c[1] && row.c[1].v)
+        .map(row => ({ text: row.c[0].v, author: row.c[1].v }));
+}
+
+/**
+ * Shows the quotes in random order, rotating every 10 seconds.
+ * If there is only one quote, it is shown without rotation.
+ */
+function startQuoteRotation(quotes) {
+    if (quotes.length === 0) return;
+
+    const shuffled = [...quotes].sort(() => Math.random() - 0.5);
+    let index = 0;
+
+    updateQuote(shuffled[0]);
+
+    if (quotes.length === 1) return;
+
+    setInterval(function() {
+        const textEl   = document.getElementById('quoteText');
+        const authorEl = document.getElementById('quoteAuthor');
+
+        textEl.style.opacity   = '0';
+        authorEl.style.opacity = '0';
+
+        setTimeout(function() {
+            index = (index + 1) % shuffled.length;
+            updateQuote(shuffled[index]);
+            textEl.style.opacity   = '1';
+            authorEl.style.opacity = '0.8';
+        }, 500);
+    }, 10000);
 }
 
 /**
@@ -153,7 +188,8 @@ async function fetchContent() {
     if (rows.length === 0) {
         return;
     }
-    updateQuote(rows[0].c);
+    const quotes = collectQuotes(rows);
+    startQuoteRotation(quotes);
     const reviews = collectReviews(rows);
     if (reviews.length > 0) {
         loadReviews(reviews);

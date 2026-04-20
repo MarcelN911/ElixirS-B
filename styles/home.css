@@ -132,6 +132,11 @@
     line-height: 1.6;
     margin: 0 0 20px;
     letter-spacing: 0.5px;
+    transition: opacity 0.5s ease;
+    min-height: 4.8em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .quote-author {
@@ -142,6 +147,7 @@
     letter-spacing: 2px;
     text-transform: uppercase;
     opacity: 0.8;
+    transition: opacity 0.5s ease;
 }
 
 /* ---- Social / Instagram Section ---- */
