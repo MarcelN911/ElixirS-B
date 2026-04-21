@@ -74,7 +74,7 @@ async function fetchBestsellers() {
         data = json.table.rows;
         document.getElementById('bestsellersCarousel').innerHTML = '';
         for (let i = 0; i < data.length; i++) {
-            if (data[i].c[9] && data[i].c[9].v === 'No') continue;
+            if (data[i].c[10] && data[i].c[10].v === 'No') continue;
             if (data[i].c[7] && data[i].c[7].v === 'Si') {
                 createBestsellerTemplate(createProductData(data, i));
             }

@@ -84,7 +84,7 @@ function checkSearchOnLoad() {
 function createProductCards(data) {
     const end = Math.min(showProducts + productsPerLoad, data.length);
     for (let i = showProducts; i < end; i++) {
-        if (data[i].c[9].v === 'No') {
+        if (data[i].c[10].v === 'No') {
             continue;
         }
         createProductTemplate(createProductData(data, i));
@@ -109,10 +109,22 @@ function resetProductView(category) {
 /** Renders all active products that belong to the given category. */
 function showCategoryProducts(category) {
     for (let i = 0; i < data.length; i++) {
-        if (data[i].c[9].v === 'No') {
+        if (data[i].c[10].v === 'No') {
             continue;
         }
         if (data[i].c[8].v === category) {
+            createProductTemplate(createProductData(data, i));
+        }
+    }
+}
+
+/** Renders all active products that have Unisex = Si. */
+function showUnisexProducts() {
+    for (let i = 0; i < data.length; i++) {
+        if (data[i].c[10].v === 'No') {
+            continue;
+        }
+        if (data[i].c[9] && data[i].c[9].v === 'Si') {
             createProductTemplate(createProductData(data, i));
         }
     }
@@ -128,6 +140,8 @@ function filterProducts(category) {
     resetProductView(category);
     if (category === 'Todos') {
         createProductCards(data);
+    } else if (category === 'Unisex') {
+        showUnisexProducts();
     } else {
         showCategoryProducts(category);
     }
@@ -165,7 +179,7 @@ function findMatchingProducts(searchInput) {
     document.getElementById('productsGrid').innerHTML = '';
     let count = 0;
     for (let i = 0; i < data.length; i++) {
-        if (data[i].c[9].v === 'No') {
+        if (data[i].c[10].v === 'No') {
             continue;
         }
         if (isProductMatch(i, searchInput)) {

@@ -64,10 +64,10 @@ function buildCurrentProductMeta(product) {
         brand = '';
     }
     let image;
-    if (product.c[10]) {
-        image = transformImageUrl(product.c[10].v);
+    if (product.c[11]) {
+        image = transformImageUrl(product.c[11].v);
     } else {
-        image = './assets/img/product-placeholder.svg';
+        image = './assets/img/logo-transparent.png';
     }
     return {
         id:    product.c[0].v,
@@ -122,18 +122,18 @@ function renderInfo(product) {
 /** Sets the main product image. Falls back to a placeholder if no image exists. */
 function renderImage(product) {
     const imgEl = document.querySelector('.pd-image');
-    if (product.c[10]) {
-        imgEl.src = transformImageUrl(product.c[10].v);
+    if (product.c[11]) {
+        imgEl.src = transformImageUrl(product.c[11].v);
     } else {
-        imgEl.src = './assets/img/product-placeholder.svg';
+        imgEl.src = './assets/img/logo-transparent.png';
     }
 }
 
 /** Fills in the product description text. */
 function renderDescription(product) {
     const descEl = document.querySelector('#pdDescription p');
-    if (product.c[11]) {
-        descEl.textContent = product.c[11].v;
+    if (product.c[12]) {
+        descEl.textContent = product.c[12].v;
     } else {
         descEl.textContent = 'No hay descripción disponible.';
     }
@@ -261,7 +261,7 @@ function getRelatedCandidates(allData, currentProduct) {
         currentCategory = '';
     }
     return allData.filter(function(row) {
-        if (!row.c[9] || row.c[9].v === 'No') {
+        if (!row.c[10] || row.c[10].v === 'No') {
             return false;
         }
         if (String(row.c[0].v) === currentId) {

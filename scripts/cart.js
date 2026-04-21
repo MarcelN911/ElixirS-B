@@ -214,7 +214,7 @@ function buildCartItemHtml(item) {
     return `
         <div class="cart-item" data-sku="${item.sku}">
             <div class="cart-item-image">
-                <img src="${item.image || './assets/img/product-placeholder.svg'}"
+                <img src="${item.image || './assets/img/logo-transparent.png'}"
                      alt="${item.name}" loading="lazy">
             </div>
             <div class="cart-item-details">

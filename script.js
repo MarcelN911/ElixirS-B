@@ -37,11 +37,11 @@ function openWhatsAppContact() {
  */
 function transformImageUrl(url, width) {
     if (width === undefined) width = 800;
-    if (!url) return './assets/img/product-placeholder.svg';
+    if (!url) return './assets/img/logo-transparent.png';
     try {
         const parsed = new URL(url);
         if (!parsed.hostname.includes('drive.google.com')) {
-            return './assets/img/product-placeholder.svg';
+            return './assets/img/logo-transparent.png';
         }
         // Format: https://drive.google.com/file/d/FILE_ID/view?usp=sharing
         const pathMatch = parsed.pathname.match(/\/d\/([^/]+)/);
@@ -53,9 +53,9 @@ function transformImageUrl(url, width) {
         if (fileId) {
             return `https://drive.google.com/thumbnail?id=${fileId}&sz=w${width}`;
         }
-        return './assets/img/product-placeholder.svg';
+        return './assets/img/logo-transparent.png';
     } catch (e) {
-        return './assets/img/product-placeholder.svg';
+        return './assets/img/logo-transparent.png';
     }
 }
 
@@ -88,9 +88,10 @@ function createProductData(data, index) {
         size:        getValue(data, index, 5,  'desconocido'),
         badge:       getValue(data, index, 6,  ''),
         categories:  getValue(data, index, 8,  ''),
-        active:      getValue(data, index, 9,  'No'),
-        image:       transformImageUrl(getValue(data, index, 10, '')),
-        description: getValue(data, index, 11, '')
+        unisex:      getValue(data, index, 9,  'No'),
+        active:      getValue(data, index, 10, 'No'),
+        image:       transformImageUrl(getValue(data, index, 11, '')),
+        description: getValue(data, index, 12, '')
     };
 }
 
