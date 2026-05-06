@@ -45,7 +45,7 @@ Hola! Completé el test de perfil. Mis respuestas:
 
 ¡Quedo atento/a a su recomendación!`;
 
-    const phone = '573205826414';
+    const phone = '+573218101882';
     window.open(`https://wa.me/${phone}?text=${encodeURIComponent(mensaje)}`, '_blank');
 }
 
