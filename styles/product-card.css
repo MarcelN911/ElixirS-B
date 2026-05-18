@@ -140,9 +140,10 @@
 
 .product-card-sizes {
     display: flex;
-    gap: 6px;
+    gap: 5px;
     margin-bottom: 10px;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    overflow: hidden;
 }
 
 .size-pill {

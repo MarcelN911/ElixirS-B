@@ -146,49 +146,6 @@
 
     </main>
 
-    <div class="pf-alert" id="pfAlert" role="complementary" aria-label="Test olfativo">
-        <div class="pf-alert-body">
-            <p class="pf-alert-eyebrow">Test Olfativo</p>
-            <p class="pf-alert-title">¿No sabes cuál elegir?</p>
-            <a href="formulario.html" class="pf-alert-btn">Descubre tu Aroma Ideal</a>
-        </div>
-        <button class="pf-alert-close" id="pfAlertClose" aria-label="Cerrar">&times;</button>
-    </div>
-
-    <script>
-        (function () {
-            if (sessionStorage.getItem('pfAlertShown')) return;
-
-            const grid  = document.getElementById('productsGrid');
-            const alert = document.getElementById('pfAlert');
-            const close = document.getElementById('pfAlertClose');
-
-            close.addEventListener('click', function () {
-                alert.classList.remove('pf-alert--visible');
-                sessionStorage.setItem('pfAlertShown', '1');
-            });
-
-            const gridObserver = new MutationObserver(function () {
-                const cards = grid.children;
-                if (cards.length < 50) return;
-
-                gridObserver.disconnect();
-
-                const cardObserver = new IntersectionObserver(function (entries) {
-                    if (entries[0].isIntersecting) {
-                        cardObserver.disconnect();
-                        alert.classList.add('pf-alert--visible');
-                        sessionStorage.setItem('pfAlertShown', '1');
-                    }
-                }, { threshold: 0.3 });
-
-                cardObserver.observe(cards[49]);
-            });
-
-            gridObserver.observe(grid, { childList: true });
-        })();
-    </script>
-
     <div class="cart-panel" id="cartPanel">
         <div class="cart-panel-header">
             <h2>Tu Carrito</h2>

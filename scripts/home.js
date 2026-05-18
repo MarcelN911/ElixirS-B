@@ -150,7 +150,7 @@ function startQuoteRotation(quotes) {
             updateQuote(shuffled[index]);
             textEl.style.opacity   = '1';
             authorEl.style.opacity = '0.8';
-        }, 500);
+        }, 600);
     }, 10000);
 }
 

@@ -7,6 +7,35 @@
 
 // ── Init ──────────────────────────────────────
 
+const ORDER_KEY = 'elixir_product_order';
+const ORDER_TTL = 24 * 60 * 60 * 1000;
+
+/**
+ * Returns a shuffled copy of `rows` using a saved order from localStorage.
+ * If no valid order exists (first visit, expired, or product count changed),
+ * a new random order is created and saved for 24 hours.
+ */
+function getOrderedProducts(rows) {
+    try {
+        const saved = JSON.parse(localStorage.getItem(ORDER_KEY));
+        if (saved && saved.order && saved.order.length === rows.length && Date.now() - saved.timestamp < ORDER_TTL) {
+            return saved.order.map(function(i) { return rows[i]; });
+        }
+    } catch (e) {}
+
+    const indices = rows.map(function(_, i) { return i; });
+    for (let i = indices.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const tmp = indices[i]; indices[i] = indices[j]; indices[j] = tmp;
+    }
+
+    try {
+        localStorage.setItem(ORDER_KEY, JSON.stringify({ order: indices, timestamp: Date.now() }));
+    } catch (e) {}
+
+    return indices.map(function(i) { return rows[i]; });
+}
+
 /** Shows 8 skeleton placeholder cards in the products grid while data is loading. */
 function showSkeletonGrid() {
     const grid = document.getElementById('productsGrid');
@@ -43,11 +72,7 @@ async function fetchProducts() {
         const db      = await fetch(productsUrl);
         const content = await db.text();
         const json = JSON.parse(content.substring(47).slice(0, -2));
-        data = json.table.rows;
-        for (let i = data.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [data[i], data[j]] = [data[j], data[i]];
-        }
+        data = getOrderedProducts(json.table.rows);
         document.getElementById('productsGrid').innerHTML = '';
         createProductCards(data);
         checkSearchOnLoad();
