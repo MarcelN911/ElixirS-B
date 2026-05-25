@@ -68,7 +68,7 @@
 }
 
 .bestsellers-carousel .product-link {
-    flex: 0 0 80%;
+    flex: 0 0 40%;
     scroll-snap-align: start;
     display: flex;
 }
