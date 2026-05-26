@@ -150,7 +150,7 @@
 
 .pd-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 40px;
+    font-size: 28px;
     font-weight: 400;
     color: white;
     line-height: 1;
@@ -269,7 +269,7 @@
 
 .pd-price-current {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 40px;
+    font-size: 28px;
     font-weight: 500;
     color: var(--gold);
     letter-spacing: 1px;
@@ -600,7 +600,7 @@
 .pd-related-carousel {
     display: flex;
     gap: 15px;
-    padding: 10px 20px;
+    padding: 10px 0;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
@@ -620,7 +620,7 @@
 }
 
 .pd-related-carousel .product-link {
-    flex: 0 0 80%;
+    flex: 0 0 40%;
     scroll-snap-align: start;
     display: flex;
 }
@@ -630,6 +630,12 @@
 }
 
 /* ---- Responsive: Product Detail ---- */
+
+@media (max-width: 649px) {
+    .pd-image-wrap {
+        aspect-ratio: 4 / 4;
+    }
+}
 
 @media (max-width: 384px) {
     .pd-price-current {
@@ -655,13 +661,13 @@
     }
 
     .pd-gallery {
-        flex: 0 0 40%;
+        flex: 0 0 48%;
         position: sticky;
         top: 90px;
     }
 
     .pd-image-wrap {
-        aspect-ratio: 3 / 5;
+        aspect-ratio: 4 / 5;
         height: unset;
     }
 
@@ -671,7 +677,7 @@
     }
 
     .pd-title {
-        font-size: 42px;
+        font-size: 32px;
     }
 }
 

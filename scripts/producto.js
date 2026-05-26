@@ -301,7 +301,6 @@ function buildRelatedCardHtml(product) {
             <div class="product-card-info">
                 <div class="product-card-name-wrap"><h3 class="product-card-name">${product.name}</h3></div>
                 <p class="product-card-brand">${product.brand}</p>
-                ${createSizePills(product.size)}
                 ${createPrice(product.price)}
             </div>
         </article>

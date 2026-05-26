@@ -398,7 +398,7 @@
 }
 
 .testimonial-card {
-    flex: 0 0 85%;
+    flex: 0 0 70%;
     scroll-snap-align: start;
     background: linear-gradient(145deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
     border: 1px solid rgba(212, 175, 125, 0.15);
