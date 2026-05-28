@@ -88,7 +88,9 @@ async function fetchBestsellers() {
             createBestsellerTemplate(createProductData(data, data.indexOf(p)));
         });
     } catch (e) {
-        document.getElementById('bestsellersCarousel').innerHTML = '';
+        console.error('[Elixir] fetchBestsellers error:', e);
+        const c = document.getElementById('bestsellersCarousel');
+        if (c) c.innerHTML = '';
     }
 }
 
@@ -111,8 +113,9 @@ function setupBestsellersNav() {
     const carousel = document.getElementById('bestsellersCarousel');
     const btnLeft  = document.getElementById('scrollLeft');
     const btnRight = document.getElementById('scrollRight');
-    btnLeft.addEventListener('click',  () => carousel.scrollBy({ left: -getScrollAmount(carousel), behavior: 'smooth' }));
-    btnRight.addEventListener('click', () => carousel.scrollBy({ left:  getScrollAmount(carousel), behavior: 'smooth' }));
+    if (!carousel || !btnLeft || !btnRight) return;
+    btnLeft.addEventListener('click',  function() { carousel.scrollBy({ left: -getScrollAmount(carousel), behavior: 'smooth' }); });
+    btnRight.addEventListener('click', function() { carousel.scrollBy({ left:  getScrollAmount(carousel), behavior: 'smooth' }); });
 }
 
 setupBestsellersNav();
@@ -176,7 +179,9 @@ async function fetchShopReviews() {
         loadReviews(reviews.map(function(r) {
             return { stars: r.calificacion, text: r.texto, name: r.nombre, city: r.ciudad };
         }));
-    } catch (e) {}
+    } catch (e) {
+        console.error('[Elixir] fetchShopReviews error:', e);
+    }
 }
 
 // ── Reviews Carousel ──────────────────────────
@@ -198,8 +203,9 @@ function setupReviewsNav() {
     const carousel = document.getElementById('testimonialsCarousel');
     const btnLeft  = document.getElementById('reviewScrollLeft');
     const btnRight = document.getElementById('reviewScrollRight');
-    btnLeft.addEventListener('click',  () => carousel.scrollBy({ left: -getReviewScrollAmount(carousel), behavior: 'smooth' }));
-    btnRight.addEventListener('click', () => carousel.scrollBy({ left:  getReviewScrollAmount(carousel), behavior: 'smooth' }));
+    if (!carousel || !btnLeft || !btnRight) return;
+    btnLeft.addEventListener('click',  function() { carousel.scrollBy({ left: -getReviewScrollAmount(carousel), behavior: 'smooth' }); });
+    btnRight.addEventListener('click', function() { carousel.scrollBy({ left:  getReviewScrollAmount(carousel), behavior: 'smooth' }); });
 }
 
 setupReviewsNav();

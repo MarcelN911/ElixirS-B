@@ -6,11 +6,13 @@
 // ============================================
 
 // --- API URLs ---
-const _apiBase    = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+const _host       = window.location.hostname;
+const _apiBase    = (_host === 'localhost' || _host === '127.0.0.1' || _host === '')
     ? 'http://localhost:3000'
     : 'https://nexomar.co';
-const productsUrl = _apiBase + '/api/products/public';
-const reviewsUrl  = _apiBase + '/api/shop-reviews/public';
+const _shopId     = '6a0de7a797ebb49fffb11079';
+const productsUrl = _apiBase + '/api/products/public?userId=' + _shopId;
+const reviewsUrl  = _apiBase + '/api/shop-reviews/public?userId=' + _shopId;
 
 // --- Pagination state (shared with products.js) ---
 let data = [];
