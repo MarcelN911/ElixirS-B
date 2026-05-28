@@ -130,25 +130,42 @@ function resetProductView(category) {
     document.getElementById('searchClear').classList.remove('visible');
 }
 
-/** Renders all active products that belong to the given category. */
-function showCategoryProducts(category) {
-    for (let i = 0; i < data.length; i++) {
-        if (data[i].disponible === false) {
-            continue;
-        }
-        if (data[i].categoria === category) {
-            createProductTemplate(createProductData(data, i));
-        }
-    }
+/**
+ * Returns the gender options of a product from its variantes.
+ * @param {Object} product
+ * @returns {string[]}
+ */
+function getProductGeneros(product) {
+    if (!product.variantes) return [];
+    var v = product.variantes.find(function(x) { return x.nombre === 'Género'; });
+    return v ? (v.opciones || []) : [];
 }
 
-/** Renders all active products that have Unisex = Si. */
-function showUnisexProducts() {
-    for (let i = 0; i < data.length; i++) {
-        if (data[i].disponible === false) {
-            continue;
-        }
-        if (data[i].variantes && data[i].variantes.some(function(v) { return v.nombre === 'Género' && v.opciones.includes('Unisex'); })) {
+/**
+ * Returns true if the product matches the gender filter.
+ * Unisex products appear under Dama and Caballero as well.
+ * @param {Object} product
+ * @param {string} filter — 'Dama' | 'Caballero' | 'Unisex'
+ */
+function matchesGenderFilter(product, filter) {
+    var generos = getProductGeneros(product);
+    if (filter === 'Dama') {
+        return generos.some(function(g) { return g === 'Damas' || g === 'Unisex'; });
+    }
+    if (filter === 'Caballero') {
+        return generos.some(function(g) { return g === 'Caballeros' || g === 'Unisex'; });
+    }
+    if (filter === 'Unisex') {
+        return generos.includes('Unisex');
+    }
+    return false;
+}
+
+/** Renders all active products that match the given gender filter. */
+function showGenderProducts(filter) {
+    for (var i = 0; i < data.length; i++) {
+        if (data[i].disponible === false) continue;
+        if (matchesGenderFilter(data[i], filter)) {
             createProductTemplate(createProductData(data, i));
         }
     }
@@ -164,12 +181,10 @@ function filterProducts(category) {
     resetProductView(category);
     if (category === 'Todos') {
         createProductCards(data);
-    } else if (category === 'Unisex') {
-        showUnisexProducts();
     } else {
-        showCategoryProducts(category);
+        showGenderProducts(category);
+        animateCards();
     }
-    animateCards();
 }
 
 /**
