@@ -61,23 +61,32 @@ function showBestsellerSkeletons() {
     carousel.innerHTML = html;
 }
 
+const BESTSELLER_MIN = 5;
+
 /**
- * Fetches products from the spreadsheet and renders only the bestsellers
- * (column 7 = 'Si') into the bestsellers carousel on the home page.
+ * Fetches products and renders the bestsellers carousel.
+ * If fewer than BESTSELLER_MIN products are marked as destacado,
+ * fills the remaining slots with randomly selected active products.
  */
 async function fetchBestsellers() {
     showBestsellerSkeletons();
     try {
         const response = await fetch(productsUrl);
-        const json = await response.json();
+        const json     = await response.json();
         data = json;
+
+        const active      = data.filter(function(p) { return p.disponible !== false; });
+        const bestsellers = active.filter(function(p) { return p.destacado === true; });
+        const others      = active.filter(function(p) { return p.destacado !== true; });
+
+        const needed  = Math.max(0, BESTSELLER_MIN - bestsellers.length);
+        const shuffled = others.sort(function() { return Math.random() - 0.5; });
+        const toShow  = bestsellers.concat(shuffled.slice(0, needed));
+
         document.getElementById('bestsellersCarousel').innerHTML = '';
-        for (var i = 0; i < data.length; i++) {
-            if (data[i].disponible === false) continue;
-            if (data[i].destacado === true) {
-                createBestsellerTemplate(createProductData(data, i));
-            }
-        }
+        toShow.forEach(function(p) {
+            createBestsellerTemplate(createProductData(data, data.indexOf(p)));
+        });
     } catch (e) {
         document.getElementById('bestsellersCarousel').innerHTML = '';
     }
@@ -108,19 +117,19 @@ function setupBestsellersNav() {
 
 setupBestsellersNav();
 
-// ── Content Fetch (Quote + Reviews) ──────────
+// ── Quotes ────────────────────────────────────
+
+const QUOTES = [
+    { text: 'No se puede ser elegante sin perfume. Es el accesorio invisible, inolvidable y definitivo.', author: 'Estée Lauder' },
+    { text: 'El perfume es el accesorio invisible, inolvidable y definitivo. Anuncia tu llegada y prolonga tu marcha.', author: 'Coco Chanel' },
+    { text: 'El perfume es una historia en olor, a veces una poesía en memoria.', author: 'Jean-Claude Ellena' },
+    { text: 'El perfume es la forma más intensa del recuerdo. Es la huella invisible que dejamos en el mundo.', author: 'Patrick Süskind' },
+];
 
 /** Updates the quote section with a quote object { text, author }. */
 function updateQuote(quote) {
     document.getElementById('quoteText').textContent   = '"' + quote.text + '"';
     document.getElementById('quoteAuthor').textContent = '— ' + quote.author;
-}
-
-/** Filters the spreadsheet rows and returns only those that have a quote text and author. */
-function collectQuotes(rows) {
-    return rows
-        .filter(row => row.c[0] && row.c[0].v && row.c[1] && row.c[1].v)
-        .map(row => ({ text: row.c[0].v, author: row.c[1].v }));
 }
 
 /**
@@ -129,21 +138,15 @@ function collectQuotes(rows) {
  */
 function startQuoteRotation(quotes) {
     if (quotes.length === 0) return;
-
-    const shuffled = [...quotes].sort(() => Math.random() - 0.5);
+    const shuffled = [...quotes].sort(function() { return Math.random() - 0.5; });
     let index = 0;
-
     updateQuote(shuffled[0]);
-
     if (quotes.length === 1) return;
-
     setInterval(function() {
         const textEl   = document.getElementById('quoteText');
         const authorEl = document.getElementById('quoteAuthor');
-
         textEl.style.opacity   = '0';
         authorEl.style.opacity = '0';
-
         setTimeout(function() {
             index = (index + 1) % shuffled.length;
             updateQuote(shuffled[index]);
@@ -153,40 +156,11 @@ function startQuoteRotation(quotes) {
     }, 10000);
 }
 
-/**
- * Filters the spreadsheet rows and returns only those that have a review text.
- * Columns: 3=stars, 4=text, 5=name, 6=city.
- */
-function collectReviews(rows) {
-    return rows
-        .filter(row => row.c[4] && row.c[4].v)
-        .map(row => ({
-            stars: row.c[3] ? row.c[3].v : 5,
-            text:  row.c[4].v,
-            name:  row.c[5] ? row.c[5].v : 'Anónimo',
-            city:  row.c[6] ? row.c[6].v : ''
-        }));
-}
-
 /** Clears the testimonials carousel and renders each review card. */
 function loadReviews(reviews) {
     const container     = document.getElementById('testimonialsCarousel');
     container.innerHTML = '';
-    reviews.forEach(review => createReviewTemplate(review));
-}
-
-/**
- * Fetches quotes from Google Sheets and starts the rotation on the home page.
- */
-async function fetchContent() {
-    try {
-        const db      = await fetch(dbUrl);
-        const content = await db.text();
-        const json    = JSON.parse(content.substring(47).slice(0, -2));
-        const rows    = json.table.rows;
-        if (rows.length === 0) return;
-        startQuoteRotation(collectQuotes(rows));
-    } catch (e) {}
+    reviews.forEach(function(review) { createReviewTemplate(review); });
 }
 
 /**
@@ -229,7 +203,7 @@ function setupReviewsNav() {
 }
 
 setupReviewsNav();
-fetchContent();
+startQuoteRotation(QUOTES);
 fetchShopReviews();
 
 // ── Video Reels Carousel ──────────────────────

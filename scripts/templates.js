@@ -1,7 +1,8 @@
 const badgeClasses = {
-    'Nuevo': 'product-card-badge--new',
-    'Sale': 'product-card-badge--sale',
-    'Favorito': 'product-card-badge'
+    'Nuevo':      'product-card-badge--new',
+    'Más vendido': 'product-card-badge--bestseller',
+    'Sale':       'product-card-badge--sale',
+    'Favorito':   'product-card-badge'
 };
 
 function createProductTemplate(product) {
@@ -18,7 +19,7 @@ function createProductTemplate(product) {
                                         <div class="product-card-name-wrap"><h3 class="product-card-name">${product.name}</h3></div>
                                         <p class="product-card-brand">${product.brand}</p>
                                         ${createSizePills(product.size)}
-                                        ${createPrice(product.price, product.sale)}
+                                        ${createPrice(product.price, product.sale, product.multiPrice)}
                                     </div>
                                 </article>
                             </a>`;
@@ -41,7 +42,7 @@ function createImg(image) {
 
 function formatPrice(value) {
     if (!value && value !== 0) return '';
-    return '$' + Number(value).toLocaleString('es-CO');
+    return '$' + Number(value).toLocaleString('es-CO') + ' COP';
 }
 
 function createSizePills(size) {
@@ -51,20 +52,21 @@ function createSizePills(size) {
     return `<div class="product-card-sizes">${pills}</div>`;
 }
 
-function createPrice(price, sale) {
+function createPrice(price, sale, multiPrice) {
     if (!price) {
         return `<div class="product-card-price">
                     <span class="price-current">Precio no disponible</span>
                 </div>`;
     }
+    const desde = multiPrice ? '<span class="price-desde">desde</span>' : '';
     if (sale && sale > 0) {
         return `<div class="product-card-price">
-                    <span class="price-current">${formatPrice(sale)}</span>
                     <span class="price-old">${formatPrice(price)}</span>
+                    <span class="price-row">${desde}<span class="price-current">${formatPrice(sale)}</span></span>
                 </div>`;
     }
     return `<div class="product-card-price">
-                <span class="price-current">${formatPrice(price)}</span>
+                <span class="price-row">${desde}<span class="price-current">${formatPrice(price)}</span></span>
             </div>`;
 }
 
@@ -98,7 +100,7 @@ function createBestsellerTemplate(product) {
                         <div class="product-card-info">
                             <div class="product-card-name-wrap"><h3 class="product-card-name">${product.name}</h3></div>
                             <p class="product-card-brand">${product.brand}</p>
-                            ${createPrice(product.price, product.sale)}
+                            ${createPrice(product.price, product.sale, false)}
                         </div>
                     </article>
                 </a>

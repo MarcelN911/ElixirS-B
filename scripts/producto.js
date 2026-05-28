@@ -77,11 +77,11 @@ function renderFullProductPage(product, allData) {
 function renderInfo(product) {
     var name     = product.nombre    || 'Producto Desconocido';
     var category = product.categoria ? 'Perfume para ' + product.categoria : 'Categoría desconocida';
-    var brand    = product.marca     || 'Desconocido';
+    var brand    = getBrand(product);
     document.querySelector('.pd-eyebrow').textContent            = category;
     document.querySelector('.pd-title').textContent              = name;
     document.querySelector('.pd-breadcrumb-current').textContent = name;
-    document.querySelector('.pd-inspiration em').textContent     = brand;
+    document.querySelector('.pd-inspiration em').textContent     = brand || '—';
 }
 
 /** Sets the main product image. Falls back to a placeholder if no image exists. */
@@ -153,16 +153,18 @@ function setupSizeClickListeners(container) {
 function renderPrice(price, priceSale) {
     const priceEl = document.querySelector('#pdPrice');
     const oldEl   = document.querySelector('#pdPriceOld');
-    if (!price) {
+    const p  = parseFloat(price)    || 0;
+    const ps = parseFloat(priceSale) || 0;
+    if (!p) {
         priceEl.textContent = 'Precio no disponible';
         oldEl.textContent   = '';
         return;
     }
-    if (priceSale) {
-        priceEl.textContent = formatPrice(priceSale);
-        oldEl.textContent   = formatPrice(price);
+    if (ps > 0 && ps < p) {
+        priceEl.textContent = formatPrice(ps);
+        oldEl.textContent   = formatPrice(p);
     } else {
-        priceEl.textContent = formatPrice(price);
+        priceEl.textContent = formatPrice(p);
         oldEl.textContent   = '';
     }
 }

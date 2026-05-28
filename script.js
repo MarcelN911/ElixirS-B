@@ -6,7 +6,6 @@
 // ============================================
 
 // --- API URLs ---
-const dbUrl       = `https://docs.google.com/spreadsheets/d/1FiOCY_GIkpCCZVaZplXQtQzwLORYQOws/gviz/tq?tqx=out:json&gid=438421994&headers=1`;
 const _apiBase    = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
     ? 'http://localhost:3000'
     : 'https://nexomar.co';
@@ -32,12 +31,37 @@ function openWhatsAppContact() {
 
 // ── Data Helpers ──────────────────────────────
 
+/**
+ * Derives the badge label from a product's tags and sale price.
+ * Priority: Nuevo > Sale/Oferta > sale price.
+ */
+function deriveBadge(p) {
+    var tags = Array.isArray(p.tags) ? p.tags : [];
+    if (tags.includes('Nuevo'))        return 'Nuevo';
+    if (tags.includes('Más vendido')) return 'Más vendido';
+    if (tags.includes('Oferta'))     return 'Sale';
+    var hasSale = (p.precioSale && p.precioSale > 0) ||
+        (p.presentaciones && p.presentaciones.some(function(pr) { return pr.precioSale > 0; }));
+    if (hasSale) return 'Sale';
+    return '';
+}
+
+function getBrand(p) {
+    if (p.marca) return p.marca;
+    if (Array.isArray(p.variantes)) {
+        var v = p.variantes.find(function(x) { return x.nombre === 'Marca'; });
+        if (v && v.opciones && v.opciones[0]) return v.opciones[0];
+    }
+    return '';
+}
+
 function createProductData(data, index) {
     var p = data[index];
     var allPrices = p.presentaciones && p.presentaciones.length > 0
         ? p.presentaciones.map(function(pr) { return pr.precio; })
         : [p.precio];
-    var lowestPrice = allPrices.reduce(function(min, val) { return val < min ? val : min; }, allPrices[0]);
+    var lowestPrice  = allPrices.reduce(function(min, val) { return val < min ? val : min; }, allPrices[0]);
+    var multiPrice   = p.presentaciones && p.presentaciones.length > 1;
     var salePrice = p.presentaciones && p.presentaciones.length > 0 && p.presentaciones[0].precioSale > 0
         ? p.presentaciones[0].precioSale
         : (p.precioSale > 0 ? p.precioSale : null);
@@ -46,12 +70,13 @@ function createProductData(data, index) {
         : '';
     return {
         id:          p._id,
-        name:        p.nombre     || 'desconocido',
-        brand:       p.marca      || 'desconocido',
+        name:        p.nombre || 'desconocido',
+        brand:       getBrand(p),
         price:       lowestPrice,
         sale:        salePrice,
         size:        allSizes,
-        badge:       '',
+        badge:       deriveBadge(p),
+        multiPrice:  multiPrice,
         categories:  p.categoria  || '',
         unisex:      p.variantes  ? p.variantes.some(function(v) { return v.nombre === 'Género' && v.opciones.includes('Unisex'); }) : false,
         active:      p.disponible,
