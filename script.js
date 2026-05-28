@@ -5,10 +5,13 @@
 // cart panel open/close, WhatsApp contact
 // ============================================
 
-// --- Google Sheets API URLs ---
-// These URLs point to two different tabs in the same spreadsheet.
+// --- API URLs ---
 const dbUrl       = `https://docs.google.com/spreadsheets/d/1FiOCY_GIkpCCZVaZplXQtQzwLORYQOws/gviz/tq?tqx=out:json&gid=438421994&headers=1`;
-const productsUrl = `https://docs.google.com/spreadsheets/d/1FiOCY_GIkpCCZVaZplXQtQzwLORYQOws/gviz/tq?tqx=out:json&gid=664120326#gid=664120326&headers=1`;
+const _apiBase    = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+    ? 'http://localhost:3000'
+    : 'https://nexomar.co';
+const productsUrl = _apiBase + '/api/products/public';
+const reviewsUrl  = _apiBase + '/api/shop-reviews/public';
 
 // --- Pagination state (shared with products.js) ---
 let data = [];
@@ -27,71 +30,33 @@ function openWhatsAppContact() {
     window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
 }
 
-// ── Image URL ─────────────────────────────────
-
-/**
- * Converts a Google Drive thumbnail URL into a directly embeddable image URL.
- * Input:  https://drive.google.com/thumbnail?id=FILE_ID&sz=w800
- * Output: https://lh3.googleusercontent.com/d/FILE_ID=w800
- * Returns the placeholder image if the URL is missing or not a Drive URL.
- */
-function transformImageUrl(url, width) {
-    if (width === undefined) width = 800;
-    if (!url) return './assets/img/logo-transparent.png';
-    try {
-        const parsed = new URL(url);
-        if (!parsed.hostname.includes('drive.google.com')) {
-            return './assets/img/logo-transparent.png';
-        }
-        // Format: https://drive.google.com/file/d/FILE_ID/view?usp=sharing
-        const pathMatch = parsed.pathname.match(/\/d\/([^/]+)/);
-        if (pathMatch) {
-            return `https://drive.google.com/thumbnail?id=${pathMatch[1]}&sz=w${width}`;
-        }
-        // Format: https://drive.google.com/thumbnail?id=FILE_ID&sz=w800
-        const fileId = parsed.searchParams.get('id');
-        if (fileId) {
-            return `https://drive.google.com/thumbnail?id=${fileId}&sz=w${width}`;
-        }
-        return './assets/img/logo-transparent.png';
-    } catch (e) {
-        return './assets/img/logo-transparent.png';
-    }
-}
-
 // ── Data Helpers ──────────────────────────────
 
-/**
- * Safely reads a cell value from a Google Sheets row.
- * Returns `fallback` if the cell is empty or missing.
- *
- * Example: getValue(data, 0, 1, 'unknown') reads column 1 of row 0.
- */
-function getValue(data, index, column, fallback) {
-    if (data[index].c[column]) {
-        return data[index].c[column].v;
-    }
-    return fallback;
-}
-
-/**
- * Converts a raw Google Sheets row into a readable product object.
- * Column numbers match the order defined in the spreadsheet.
- */
 function createProductData(data, index) {
+    var p = data[index];
+    var allPrices = p.presentaciones && p.presentaciones.length > 0
+        ? p.presentaciones.map(function(pr) { return pr.precio; })
+        : [p.precio];
+    var lowestPrice = allPrices.reduce(function(min, val) { return val < min ? val : min; }, allPrices[0]);
+    var salePrice = p.presentaciones && p.presentaciones.length > 0 && p.presentaciones[0].precioSale > 0
+        ? p.presentaciones[0].precioSale
+        : (p.precioSale > 0 ? p.precioSale : null);
+    var allSizes = p.presentaciones
+        ? p.presentaciones.map(function(pr) { return pr.etiqueta; }).join(',')
+        : '';
     return {
-        id:          getValue(data, index, 0,  ''),
-        name:        getValue(data, index, 1,  'desconocido'),
-        brand:       getValue(data, index, 2,  'desconocido'),
-        price:       getValue(data, index, 3,  'desconocido'),
-        sale:        getValue(data, index, 4,  ''),
-        size:        getValue(data, index, 5,  'desconocido'),
-        badge:       getValue(data, index, 6,  ''),
-        categories:  getValue(data, index, 8,  ''),
-        unisex:      getValue(data, index, 9,  'No'),
-        active:      getValue(data, index, 10, 'No'),
-        image:       transformImageUrl(getValue(data, index, 11, '')),
-        description: getValue(data, index, 12, '')
+        id:          p._id,
+        name:        p.nombre     || 'desconocido',
+        brand:       p.marca      || 'desconocido',
+        price:       lowestPrice,
+        sale:        salePrice,
+        size:        allSizes,
+        badge:       '',
+        categories:  p.categoria  || '',
+        unisex:      p.variantes  ? p.variantes.some(function(v) { return v.nombre === 'Género' && v.opciones.includes('Unisex'); }) : false,
+        active:      p.disponible,
+        image:       p.imagenes && p.imagenes.length > 0 ? p.imagenes[0] : './assets/img/logo-transparent.png',
+        description: p.descripcion || ''
     };
 }
 

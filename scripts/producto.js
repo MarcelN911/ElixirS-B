@@ -35,45 +35,25 @@ async function fetchProduct() {
 
 fetchProduct();
 
-/** Fetches the spreadsheet and returns the raw rows array. */
+/** Fetches all products from the API and returns the array. */
 async function loadAllProductRows() {
-    const db      = await fetch(productsUrl);
-    const content = await db.text();
-    const json    = JSON.parse(content.substring(47).slice(0, -2));
-    return json.table.rows;
+    const response = await fetch(productsUrl);
+    return await response.json();
 }
 
-/** Reads the ?id= URL parameter and finds the matching product row. */
+/** Reads the ?id= URL parameter and finds the matching product. */
 function findProductById(allData) {
-    const id = new URLSearchParams(window.location.search).get('id');
-    return allData.find(function(row) { return row.c[0].v == id; });
+    var id = new URLSearchParams(window.location.search).get('id');
+    return allData.find(function(row) { return String(row._id) === id; });
 }
 
 /** Extracts the minimal product fields needed for the add-to-cart function. */
 function buildCurrentProductMeta(product) {
-    let name;
-    if (product.c[1]) {
-        name = product.c[1].v;
-    } else {
-        name = 'Producto';
-    }
-    let brand;
-    if (product.c[2]) {
-        brand = product.c[2].v;
-    } else {
-        brand = '';
-    }
-    let image;
-    if (product.c[11]) {
-        image = transformImageUrl(product.c[11].v);
-    } else {
-        image = './assets/img/logo-transparent.png';
-    }
     return {
-        id:    product.c[0].v,
-        name:  name,
-        brand: brand,
-        image: image
+        id:    product._id,
+        name:  product.nombre || 'Producto',
+        brand: product.marca  || '',
+        image: product.imagenes && product.imagenes.length > 0 ? product.imagenes[0] : './assets/img/logo-transparent.png'
     };
 }
 
@@ -95,24 +75,9 @@ function renderFullProductPage(product, allData) {
 
 /** Fills in the product name, brand, category eyebrow, and breadcrumb. */
 function renderInfo(product) {
-    let name;
-    if (product.c[1]) {
-        name = product.c[1].v;
-    } else {
-        name = 'Producto Desconocido';
-    }
-    let category;
-    if (product.c[8]) {
-        category = 'Perfume para ' + product.c[8].v;
-    } else {
-        category = 'Categoría desconocida';
-    }
-    let brand;
-    if (product.c[2]) {
-        brand = product.c[2].v;
-    } else {
-        brand = 'Desconocido';
-    }
+    var name     = product.nombre    || 'Producto Desconocido';
+    var category = product.categoria ? 'Perfume para ' + product.categoria : 'Categoría desconocida';
+    var brand    = product.marca     || 'Desconocido';
     document.querySelector('.pd-eyebrow').textContent            = category;
     document.querySelector('.pd-title').textContent              = name;
     document.querySelector('.pd-breadcrumb-current').textContent = name;
@@ -121,77 +86,49 @@ function renderInfo(product) {
 
 /** Sets the main product image. Falls back to a placeholder if no image exists. */
 function renderImage(product) {
-    const imgEl = document.querySelector('.pd-image');
-    if (product.c[11]) {
-        imgEl.src = transformImageUrl(product.c[11].v);
-    } else {
-        imgEl.src = './assets/img/logo-transparent.png';
-    }
+    var imgEl = document.querySelector('.pd-image');
+    imgEl.src = product.imagenes && product.imagenes.length > 0 ? product.imagenes[0] : './assets/img/logo-transparent.png';
 }
 
 /** Fills in the product description text. */
 function renderDescription(product) {
-    const descEl = document.querySelector('#pdDescription p');
-    if (product.c[12]) {
-        descEl.textContent = product.c[12].v;
-    } else {
-        descEl.textContent = 'No hay descripción disponible.';
-    }
+    var descEl = document.querySelector('#pdDescription p');
+    descEl.textContent = product.descripcion || 'No hay descripción disponible.';
 }
 
 /**
- * Renders clickable size buttons for each available ml option.
+ * Renders clickable size buttons from the product's presentaciones array.
  * Each button stores its price and sale price as data attributes.
  * Clicking a button updates the displayed price.
  */
 function renderSizes(product) {
-    const sizes      = parseSizeList(product.c[5]);
-    const prices     = product.c[3] ? product.c[3].v.toString().split(',') : [];
-    const salePrices = product.c[4] ? product.c[4].v.toString().split(',') : [];
-    const container  = document.querySelector('.pd-sizes');
+    var container = document.querySelector('.pd-sizes');
     container.innerHTML = '';
 
-    if (sizes.length === 0) {
+    if (!product.presentaciones || product.presentaciones.length === 0) {
         container.innerHTML = '<p class="pd-no-sizes">Talla no disponible</p>';
         document.querySelector('.pd-size-selected').textContent = '';
         renderPrice('', '');
         return;
     }
 
-    sizes.forEach(function(size, i) {
-        container.appendChild(createSizeButton(size, prices[i], salePrices[i], i === 0));
+    product.presentaciones.forEach(function(pres, i) {
+        container.appendChild(createSizeButton(pres.etiqueta, pres.precio, pres.precioSale, i === 0));
     });
 
-    const firstPrice    = prices[0]     ? prices[0].trim()     : '';
-    const firstSalePrice = salePrices[0] ? salePrices[0].trim() : '';
-    renderPrice(firstPrice, firstSalePrice);
-    document.querySelector('.pd-size-selected').textContent = sizes[0] + ' ml';
+    var first = product.presentaciones[0];
+    renderPrice(first.precio, first.precioSale);
+    document.querySelector('.pd-size-selected').textContent = first.etiqueta + ' ml';
     setupSizeClickListeners(container);
-}
-
-/**
- * Parses a comma-separated size string from the spreadsheet into an array.
- * Example: "50, 100, 200" → ['50', '100', '200']
- * Returns an empty array if the cell is missing.
- */
-function parseSizeList(cell) {
-    if (!cell) {
-        return [];
-    }
-    return cell.v.toString().split(',').map(function(s) { return s.trim(); }).filter(Boolean);
 }
 
 /** Creates a single size button with its price data stored as attributes. */
 function createSizeButton(size, price, salePrice, isFirst) {
-    const btn = document.createElement('button');
-    if (isFirst) {
-        btn.className = 'pd-size-btn active';
-    } else {
-        btn.className = 'pd-size-btn';
-    }
+    var btn = document.createElement('button');
+    btn.className         = isFirst ? 'pd-size-btn active' : 'pd-size-btn';
     btn.textContent       = size + ' ml';
-    btn.dataset.price     = price     ? price.trim()     : '';
-    btn.dataset.priceSale = salePrice ? salePrice.trim() : '';
+    btn.dataset.price     = price     || 0;
+    btn.dataset.priceSale = salePrice || 0;
     return btn;
 }
 
@@ -253,39 +190,23 @@ function renderRelated(allData, currentProduct) {
  * excluding the product currently being viewed.
  */
 function getRelatedCandidates(allData, currentProduct) {
-    const currentId = String(currentProduct.c[0].v);
-    let currentCategory;
-    if (currentProduct.c[8]) {
-        currentCategory = currentProduct.c[8].v;
-    } else {
-        currentCategory = '';
-    }
+    var currentId       = String(currentProduct._id);
+    var currentCategory = currentProduct.categoria || '';
     return allData.filter(function(row) {
-        if (!row.c[10] || row.c[10].v === 'No') {
-            return false;
-        }
-        if (String(row.c[0].v) === currentId) {
-            return false;
-        }
-        if (!row.c[8] || row.c[8].v !== currentCategory) {
-            return false;
-        }
+        if (row.disponible === false) return false;
+        if (String(row._id) === currentId) return false;
+        if (row.categoria !== currentCategory) return false;
         return true;
     });
 }
 
 /**
- * Puts bestsellers first, shuffles other products randomly, then cuts to 8.
- * This ensures the most relevant products appear at the start of the carousel.
+ * Puts destacado products first, shuffles the rest randomly, then cuts to 8.
  */
 function sortAndLimitRelated(candidates) {
-    const bestsellers = candidates.filter(function(row) {
-        return row.c[7] && row.c[7].v === 'Si';
-    });
-    const others = candidates.filter(function(row) {
-        return !row.c[7] || row.c[7].v !== 'Si';
-    });
-    return [...bestsellers, ...others.sort(function() { return Math.random() - 0.5; })].slice(0, 8);
+    var bestsellers = candidates.filter(function(row) { return row.destacado === true; });
+    var others      = candidates.filter(function(row) { return row.destacado !== true; });
+    return bestsellers.concat(others.sort(function() { return Math.random() - 0.5; })).slice(0, 8);
 }
 
 /** Returns the HTML string for a single related product card link. */

@@ -69,10 +69,9 @@ function showProductsLoadError() {
 async function fetchProducts() {
     showSkeletonGrid();
     try {
-        const db      = await fetch(productsUrl);
-        const content = await db.text();
-        const json = JSON.parse(content.substring(47).slice(0, -2));
-        data = getOrderedProducts(json.table.rows);
+        const response = await fetch(productsUrl);
+        const json = await response.json();
+        data = getOrderedProducts(json);
         document.getElementById('productsGrid').innerHTML = '';
         createProductCards(data);
         checkSearchOnLoad();
@@ -109,7 +108,7 @@ function checkSearchOnLoad() {
 function createProductCards(data) {
     const end = Math.min(showProducts + productsPerLoad, data.length);
     for (let i = showProducts; i < end; i++) {
-        if (data[i].c[10].v === 'No') {
+        if (data[i].disponible === false) {
             continue;
         }
         createProductTemplate(createProductData(data, i));
@@ -134,10 +133,10 @@ function resetProductView(category) {
 /** Renders all active products that belong to the given category. */
 function showCategoryProducts(category) {
     for (let i = 0; i < data.length; i++) {
-        if (data[i].c[10].v === 'No') {
+        if (data[i].disponible === false) {
             continue;
         }
-        if (data[i].c[8].v === category) {
+        if (data[i].categoria === category) {
             createProductTemplate(createProductData(data, i));
         }
     }
@@ -146,10 +145,10 @@ function showCategoryProducts(category) {
 /** Renders all active products that have Unisex = Si. */
 function showUnisexProducts() {
     for (let i = 0; i < data.length; i++) {
-        if (data[i].c[10].v === 'No') {
+        if (data[i].disponible === false) {
             continue;
         }
-        if (data[i].c[9] && data[i].c[9].v === 'Si') {
+        if (data[i].variantes && data[i].variantes.some(function(v) { return v.nombre === 'Género' && v.opciones.includes('Unisex'); })) {
             createProductTemplate(createProductData(data, i));
         }
     }
@@ -191,8 +190,8 @@ function switchFilterTab(category) {
 
 /** Returns true if a product's name or brand contains the search term. */
 function isProductMatch(index, searchInput) {
-    const name  = data[index].c[1].v.toLowerCase();
-    const brand = data[index].c[2].v.toLowerCase();
+    const name  = (data[index].nombre || '').toLowerCase();
+    const brand = (data[index].marca  || '').toLowerCase();
     return name.includes(searchInput) || brand.includes(searchInput);
 }
 
@@ -204,7 +203,7 @@ function findMatchingProducts(searchInput) {
     document.getElementById('productsGrid').innerHTML = '';
     let count = 0;
     for (let i = 0; i < data.length; i++) {
-        if (data[i].c[10].v === 'No') {
+        if (data[i].disponible === false) {
             continue;
         }
         if (isProductMatch(i, searchInput)) {

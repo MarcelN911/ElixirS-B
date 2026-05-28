@@ -68,14 +68,13 @@ function showBestsellerSkeletons() {
 async function fetchBestsellers() {
     showBestsellerSkeletons();
     try {
-        const db      = await fetch(productsUrl);
-        const content = await db.text();
-        const json = JSON.parse(content.substring(47).slice(0, -2));
-        data = json.table.rows;
+        const response = await fetch(productsUrl);
+        const json = await response.json();
+        data = json;
         document.getElementById('bestsellersCarousel').innerHTML = '';
-        for (let i = 0; i < data.length; i++) {
-            if (data[i].c[10] && data[i].c[10].v === 'No') continue;
-            if (data[i].c[7] && data[i].c[7].v === 'Si') {
+        for (var i = 0; i < data.length; i++) {
+            if (data[i].disponible === false) continue;
+            if (data[i].destacado === true) {
                 createBestsellerTemplate(createProductData(data, i));
             }
         }
@@ -177,23 +176,33 @@ function loadReviews(reviews) {
 }
 
 /**
- * Fetches the content tab of the spreadsheet (quotes and reviews)
- * and updates the home page sections accordingly.
+ * Fetches quotes from Google Sheets and starts the rotation on the home page.
  */
 async function fetchContent() {
-    const db      = await fetch(dbUrl);
-    const content = await db.text();
-    const json    = JSON.parse(content.substring(47).slice(0, -2));
-    const rows    = json.table.rows;
-    if (rows.length === 0) {
-        return;
-    }
-    const quotes = collectQuotes(rows);
-    startQuoteRotation(quotes);
-    const reviews = collectReviews(rows);
-    if (reviews.length > 0) {
-        loadReviews(reviews);
-    }
+    try {
+        const db      = await fetch(dbUrl);
+        const content = await db.text();
+        const json    = JSON.parse(content.substring(47).slice(0, -2));
+        const rows    = json.table.rows;
+        if (rows.length === 0) return;
+        startQuoteRotation(collectQuotes(rows));
+    } catch (e) {}
+}
+
+/**
+ * Fetches shop reviews from the NEXOMAR API and renders them in the
+ * testimonials carousel. Maps MongoDB fields to the template's expected format.
+ */
+async function fetchShopReviews() {
+    try {
+        const res = await fetch(reviewsUrl);
+        if (!res.ok) return;
+        const reviews = await res.json();
+        if (!reviews.length) return;
+        loadReviews(reviews.map(function(r) {
+            return { stars: r.calificacion, text: r.texto, name: r.nombre, city: r.ciudad };
+        }));
+    } catch (e) {}
 }
 
 // ── Reviews Carousel ──────────────────────────
@@ -221,6 +230,7 @@ function setupReviewsNav() {
 
 setupReviewsNav();
 fetchContent();
+fetchShopReviews();
 
 // ── Video Reels Carousel ──────────────────────
 

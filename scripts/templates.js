@@ -40,15 +40,8 @@ function createImg(image) {
 
 
 function formatPrice(value) {
-    if (typeof value === 'string') {
-        return value + '.000 COP';
-    }
-    return value;
-}
-
-function getLowestPrice(priceStr) {
-    const prices = priceStr.toString().split(',').map(p => parseInt(p.trim()));
-    return Math.min(...prices).toString();
+    if (!value && value !== 0) return '';
+    return '$' + Number(value).toLocaleString('es-CO');
 }
 
 function createSizePills(size) {
@@ -58,19 +51,20 @@ function createSizePills(size) {
     return `<div class="product-card-sizes">${pills}</div>`;
 }
 
-function createPrice(price) {
-    if (!price || price === 'desconocido') {
+function createPrice(price, sale) {
+    if (!price) {
         return `<div class="product-card-price">
-                    <span class="price-current">desconocido</span>
+                    <span class="price-current">Precio no disponible</span>
                 </div>`;
     }
-
-    const prices = price.toString().split(',');
-    const lowestPrice = getLowestPrice(price);
-    const prefix = prices.length > 1 ? 'Desde ' : '';
-
+    if (sale && sale > 0) {
+        return `<div class="product-card-price">
+                    <span class="price-current">${formatPrice(sale)}</span>
+                    <span class="price-old">${formatPrice(price)}</span>
+                </div>`;
+    }
     return `<div class="product-card-price">
-                <span class="price-current">${prefix}$${formatPrice(lowestPrice)}</span>
+                <span class="price-current">${formatPrice(price)}</span>
             </div>`;
 }
 
