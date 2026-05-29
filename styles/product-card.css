@@ -225,6 +225,40 @@
     color: inherit;
 }
 
+/* ── Wishlist heart ── */
+.elixir-wish {
+    position: absolute;
+    top: 10px; right: 10px;
+    width: 30px; height: 30px;
+    background: rgba(12, 15, 35, 0.55);
+    backdrop-filter: blur(6px);
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: rgba(212,175,125,0.7);
+    z-index: 3;
+    transition: color 0.2s, background 0.2s;
+    padding: 0;
+}
+
+.elixir-wish:hover { color: var(--gold); background: rgba(12,15,35,0.8); }
+.elixir-wish--active { color: #e8455a; }
+.elixir-wish--active:hover { color: #e8455a; }
+
+/* Detail page variant — not absolute */
+.elixir-wish--detail {
+    position: static;
+    width: 36px; height: 36px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(212,175,125,0.2);
+    display: inline-flex;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
 @media (min-width: 600px) {
     .product-card-badge {
         padding: 5px 10px;

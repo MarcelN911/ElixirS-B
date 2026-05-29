@@ -41,7 +41,7 @@ function hideSearchHint() {
 }
 
 const searchForm = document.getElementById('searchForm');
-if (searchForm) {
+if (searchForm && document.getElementById('searchInputMain')) {
     searchForm.addEventListener('submit', function(event) {
         event.preventDefault();
         searchProductsMain();

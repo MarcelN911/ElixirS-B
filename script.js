@@ -14,6 +14,108 @@ const _shopId     = '6a0de7a797ebb49fffb11079';
 const productsUrl = _apiBase + '/api/products/public?userId=' + _shopId;
 const reviewsUrl  = _apiBase + '/api/shop-reviews/public?userId=' + _shopId;
 
+// ── Wishlist Overlay ──────────────────────────────
+
+function elixirUpdateWishBadge() {
+    const count = Object.keys(getHearts()).length;
+    ['elixirWishBadge', 'elixirWishBadgeMobile'].forEach(function(id) {
+        const badge = document.getElementById(id);
+        if (!badge) return;
+        badge.textContent = count;
+        badge.classList.toggle('hidden', count === 0);
+    });
+}
+
+async function elixirOpenWishlist() {
+    const overlay = document.getElementById('elixirWishOverlay');
+    const body    = document.getElementById('elixirWishBody');
+    if (!overlay) return;
+    overlay.classList.remove('hidden');
+    requestAnimationFrame(function() { overlay.classList.add('open'); });
+    document.body.style.overflow = 'hidden';
+
+    const ids = Object.keys(getHearts());
+    if (!ids.length) {
+        body.innerHTML = '<div style="text-align:center;padding:60px 24px;color:rgba(212,175,125,0.6)">' +
+            '<div style="font-size:32px;margin-bottom:12px">🤍</div>' +
+            '<div style="font-family:\'Cormorant Garamond\',serif;font-style:italic;font-size:20px;color:rgba(212,175,125,0.8)">Sin favoritos aún</div>' +
+            '<div style="font-size:12px;margin-top:8px;line-height:1.6">Presiona el corazón en los productos<br>que más te gusten.</div>' +
+        '</div>';
+        return;
+    }
+
+    body.innerHTML = '<div style="padding:20px 24px;color:rgba(255,255,255,0.4);font-size:13px">Cargando...</div>';
+    try {
+        const res      = await fetch(productsUrl);
+        const all      = await res.json();
+        const hearted  = all.filter(function(p) { return ids.includes(p._id); });
+        if (!hearted.length) { body.innerHTML = ''; return; }
+
+        body.innerHTML = hearted.map(function(p) {
+            const img   = p.imagenes && p.imagenes[0] ? p.imagenes[0] : '';
+            const price = '$' + Math.round(p.precio || 0).toLocaleString('es-CO') + ' COP';
+            return '<a href="producto.html?id=' + p._id + '" style="display:flex;align-items:center;gap:14px;padding:14px 24px;border-bottom:1px solid rgba(212,175,125,0.1);text-decoration:none;color:inherit;transition:background 0.15s" onmouseenter="this.style.background=\'rgba(255,255,255,0.04)\'" onmouseleave="this.style.background=\'transparent\'">' +
+                (img ? '<img src="' + img + '" style="width:52px;height:65px;object-fit:cover;object-position:center top;flex-shrink:0;border-radius:3px">' : '<div style="width:52px;height:65px;background:#1a1020;flex-shrink:0;border-radius:3px"></div>') +
+                '<div style="flex:1;min-width:0">' +
+                    '<div style="font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#e0d0b0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + (p.nombre || '') + '</div>' +
+                    '<div style="font-family:\'Cormorant Garamond\',serif;font-style:italic;font-size:11px;color:rgba(212,175,125,0.6);margin-top:2px">' + (p.marca || '') + '</div>' +
+                    '<div style="font-family:\'Cormorant Garamond\',serif;font-size:14px;color:var(--gold);margin-top:4px">' + price + '</div>' +
+                '</div>' +
+                '<button onclick="event.preventDefault();elixirRemoveWish(\'' + p._id + '\',this.closest(\'a\'))" style="background:none;border:none;color:rgba(212,175,125,0.4);font-size:16px;cursor:pointer;padding:6px;flex-shrink:0;transition:color 0.2s" onmouseenter="this.style.color=\'#e8455a\'" onmouseleave="this.style.color=\'rgba(212,175,125,0.4)\'">✕</button>' +
+            '</a>';
+        }).join('');
+    } catch (e) {}
+}
+
+function elixirCloseWishlist() {
+    const overlay = document.getElementById('elixirWishOverlay');
+    if (!overlay) return;
+    overlay.classList.remove('open');
+    setTimeout(function() { overlay.classList.add('hidden'); }, 400);
+    document.body.style.overflow = '';
+}
+
+function elixirRemoveWish(productId, el) {
+    const h = getHearts();
+    delete h[productId];
+    localStorage.setItem(HEARTS_KEY, JSON.stringify(h));
+    if (el) el.remove();
+    elixirUpdateWishBadge();
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    elixirUpdateWishBadge();
+    ['wishlistBtn', 'wishlistBtnMobile'].forEach(function(id) {
+        const btn = document.getElementById(id);
+        if (btn) btn.addEventListener('click', elixirOpenWishlist);
+    });
+    const overlay = document.getElementById('elixirWishOverlay');
+    if (overlay) overlay.addEventListener('click', function(e) {
+        if (e.target === overlay || e.target.classList.contains('elixir-wish-backdrop')) elixirCloseWishlist();
+    });
+});
+
+// ── Heart / Wishlist ──────────────────────────────
+
+const HEARTS_KEY = 'elixir_hearts';
+
+function getHearts() {
+    try { return JSON.parse(localStorage.getItem(HEARTS_KEY) || '{}'); } catch (_) { return {}; }
+}
+
+function isHearted(productId) { return !!getHearts()[productId]; }
+
+async function heartProduct(productId) {
+    if (isHearted(productId)) return false;
+    try {
+        await fetch(_apiBase + '/api/products/' + productId + '/heart', { method: 'POST' });
+        const h = getHearts();
+        h[productId] = true;
+        localStorage.setItem(HEARTS_KEY, JSON.stringify(h));
+        return true;
+    } catch (_) { return false; }
+}
+
 // --- Pagination state (shared with products.js) ---
 let data = [];
 let showProducts = 0;

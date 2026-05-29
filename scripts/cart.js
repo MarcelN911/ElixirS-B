@@ -564,6 +564,11 @@ if (cartBarButton) {
     cartBarButton.addEventListener('click', openBasket);
 }
 
+const cartButtonMobile = document.getElementById('cartButtonMobile');
+if (cartButtonMobile) {
+    cartButtonMobile.addEventListener('click', openBasket);
+}
+
 const cartCheckoutBtn = document.getElementById('cartCheckoutBtn');
 if (cartCheckoutBtn) {
     cartCheckoutBtn.addEventListener('click', openCheckoutModal);

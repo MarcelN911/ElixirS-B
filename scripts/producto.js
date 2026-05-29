@@ -68,7 +68,37 @@ function renderFullProductPage(product, allData) {
     renderSizes(product);
     renderRelated(allData, product);
     setupProductPage();
+    initProductHeart(product._id);
     document.querySelector('.pd-layout').classList.add('visible');
+}
+
+function initProductHeart(productId) {
+    var btn = document.getElementById('pdWishBtn');
+    if (!btn) {
+        // Place wish button inside the product image (top-right corner)
+        var imgWrap = document.querySelector('.pd-image-wrap');
+        if (!imgWrap) return;
+        imgWrap.style.position = 'relative';
+        btn = document.createElement('button');
+        btn.id = 'pdWishBtn';
+        btn.className = 'elixir-wish';
+        btn.setAttribute('aria-label', 'Guardar favorito');
+        btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>';
+        imgWrap.appendChild(btn);
+    }
+
+    if (isHearted(productId)) {
+        btn.classList.add('elixir-wish--active');
+        btn.querySelector('svg').setAttribute('fill', 'currentColor');
+    }
+
+    btn.addEventListener('click', async function() {
+        var active = this.classList.contains('elixir-wish--active');
+        this.classList.toggle('elixir-wish--active');
+        var svg = this.querySelector('svg');
+        if (svg) svg.setAttribute('fill', active ? 'none' : 'currentColor');
+        if (!active) await heartProduct(productId);
+    });
 }
 
 // ── Render Functions ──────────────────────────

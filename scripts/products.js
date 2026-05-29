@@ -206,7 +206,7 @@ function switchFilterTab(category) {
 /** Returns true if a product's name or brand contains the search term. */
 function isProductMatch(index, searchInput) {
     const name  = (data[index].nombre || '').toLowerCase();
-    const brand = (data[index].marca  || '').toLowerCase();
+    const brand = getBrand(data[index]).toLowerCase();
     return name.includes(searchInput) || brand.includes(searchInput);
 }
 

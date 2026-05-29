@@ -71,7 +71,15 @@
                         <li>
                             <a href="https://www.instagram.com/p/DIzDB8NNuoE/" aria-label="Instagram">
                                 <img src="./assets/img/instagram_white.svg" class="nav-icon social-icon" alt="Instagram">
-                            </a> 
+                            </a>
+                        </li>
+                        <li>
+                            <button class="nav-icon-button elixir-wish-btn" id="wishlistBtn" aria-label="Favoritos">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round">
+                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                                </svg>
+                                <span class="elixir-wish-nav-badge hidden" id="elixirWishBadge"></span>
+                            </button>
                         </li>
                         <li>
                             <button class="nav-icon-button" id="cartButton" aria-label="Carrito">
@@ -83,9 +91,16 @@
                 </div>
 
                 <div class="mobile-right">
-                    <a href="https://www.instagram.com/elixirsb__/" target="_blank" class="nav-icon-button" aria-label="Instagram">
-                        <img src="./assets/img/instagram_white.svg" class="nav-icon" alt="Instagram">
-                    </a>
+                    <button class="nav-icon-button elixir-wish-btn" id="wishlistBtnMobile" aria-label="Favoritos">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                        </svg>
+                        <span class="elixir-wish-nav-badge hidden" id="elixirWishBadgeMobile"></span>
+                    </button>
+                    <button class="nav-icon-button" id="cartButtonMobile" aria-label="Carrito">
+                        <img src="./assets/img/shopping-car.svg" class="nav-icon basket-icon" alt="Carrito">
+                        <span class="cart-count" id="cartCountMobile">0</span>
+                    </button>
                 </div>
             </div>
         </nav>
@@ -430,6 +445,44 @@
         </div>
     </div>
 
+
+<!-- Wishlist overlay -->
+<div id="elixirWishOverlay" class="hidden" style="position:fixed;inset:0;z-index:500;display:flex;justify-content:flex-end;transition:opacity 0.35s;opacity:0;pointer-events:none">
+    <div class="elixir-wish-backdrop" style="position:absolute;inset:0;background:rgba(0,0,0,0.5)"></div>
+    <div style="position:relative;width:min(100%,400px);background:#0c0f23;border-left:1px solid rgba(212,175,125,0.15);display:flex;flex-direction:column;transform:translateX(100%);transition:transform 0.4s cubic-bezier(.2,.7,.2,1)" id="elixirWishPanel">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid rgba(212,175,125,0.15);flex-shrink:0">
+            <span style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold)">❤ Mis favoritos</span>
+            <button onclick="elixirCloseWishlist()" style="background:none;border:none;color:rgba(212,175,125,0.5);font-size:20px;cursor:pointer;padding:6px;line-height:1">✕</button>
+        </div>
+        <div id="elixirWishBody" style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch"></div>
+    </div>
+</div>
+
+<script>
+document.getElementById('elixirWishOverlay').addEventListener('transitionend', function() {});
+// Open animation
+document.addEventListener('DOMContentLoaded', function() {
+    var overlay = document.getElementById('elixirWishOverlay');
+    var panel   = document.getElementById('elixirWishPanel');
+    var origOpen = window.elixirOpenWishlist;
+    window.elixirOpenWishlist = async function() {
+        overlay.classList.remove('hidden');
+        overlay.style.pointerEvents = 'auto';
+        requestAnimationFrame(function() {
+            overlay.style.opacity = '1';
+            panel.style.transform = 'translateX(0)';
+        });
+        if (origOpen) await origOpen();
+    };
+    window.elixirCloseWishlist = function() {
+        overlay.style.opacity = '0';
+        panel.style.transform = 'translateX(100%)';
+        overlay.style.pointerEvents = 'none';
+        setTimeout(function() { overlay.classList.add('hidden'); }, 400);
+        document.body.style.overflow = '';
+    };
+});
+</script>
 
 </body>
 </html>
