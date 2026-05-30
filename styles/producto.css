@@ -632,7 +632,7 @@
 }
 
 .pd-related-carousel .product-link {
-    flex: 0 0 40%;
+    flex: 0 0 45%;
     scroll-snap-align: start;
     display: flex;
 }
@@ -662,7 +662,7 @@
 
 @media (min-width: 650px) {
     .pd-related-carousel .product-link {
-        flex: 0 0 44%;
+        flex: 0 0 45%;
     }
 
     .pd-layout {
