@@ -249,6 +249,11 @@ nav.scrolled {
     letter-spacing: 4px;
 }
 
+.mobile-menu ul a.active {
+    color: var(--gold);
+    opacity: 1;
+}
+
 .mobile-social {
     padding-top: 25px;
     border-top: 1px solid rgba(212, 175, 125, 0.15);
@@ -429,6 +434,20 @@ nav ul {
 
     .mobile-overlay {
         display: none;
+    }
+}
+
+/* ── Wishlist panel — desktop ── */
+@media (min-width: 768px) {
+    #elixirWishPanel {
+        inset: 0 0 0 auto !important;
+        width: 420px !important;
+        border-left: 1px solid rgba(212, 175, 125, 0.15);
+        box-shadow: -12px 0 40px rgba(0, 0, 0, 0.5);
+    }
+
+    #elixirWishBackdrop {
+        background: rgba(0, 0, 0, 0.45) !important;
     }
 }
 

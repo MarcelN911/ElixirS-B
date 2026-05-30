@@ -111,6 +111,7 @@
                 <button class="mobile-close" id="menuClose" aria-label="Cerrar menú">&times;</button>
             </div>
             <ul>
+                <li><a href="index.html" class="active">Inicio</a></li>
                 <li><a href="productos.html">Productos</a></li>
                 <li><a href="nosotros.html">Nosotros</a></li>
                 <li><a href="contacto.html">Contacto</a></li>
@@ -468,13 +469,16 @@ document.addEventListener('DOMContentLoaded', function() {
     var panel    = document.getElementById('elixirWishPanel');
     var body     = document.getElementById('elixirWishBody');
 
+    backdrop.addEventListener('click', function() { elixirCloseWishlist(); });
+
     window.elixirOpenWishlist = async function() {
+        var isDesktop = window.innerWidth >= 768;
         // Show overlay
         overlay.style.display = 'block';
         overlay.style.pointerEvents = 'auto';
         document.body.style.overflow = 'hidden';
         requestAnimationFrame(function() {
-            panel.style.transform = 'translateY(0)';
+            panel.style.transform = isDesktop ? 'translateX(0)' : 'translateY(0)';
         });
 
         // Get hearted IDs
@@ -520,7 +524,8 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     window.elixirCloseWishlist = function() {
-        panel.style.transform = 'translateY(100%)';
+        var isDesktop = window.innerWidth >= 768;
+        panel.style.transform = isDesktop ? 'translateX(100%)' : 'translateY(100%)';
         overlay.style.pointerEvents = 'none';
         setTimeout(function() { overlay.style.display = 'none'; }, 400);
         document.body.style.overflow = '';
