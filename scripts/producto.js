@@ -21,18 +21,14 @@ let pdCurrentProduct = null;
 async function fetchProduct() {
     try {
         const allData = await loadAllProductRows();
-        const urlId   = new URLSearchParams(window.location.search).get('id');
-        console.log('[producto] allData.length:', allData.length, '| looking for id:', urlId);
         const product = findProductById(allData);
         if (!product) {
-            console.warn('[producto] product NOT found. First 3 _ids:', allData.slice(0,3).map(function(r){return r._id;}));
             window.location.replace('404.html');
             return;
         }
         pdCurrentProduct = buildCurrentProductMeta(product);
         renderFullProductPage(product, allData);
     } catch (e) {
-        console.error('[producto] ERROR:', e);
         window.location.replace('404.html');
     }
 }
