@@ -25,7 +25,7 @@ async function elixirToggleHeart(btn) {
 
 function createProductTemplate(product) {
     const container = document.getElementById('productsGrid');
-    container.innerHTML += `<a href="producto.html?id=${product.id}" class="product-link">
+    container.insertAdjacentHTML('beforeend', `<a href="producto.html?id=${product.id}" class="product-link">
                                 <article class="product-card fade-hidden">
                                     <div class="product-card-image">
                                         ${createImg(product.image)}
@@ -41,7 +41,7 @@ function createProductTemplate(product) {
                                         ${createPrice(product.price, product.sale, product.multiPrice)}
                                     </div>
                                 </article>
-                            </a>`;
+                            </a>`);
 }
 
 function createBadge(badge) {
@@ -91,7 +91,7 @@ function createPrice(price, sale, multiPrice) {
 
 function createReviewTemplate(review) {
     const container = document.getElementById('testimonialsCarousel');
-    container.innerHTML += `<article class="testimonial-card">
+    container.insertAdjacentHTML('beforeend', `<article class="testimonial-card">
                                 <div class="testimonial-rating">${createStars(review.stars)}</div>
                                 <p class="testimonial-text">"${review.text}"</p>
                                 <div class="testimonial-author">
@@ -101,13 +101,12 @@ function createReviewTemplate(review) {
                                         ${review.city ? `<span class="testimonial-location">${review.city}</span>` : ''}
                                     </div>
                                 </div>
-                            </article>`
-                        ;
+                            </article>`);
 }
 
 function createBestsellerTemplate(product) {
     const container = document.getElementById('bestsellersCarousel');
-    container.innerHTML += `
+    container.insertAdjacentHTML('beforeend', `
                 <a href="producto.html?id=${product.id}" class="product-link">
                     <article class="product-card">
                         <div class="product-card-image">
@@ -124,5 +123,5 @@ function createBestsellerTemplate(product) {
                         </div>
                     </article>
                 </a>
-    `;
+    `);
 }
