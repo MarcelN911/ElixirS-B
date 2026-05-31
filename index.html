@@ -15,6 +15,8 @@
     <meta property="og:url" content="https://elixirsb.netlify.app/">
 
     <link rel="icon" type="image/png" href="./assets/img/logo-transparent.png">
+    <link rel="apple-touch-icon" href="./assets/img/logo-transparent.png">
+    <link rel="canonical" href="https://elixirsb.netlify.app/">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,6 +33,30 @@
 
     <link rel="stylesheet" href="styles/animations.css">
     <link rel="stylesheet" href="styles/checkout-modal.css">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Elixir S&B",
+      "description": "Perfumería online de lujo en Medellín, Colombia. Fragancias inspiradas en las mejores marcas del mundo a precios accesibles.",
+      "url": "https://elixirsb.netlify.app/",
+      "telephone": "+573218101882",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Medellín",
+        "addressRegion": "Antioquia",
+        "addressCountry": "CO"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+573218101882",
+        "contactType": "customer service",
+        "availableLanguage": "Spanish"
+      },
+      "sameAs": ["https://www.instagram.com/elixirsb__/"]
+    }
+    </script>
 
     <script src="script.js" defer></script>
     <script src="scripts/templates.js" defer></script>
@@ -118,8 +144,8 @@
                 <li><a href="formulario.html">Test Olfativo</a></li>
             </ul>
             <div class="mobile-social">
-                <a href="https://www.instagram.com/p/DIzDB8NNuoE/" aria-label="Instagram"><img src="./assets/img/instagram_white.svg" alt="Instagram"></a>
-                <a href="#" aria-label="WhatsApp"><img src="./assets/img/whatsapp_white.svg" alt="WhatsApp"></a>
+                <a href="https://www.instagram.com/elixirsb__/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><img src="./assets/img/instagram_white.svg" alt="Instagram"></a>
+                <a href="https://wa.me/573218101882" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><img src="./assets/img/whatsapp_white.svg" alt="WhatsApp"></a>
             </div>
         </div>
         <div class="mobile-overlay" id="mobileOverlay"></div>
@@ -133,7 +159,7 @@
                 <p class="hero-subtitle">Inspiración de linaje. Distinción sin límites. El privilegio de vestir las fragancias más icónicas de la historia.</p>
                 <div class="hero-cta">
                     <a href="productos.html" class="hero-btn hero-btn--primary">Explorar Productos</a>
-                    <a href="https://wa.me/573218101882" target="_blank" class="hero-btn hero-btn--secondary">
+                    <a href="https://wa.me/573218101882" target="_blank" rel="noopener noreferrer" class="hero-btn hero-btn--secondary">
                         <img src="./assets/img/whatsapp_white.svg" alt=""> Escríbenos
                     </a>
                 </div>
@@ -192,49 +218,49 @@
                     <img src="./assets/img/instagram_white.svg" alt="Instagram" class="social-icon-title">
                     <h2 class="social-title">ElixirS&B</h2>
                 </div>
-                <a href="https://www.instagram.com/elixirsb__/" target="_blank" class="social-follow-btn">
+                <a href="https://www.instagram.com/elixirsb__/" target="_blank" rel="noopener noreferrer" class="social-follow-btn">
                     Seguir en Instagram
                 </a>
             </div>
             <div class="social-reels" id="socialReels">
                 <div class="social-reel-item" data-role="side">
-                    <video src="./assets/video/video7.mp4" muted loop playsinline class="social-reel-video"></video>
+                    <video data-src="./assets/video/video7.mp4" muted loop playsinline class="social-reel-video"></video>
                     <div class="social-reel-overlay">
                         <img src="./assets/img/instagram_white.svg" alt="Instagram" class="social-reel-ig">
                     </div>
                 </div>
                 <div class="social-reel-item" data-role="side">
-                    <video src="./assets/video/video5.mp4" muted loop playsinline class="social-reel-video"></video>
+                    <video data-src="./assets/video/video5.mp4" muted loop playsinline class="social-reel-video"></video>
                     <div class="social-reel-overlay">
                         <img src="./assets/img/instagram_white.svg" alt="Instagram" class="social-reel-ig">
                     </div>
                 </div>
                 <div class="social-reel-item" data-role="side">
-                    <video src="./assets/video/video3.mp4" muted loop playsinline class="social-reel-video"></video>
+                    <video data-src="./assets/video/video3.mp4" muted loop playsinline class="social-reel-video"></video>
                     <div class="social-reel-overlay">
                         <img src="./assets/img/instagram_white.svg" alt="Instagram" class="social-reel-ig">
                     </div>
                 </div>
                 <div class="social-reel-item" data-role="center">
-                    <video src="./assets/video/video1.mp4" muted loop playsinline class="social-reel-video"></video>
+                    <video data-src="./assets/video/video1.mp4" muted loop playsinline class="social-reel-video"></video>
                     <div class="social-reel-overlay">
                         <img src="./assets/img/instagram_white.svg" alt="Instagram" class="social-reel-ig">
                     </div>
                 </div>
                 <div class="social-reel-item" data-role="side">
-                    <video src="./assets/video/video2.mp4" muted loop playsinline class="social-reel-video"></video>
+                    <video data-src="./assets/video/video2.mp4" muted loop playsinline class="social-reel-video"></video>
                     <div class="social-reel-overlay">
                         <img src="./assets/img/instagram_white.svg" alt="Instagram" class="social-reel-ig">
                     </div>
                 </div>
                 <div class="social-reel-item" data-role="side">
-                    <video src="./assets/video/video6.mp4" muted loop playsinline class="social-reel-video"></video>
+                    <video data-src="./assets/video/video6.mp4" muted loop playsinline class="social-reel-video"></video>
                     <div class="social-reel-overlay">
                         <img src="./assets/img/instagram_white.svg" alt="Instagram" class="social-reel-ig">
                     </div>
                 </div>
                 <div class="social-reel-item" data-role="side">
-                    <video src="./assets/video/video4.mp4" muted loop playsinline class="social-reel-video"></video>
+                    <video data-src="./assets/video/video4.mp4" muted loop playsinline class="social-reel-video"></video>
                     <div class="social-reel-overlay">
                         <img src="./assets/img/instagram_white.svg" alt="Instagram" class="social-reel-ig">
                     </div>
@@ -340,9 +366,9 @@
         <div class="footer-content">
             <div class="footer-brand">
                 <img src="./assets/img/logo-transparent.png" alt="Elixir S&B" class="footer-logo">
-                <p class="footer-tagline">Distincion sin limites</p>
+                <p class="footer-tagline">Distinción sin límites</p>
                 <div class="footer-social">
-                    <a href="https://www.instagram.com/elixirsb__/" target="_blank" aria-label="Instagram">
+                    <a href="https://www.instagram.com/elixirsb__/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                         <img src="./assets/img/instagram_white.svg" alt="Instagram">
                     </a>
                     <a href="#" onclick="openWhatsAppContact(); return false;" aria-label="WhatsApp">

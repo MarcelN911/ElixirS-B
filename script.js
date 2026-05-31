@@ -326,8 +326,7 @@ function setupCookieBanner() {
     banner.id = 'cookieBanner';
     banner.innerHTML = `
         <p>
-            Usamos servicios externos (Google Fonts, Google Sheets) para el funcionamiento de la tienda.
-            Al navegar, aceptas el uso de cookies y servicios de terceros.
+            Usamos Google Fonts y herramientas de análisis para mejorar tu experiencia. No almacenamos datos personales de navegación.
             <a href="privacidad.html">Ver política de privacidad</a>.
         </p>
         <button class="cookie-banner-btn" onclick="acceptCookies()">Aceptar</button>`;

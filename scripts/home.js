@@ -450,3 +450,21 @@ function setupMobileCarousel(reels) {
 }
 
 setupReels();
+
+// Lazy-load video sources when the section scrolls into view (200px before)
+(function() {
+    var section = document.getElementById('socialSection');
+    if (!section) return;
+    var loaded = false;
+    var lazyObserver = new IntersectionObserver(function(entries) {
+        if (entries[0].isIntersecting && !loaded) {
+            loaded = true;
+            section.querySelectorAll('video[data-src]').forEach(function(video) {
+                video.src = video.dataset.src;
+                video.load();
+            });
+            lazyObserver.disconnect();
+        }
+    }, { rootMargin: '200px' });
+    lazyObserver.observe(section);
+})();

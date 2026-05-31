@@ -6,8 +6,5 @@
 User-agent: *
 Allow: /
 
-# Excluir recursos que no necesitan indexación
-Disallow: /assets/
-
 # Apuntar al sitemap
 Sitemap: https://elixirsb.netlify.app/sitemap.xml

@@ -69,7 +69,69 @@ function renderFullProductPage(product, allData) {
     renderRelated(allData, product);
     setupProductPage();
     initProductHeart(product._id);
+    updatePageMeta(product);
     document.querySelector('.pd-layout').classList.add('visible');
+}
+
+/** Updates title, meta description, Open Graph tags and canonical for this product. */
+function updatePageMeta(product) {
+    var name  = product.nombre    || 'Producto';
+    var desc  = product.descripcion || (name + ' — Fragancia disponible en Elixir S&B. Envíos a todo Colombia.');
+    var img   = (product.imagenes && product.imagenes[0]) ? product.imagenes[0] : 'https://elixirsb.netlify.app/assets/img/og-banner.png';
+    var url   = 'https://elixirsb.netlify.app/producto.html?id=' + product._id;
+
+    document.title = name + ' — Elixir S&B | Medellín, Colombia';
+
+    setMeta('name',     'description',  desc);
+    setMeta('property', 'og:title',     name + ' — Elixir S&B');
+    setMeta('property', 'og:description', desc.slice(0, 160));
+    setMeta('property', 'og:url',       url);
+    setMeta('property', 'og:image',     img);
+
+    var canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) canonical.href = url;
+
+    injectProductSchema(product, url);
+}
+
+function setMeta(attr, val, content) {
+    var el = document.querySelector('meta[' + attr + '="' + val + '"]');
+    if (el) el.setAttribute('content', content);
+}
+
+/** Injects a JSON-LD Product schema script tag into the document head. */
+function injectProductSchema(product, url) {
+    var existing = document.getElementById('pd-jsonld');
+    if (existing) existing.remove();
+
+    var first = product.presentaciones && product.presentaciones[0];
+    var price = first ? (first.precioSale || first.precio) : 0;
+
+    var schema = {
+        '@context': 'https://schema.org',
+        '@type': 'Product',
+        'name': product.nombre || '',
+        'description': product.descripcion || '',
+        'url': url,
+        'brand': { '@type': 'Brand', 'name': getBrand(product) || 'Elixir S&B' },
+        'offers': {
+            '@type': 'Offer',
+            'priceCurrency': 'COP',
+            'price': price,
+            'availability': 'https://schema.org/InStock',
+            'seller': { '@type': 'Organization', 'name': 'Elixir S&B' }
+        }
+    };
+
+    if (product.imagenes && product.imagenes[0]) {
+        schema.image = product.imagenes[0];
+    }
+
+    var script = document.createElement('script');
+    script.id   = 'pd-jsonld';
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify(schema);
+    document.head.appendChild(script);
 }
 
 function initProductHeart(productId) {
