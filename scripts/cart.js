@@ -390,6 +390,7 @@ function openCheckoutModal() {
     }
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
     const nameInput = document.getElementById('checkoutName');
     if (nameInput) {
         nameInput.focus();
@@ -404,6 +405,7 @@ function closeCheckoutModal() {
     }
     modal.classList.remove('active');
     document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
     const errorEl = document.getElementById('checkoutError');
     if (errorEl) {
         errorEl.textContent = '';

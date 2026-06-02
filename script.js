@@ -33,6 +33,7 @@ async function elixirOpenWishlist() {
     overlay.classList.remove('hidden');
     requestAnimationFrame(function() { overlay.classList.add('open'); });
     document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
 
     const ids = Object.keys(getHearts());
     if (!ids.length) {
@@ -73,6 +74,7 @@ function elixirCloseWishlist() {
     overlay.classList.remove('open');
     setTimeout(function() { overlay.classList.add('hidden'); }, 400);
     document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
 }
 
 function elixirRemoveWish(productId, el) {
@@ -206,11 +208,15 @@ function createStars(count) {
 function openMobileMenu() {
     document.getElementById('mobileMenu').classList.add('active');
     document.getElementById('mobileOverlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
 }
 
 function closeMobileMenu() {
     document.getElementById('mobileMenu').classList.remove('active');
     document.getElementById('mobileOverlay').classList.remove('active');
+    document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
 }
 
 // Wire up the mobile menu — only runs on pages that have the menu button
