@@ -1,5 +1,5 @@
 // ============================================
-// SCROLL.JS — Elixir S&B
+// SCROLL.JS — ScentScape
 // Infinite scroll for the products grid.
 // A loading spinner is placed at the bottom
 // of the grid. When it scrolls into view,

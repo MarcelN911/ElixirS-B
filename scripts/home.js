@@ -1,5 +1,5 @@
 // ============================================
-// HOME.JS — Elixir S&B
+// HOME.JS — ScentScape
 // Home page logic:
 // hero search bar, bestsellers carousel,
 // testimonials carousel, video reels carousel,
@@ -88,7 +88,7 @@ async function fetchBestsellers() {
             createBestsellerTemplate(createProductData(data, data.indexOf(p)));
         });
     } catch (e) {
-        console.error('[Elixir] fetchBestsellers error:', e);
+        console.error('[ScentScape] fetchBestsellers error:', e);
         const c = document.getElementById('bestsellersCarousel');
         if (c) c.innerHTML = '';
     }
@@ -180,7 +180,7 @@ async function fetchShopReviews() {
             return { stars: r.calificacion, text: r.texto, name: r.nombre, city: r.ciudad };
         }));
     } catch (e) {
-        console.error('[Elixir] fetchShopReviews error:', e);
+        console.error('[ScentScape] fetchShopReviews error:', e);
     }
 }
 

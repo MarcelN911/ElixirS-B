@@ -1,4 +1,4 @@
-# robots.txt — Elixir S&B
+# robots.txt — ScentScape
 # Perfumería online | Medellín, Colombia
 # Actualizado: abril 2026
 

@@ -1,5 +1,5 @@
 // ============================================
-// PRODUCTO.JS — Elixir S&B
+// PRODUCTO.JS — ScentScape
 // Single product detail page:
 // fetch product by ID, render all sections
 // (info, image, sizes, description, related),
@@ -53,7 +53,7 @@ function buildCurrentProductMeta(product) {
         id:    product._id,
         name:  product.nombre || 'Producto',
         brand: product.marca  || '',
-        image: product.imagenes && product.imagenes.length > 0 ? product.imagenes[0] : './assets/img/logo-transparent.png'
+        image: product.imagenes && product.imagenes.length > 0 ? product.imagenes[0] : './assets/img/scentscape-logo.png'
     };
 }
 
@@ -76,14 +76,14 @@ function renderFullProductPage(product, allData) {
 /** Updates title, meta description, Open Graph tags and canonical for this product. */
 function updatePageMeta(product) {
     var name  = product.nombre    || 'Producto';
-    var desc  = product.descripcion || (name + ' — Fragancia disponible en Elixir S&B. Envíos a todo Colombia.');
+    var desc  = product.descripcion || (name + ' — Fragancia disponible en ScentScape. Envíos a todo Colombia.');
     var img   = (product.imagenes && product.imagenes[0]) ? product.imagenes[0] : 'https://elixirsb.netlify.app/assets/img/og-banner.png';
     var url   = 'https://elixirsb.netlify.app/producto.html?id=' + product._id;
 
-    document.title = name + ' — Elixir S&B | Medellín, Colombia';
+    document.title = name + ' — ScentScape | Medellín, Colombia';
 
     setMeta('name',     'description',  desc);
-    setMeta('property', 'og:title',     name + ' — Elixir S&B');
+    setMeta('property', 'og:title',     name + ' — ScentScape');
     setMeta('property', 'og:description', desc.slice(0, 160));
     setMeta('property', 'og:url',       url);
     setMeta('property', 'og:image',     img);
@@ -113,13 +113,13 @@ function injectProductSchema(product, url) {
         'name': product.nombre || '',
         'description': product.descripcion || '',
         'url': url,
-        'brand': { '@type': 'Brand', 'name': getBrand(product) || 'Elixir S&B' },
+        'brand': { '@type': 'Brand', 'name': getBrand(product) || 'ScentScape' },
         'offers': {
             '@type': 'Offer',
             'priceCurrency': 'COP',
             'price': price,
             'availability': 'https://schema.org/InStock',
-            'seller': { '@type': 'Organization', 'name': 'Elixir S&B' }
+            'seller': { '@type': 'Organization', 'name': 'ScentScape' }
         }
     };
 
@@ -179,7 +179,7 @@ function renderInfo(product) {
 /** Sets the main product image. Falls back to a placeholder if no image exists. */
 function renderImage(product) {
     var imgEl = document.querySelector('.pd-image');
-    imgEl.src = product.imagenes && product.imagenes.length > 0 ? product.imagenes[0] : './assets/img/logo-transparent.png';
+    imgEl.src = product.imagenes && product.imagenes.length > 0 ? product.imagenes[0] : './assets/img/scentscape-logo.png';
 }
 
 /** Fills in the product description text. */

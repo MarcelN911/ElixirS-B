@@ -1,5 +1,5 @@
 // ============================================
-// CART.JS — Elixir S&B
+// CART.JS — ScentScape
 // Shopping cart: state management, CRUD,
 // price calculations, UI rendering,
 // and WhatsApp checkout
@@ -214,7 +214,7 @@ function buildCartItemHtml(item) {
     return `
         <div class="cart-item" data-sku="${item.sku}">
             <div class="cart-item-image">
-                <img src="${item.image || './assets/img/logo-transparent.png'}"
+                <img src="${item.image || './assets/img/scentscape-logo.png'}"
                      alt="${item.name}" loading="lazy">
             </div>
             <div class="cart-item-details">
@@ -503,7 +503,7 @@ function buildOrderExtras(summary, referencia) {
 /** Composes the full WhatsApp order message from customer data and cart summary. */
 function buildWhatsAppText(customer, itemLines, summary, extras) {
     return (
-`*NUEVO PEDIDO — Elixir S&B*
+`*NUEVO PEDIDO — ScentScape*
 
 Hola, quiero hacer un pedido con la siguiente información:
 

@@ -1,5 +1,5 @@
 // ============================================
-// PRODUCTS.JS — Elixir S&B
+// PRODUCTS.JS — ScentScape
 // Products grid page: fetch products,
 // render cards, filter by category,
 // search by name/brand, infinite scroll

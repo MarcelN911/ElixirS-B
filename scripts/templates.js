@@ -55,7 +55,7 @@ function createImg(image) {
     if (image) {
         return `<img src="${image}" loading="lazy" alt="Imagen del producto">`;
     }
-    return '<img src="./assets/img/logo-transparent.png" loading="lazy" alt="Imagen del producto">';
+    return '<img src="./assets/img/scentscape-logo.png" loading="lazy" alt="Imagen del producto">';
 }
 
 

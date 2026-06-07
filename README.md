@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🌸 ElixirS-B
+# 🌸 ScentScape
 ### Online Perfume Shop — Built for a Small Business in Colombia
 
 *Replacing a static PDF catalog with a dynamic, WhatsApp-integrated shopping experience*
@@ -74,7 +74,7 @@ Customer adds products to cart
   Redirected to WhatsApp
   with pre-filled message:
   ┌──────────────────────────────┐
-  │ 🛒 Order from ElixirS        │
+  │ 🛒 Order from ScentScape     │
   │ ─────────────────────────    │
   │ • Blue de Chanel 50ml — $X   │
   │ • Dior Sauvage 100ml — $X    │
