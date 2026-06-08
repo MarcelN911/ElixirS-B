@@ -20,7 +20,8 @@ async function elixirToggleHeart(btn) {
     btn.classList.toggle('elixir-wish--active');
     const svg = btn.querySelector('svg');
     if (svg) svg.setAttribute('fill', active ? 'none' : 'currentColor');
-    if (!active) await heartProduct(id);
+    if (active) unheartProduct(id);
+    else await heartProduct(id);
 }
 
 function createProductTemplate(product) {

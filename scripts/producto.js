@@ -159,7 +159,8 @@ function initProductHeart(productId) {
         this.classList.toggle('elixir-wish--active');
         var svg = this.querySelector('svg');
         if (svg) svg.setAttribute('fill', active ? 'none' : 'currentColor');
-        if (!active) await heartProduct(productId);
+        if (active) unheartProduct(productId);
+        else await heartProduct(productId);
     });
 }
 
