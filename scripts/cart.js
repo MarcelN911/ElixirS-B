@@ -11,6 +11,10 @@ const CART_STORAGE_KEY        = 'elixir_cart';
 
 let cart = [];
 
+// ── Applied discount code ─────────────────────
+let appliedCode    = '';
+let appliedPercent = 0;
+
 // ── Persistence ───────────────────────────────
 
 /** Loads the saved cart from localStorage into the `cart` array. */
@@ -30,12 +34,12 @@ function saveCart() {
 
 // ── Price Helpers ─────────────────────────────
 //
-// Google Sheets stores prices as short numbers (65, 95, 160)
-// representing 65.000, 95.000, 160.000 COP.
+// Product prices come straight from the NEXOMAR API as full COP amounts
+// (e.g. precio: 1490000), not abbreviated Sheets-style numbers.
 
-/** Converts a raw spreadsheet price (e.g. 65) to the full COP amount (65000). */
+/** Parses a cart item's stored price field into a numeric COP amount. */
 function rawToPrice(raw) {
-    return parseInt(raw, 10) * 1000;
+    return parseInt(raw, 10);
 }
 
 /**
@@ -168,9 +172,17 @@ function getTotalDiscount() {
     }, 0);
 }
 
-/** The actual amount the customer pays after discounts. */
+/** Amount saved by the applied discount code, on top of item-level sale prices. */
+function getCodeDiscountAmount() {
+    if (appliedPercent <= 0) {
+        return 0;
+    }
+    return Math.round((getSubtotal() - getTotalDiscount()) * appliedPercent / 100);
+}
+
+/** The actual amount the customer pays after item discounts and the applied code. */
 function getFinalTotal() {
-    return getSubtotal() - getTotalDiscount();
+    return getSubtotal() - getTotalDiscount() - getCodeDiscountAmount();
 }
 
 /** How many more COP the customer needs to reach free shipping. 0 if already eligible. */
@@ -185,12 +197,16 @@ function getShippingShortfall() {
 function getCartSummary() {
     const subtotal          = getSubtotal();
     const totalDiscount     = getTotalDiscount();
+    const codeDiscount      = getCodeDiscountAmount();
     const finalTotal        = getFinalTotal();
     const shippingShortfall = getShippingShortfall();
     return {
         itemCount:       cart.reduce(function(sum, item) { return sum + item.quantity; }, 0),
         subtotal:        subtotal,
         totalDiscount:   totalDiscount,
+        codeDiscount:    codeDiscount,
+        appliedCode:     appliedCode,
+        appliedPercent:  appliedPercent,
         finalTotal:      finalTotal,
         shippingShortfall: shippingShortfall,
         hasFreeShipping: cart.length > 0 && shippingShortfall === 0
@@ -317,6 +333,20 @@ function renderPriceSummary(summary) {
             discountRow.style.display = 'none';
         }
         discountEl.textContent = `−$${formatCOP(summary.totalDiscount)} COP`;
+    }
+    const codeRow   = document.getElementById('cartCodeDiscountRow');
+    const codeLabel = document.getElementById('cartCodeDiscountLabel');
+    const codeEl    = document.getElementById('cartCodeDiscount');
+    if (codeRow && codeEl) {
+        if (summary.codeDiscount > 0) {
+            codeRow.style.display = 'flex';
+            if (codeLabel) {
+                codeLabel.textContent = `Código (${summary.appliedPercent}%)`;
+            }
+            codeEl.textContent = `−$${formatCOP(summary.codeDiscount)} COP`;
+        } else {
+            codeRow.style.display = 'none';
+        }
     }
     const totalEl = document.getElementById('cartFinalTotal');
     if (totalEl) {
@@ -457,6 +487,55 @@ function validateCheckoutForm() {
     return fields;
 }
 
+// ── Discount code ──────────────────────────────
+
+/** Validates the entered code against the shop's active discounts and applies it. */
+async function applyDiscountCode() {
+    const input  = document.getElementById('cartCodigo');
+    const btn    = document.getElementById('cartCodeApplyBtn');
+    const fb     = document.getElementById('cartCodeFeedback');
+    const codigo = input ? input.value.trim().toUpperCase() : '';
+
+    if (!fb) {
+        return;
+    }
+    if (!codigo) {
+        fb.textContent = 'Ingresa un código.';
+        fb.className   = 'cart-code-feedback cart-code-feedback--error';
+        return;
+    }
+
+    if (btn) {
+        btn.disabled = true;
+    }
+    fb.textContent = 'Verificando…';
+    fb.className   = 'cart-code-feedback';
+
+    try {
+        const url = `${validateUrl}?shopId=${encodeURIComponent(_shopId)}&codigo=${encodeURIComponent(codigo)}`;
+        const res  = await fetch(url);
+        const data = await res.json();
+        if (data.valid) {
+            appliedCode    = data.codigo;
+            appliedPercent = data.porcentaje;
+            fb.textContent = `¡Código aplicado! −${data.porcentaje}% de descuento`;
+            fb.className   = 'cart-code-feedback cart-code-feedback--ok';
+        } else {
+            appliedCode    = '';
+            appliedPercent = 0;
+            fb.textContent = data.error || 'Código no válido';
+            fb.className   = 'cart-code-feedback cart-code-feedback--error';
+        }
+        updateTotalsOnly();
+    } catch (e) {
+        fb.textContent = 'Error al verificar el código';
+        fb.className   = 'cart-code-feedback cart-code-feedback--error';
+    }
+    if (btn) {
+        btn.disabled = false;
+    }
+}
+
 // ── WhatsApp Message Builder ──────────────────
 
 /**
@@ -485,6 +564,12 @@ function buildOrderExtras(summary, referencia) {
     } else {
         discountLine = '';
     }
+    let codeLine;
+    if (summary.codeDiscount > 0) {
+        codeLine = `\nCódigo *${summary.appliedCode}* (${summary.appliedPercent}%): − $${formatCOP(summary.codeDiscount)} COP`;
+    } else {
+        codeLine = '';
+    }
     let shippingLine;
     if (summary.hasFreeShipping) {
         shippingLine = '\nEnvío: *¡GRATIS!*';
@@ -497,7 +582,7 @@ function buildOrderExtras(summary, referencia) {
     } else {
         refLine = '';
     }
-    return { discountLine, shippingLine, refLine };
+    return { discountLine, codeLine, shippingLine, refLine };
 }
 
 /** Composes the full WhatsApp order message from customer data and cart summary. */
@@ -516,7 +601,7 @@ Hola, quiero hacer un pedido con la siguiente información:
 ${itemLines}
 
 *Resumen del pedido:*
-Subtotal: $${formatCOP(summary.subtotal)} COP${extras.discountLine}${extras.shippingLine}
+Subtotal: $${formatCOP(summary.subtotal)} COP${extras.discountLine}${extras.codeLine}${extras.shippingLine}
 
 *Total a pagar: $${formatCOP(summary.finalTotal)} COP*`
     );
@@ -537,6 +622,40 @@ function isMobileDevice() {
     return /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }
 
+/** Saves the cliente + order to NEXOMAR in the background (fire-and-forget). */
+function saveOrder(customer) {
+    if (typeof orderUrl === 'undefined' || typeof _shopId === 'undefined') {
+        return;
+    }
+    const summary = getCartSummary();
+    const items = cart.map(function(item) {
+        return {
+            nombre:    item.name,
+            cantidad:  item.quantity,
+            precio:    rawToPrice(item.salePrice || item.regularPrice),
+            variante:  item.size ? `${item.size} ml` : '',
+            marca:     item.brand || '',
+            productId: item.productId || null
+        };
+    });
+    fetch(orderUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            shopId:          _shopId,
+            nombre:          customer.name,
+            telefono:        customer.celular,
+            ciudad:          customer.ciudad,
+            barrio:          customer.barrio    || '',
+            direccion:       customer.direccion || '',
+            items:           items,
+            total:           summary.finalTotal,
+            codigoDescuento: summary.appliedCode    || '',
+            descuento:       summary.appliedPercent || 0
+        })
+    }).catch(function() {});
+}
+
 /**
  * Validates the form, generates the WhatsApp message, and opens WhatsApp.
  * On mobile: opens the native app. On desktop: opens WhatsApp Web in a new tab.
@@ -554,6 +673,7 @@ function submitOrder() {
     } else {
         window.open(`https://wa.me/${phone}?text=${encoded}`, '_blank');
     }
+    saveOrder(customerData);
     closeCheckoutModal();
 }
 
@@ -574,6 +694,24 @@ if (cartButtonMobile) {
 const cartCheckoutBtn = document.getElementById('cartCheckoutBtn');
 if (cartCheckoutBtn) {
     cartCheckoutBtn.addEventListener('click', openCheckoutModal);
+}
+
+const cartCodeApplyBtn = document.getElementById('cartCodeApplyBtn');
+if (cartCodeApplyBtn) {
+    cartCodeApplyBtn.addEventListener('click', applyDiscountCode);
+}
+
+const cartCodigoInput = document.getElementById('cartCodigo');
+if (cartCodigoInput) {
+    cartCodigoInput.addEventListener('input', function() {
+        this.value = this.value.toUpperCase();
+    });
+    cartCodigoInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            applyDiscountCode();
+        }
+    });
 }
 
 const checkoutModalClose = document.getElementById('checkoutModalClose');

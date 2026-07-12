@@ -550,7 +550,7 @@
 }
 
 .pd-acc-item.open .pd-acc-body {
-    max-height: 400px;
+    max-height: 4000px;
     padding-bottom: 20px;
 }
 
@@ -562,6 +562,37 @@
     line-height: 1.75;
     letter-spacing: 0.3px;
 }
+
+.pd-desc-clamped {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+}
+
+.pd-desc-expanded {
+    display: block;
+    -webkit-line-clamp: unset;
+    overflow: visible;
+}
+
+.pd-desc-toggle {
+    display: block;
+    background: none;
+    border: none;
+    padding: 0;
+    margin-top: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: rgb(212, 175, 125);
+    cursor: pointer;
+    transition: opacity 0.15s;
+}
+.pd-desc-toggle:hover { opacity: 0.75; }
+.pd-desc-toggle.hidden { display: none; }
 
 /* Related Products */
 .pd-related {

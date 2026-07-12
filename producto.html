@@ -30,8 +30,11 @@
     <link rel="stylesheet" href="styles/footer.css">
     <link rel="stylesheet" href="styles/animations.css">
     <link rel="stylesheet" href="styles/checkout-modal.css">
+    <link rel="stylesheet" href="styles/discount-widget.css">
 
     <script src="script.js" defer></script>
+    <script src="scripts/discount-config.js" defer></script>
+    <script src="scripts/discount-widget.js" defer></script>
     <script src="scripts/templates.js" defer></script>
     <script src="scripts/cart.js" defer></script>
     <script src="scripts/producto.js" defer></script>
@@ -69,6 +72,14 @@
                             <a href="https://www.instagram.com/elixirsb__/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                                 <img src="./assets/img/instagram_white.svg" class="nav-icon social-icon" alt="Instagram">
                             </a>
+                        </li>
+                        <li>
+                            <button class="nav-icon-button elixir-wish-btn" id="wishlistBtn" aria-label="Favoritos">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round">
+                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                                </svg>
+                                <span class="elixir-wish-nav-badge hidden" id="elixirWishBadge"></span>
+                            </button>
                         </li>
                         <li>
                             <button class="nav-icon-button" id="cartButton" aria-label="Carrito">
@@ -190,7 +201,8 @@
                             <span>Descripción</span>
                         </button>
                         <div class="pd-acc-body" id="pdDescription">
-                            <p>Rose Noir es una fragancia oscura y seductora que evoca el misterio de la noche. Su apertura especiada con bergamota y cardamomo da paso a un corazón floral profundo, dominado por la rosa negra y la orquídea, antes de asentarse en una base cálida de maderas oscuras y patchouli. Una fragancia para quienes no temen destacar.</p>
+                            <p class="pd-desc-text pd-desc-clamped">Rose Noir es una fragancia oscura y seductora que evoca el misterio de la noche. Su apertura especiada con bergamota y cardamomo da paso a un corazón floral profundo, dominado por la rosa negra y la orquídea, antes de asentarse en una base cálida de maderas oscuras y patchouli. Una fragancia para quienes no temen destacar.</p>
+                            <button type="button" class="pd-desc-toggle hidden" id="pdDescToggle" aria-expanded="false">Ver más</button>
                         </div>
                     </div>
                 </div>
@@ -247,8 +259,13 @@
                 <div class="cart-shipping-track">
                     <div class="cart-shipping-fill" id="cartShippingProgress"></div>
                 </div>
-                <p class="cart-shipping-text" id="cartShippingText">Envío gratis desde $300.000 COP</p>
+                <p class="cart-shipping-text" id="cartShippingText">Envío gratis desde $500.000 COP</p>
             </div>
+            <div class="cart-code-row">
+                <input type="text" id="cartCodigo" placeholder="Código de descuento" autocomplete="off">
+                <button type="button" class="cart-code-apply" id="cartCodeApplyBtn">Aplicar</button>
+            </div>
+            <p class="cart-code-feedback" id="cartCodeFeedback"></p>
             <div class="cart-price-row">
                 <span>Subtotal</span>
                 <span id="cartSubtotal">$0 COP</span>
@@ -256,6 +273,10 @@
             <div class="cart-price-row cart-discount-row" id="cartDiscountRow" style="display:none">
                 <span>Descuento ✨</span>
                 <span id="cartDiscount" class="cart-discount-val">−$0 COP</span>
+            </div>
+            <div class="cart-price-row cart-discount-row" id="cartCodeDiscountRow" style="display:none">
+                <span id="cartCodeDiscountLabel">Código</span>
+                <span id="cartCodeDiscount" class="cart-discount-val">−$0 COP</span>
             </div>
             <div class="cart-price-row cart-total-row">
                 <span>Total</span>

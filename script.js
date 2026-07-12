@@ -13,6 +13,8 @@ const _apiBase    = (_host === 'localhost' || _host === '127.0.0.1' || _host ===
 const _shopId     = '6a0de7a797ebb49fffb11079';
 const productsUrl = _apiBase + '/api/products/public?userId=' + _shopId;
 const reviewsUrl  = _apiBase + '/api/shop-reviews/public?userId=' + _shopId;
+const validateUrl = _apiBase + '/api/public/validate-code';
+const orderUrl    = _apiBase + '/api/public/order';
 
 // ── Heart / Wishlist storage ──────────────────────
 
@@ -108,9 +110,9 @@ function elixirRenderWishItem(p) {
     link.innerHTML =
         (img ? '<img src="' + img + '" style="width:52px;height:65px;object-fit:cover;object-position:center top;flex-shrink:0;border-radius:3px">' : '<div style="width:52px;height:65px;background:#1a1020;flex-shrink:0;border-radius:3px"></div>') +
         '<div style="flex:1;min-width:0">' +
-            '<div style="font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#e0d0b0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + (p.nombre || '') + '</div>' +
-            (marca ? '<div style="font-family:\'Cormorant Garamond\',serif;font-style:italic;font-size:11px;color:rgba(212,175,125,0.6);margin-top:2px">' + marca + '</div>' : '') +
-            '<div style="font-family:\'Cormorant Garamond\',serif;font-size:14px;color:var(--gold);margin-top:4px">' + price + '</div>' +
+            '<div style="font-size:13px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#e0d0b0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + (p.nombre || '') + '</div>' +
+            (marca ? '<div style="font-family:\'Cormorant Garamond\',serif;font-style:italic;font-size:13px;color:rgba(212,175,125,0.6);margin-top:2px">' + marca + '</div>' : '') +
+            '<div style="font-family:\'Cormorant Garamond\',serif;font-size:19px;color:var(--gold);margin-top:4px">' + price + '</div>' +
         '</div>';
     link.addEventListener('click', elixirCloseWishlist);
 

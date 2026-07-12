@@ -1,0 +1,340 @@
+/* ============================================================
+   NEXOMAR DISCOUNT WIDGET — ScentScape (ElixirS&B) theme
+   Copied from NEXOMAR.co/client/widgets/discount/discount-widget.css.
+   Only the :root variables + the few visual refinements below are
+   site-specific; class names/structure must stay untouched —
+   discount-widget.js depends on them.
+   ============================================================ */
+
+:root {
+    --nxdw-bg:        rgb(21,25,50);     /* --primary-color */
+    --nxdw-bg-2:      rgba(255,255,255,0.06);
+    --nxdw-ink:       rgb(255,255,255);  /* --sec-text-color */
+    --nxdw-muted:     rgba(255,255,255,0.68);
+    --nxdw-accent:    rgb(212,175,125);  /* --gold */
+    --nxdw-accent-2:  rgb(240,210,170);  /* --gold-light */
+    --nxdw-border:    rgba(212,175,125,0.35);
+    --nxdw-danger:    rgb(224,120,130);
+    --nxdw-font-body: 'Montserrat', sans-serif;
+    --nxdw-font-disp: 'Cormorant Garamond', serif;
+    --nxdw-bar-h:     36px;
+    /* Header=1000, mobile-menu overlay=1002, cart panel=1002/1003. Sit above
+       the header but below any open panel, so the bar hides behind them
+       instead of floating on top. */
+    --nxdw-bar-z:     1001;
+    --nxdw-modal-z:   99999;
+    /* The bar sits directly above the site's black nav header (rgba(0,0,0,.9)
+       with a gold bottom border) — match that instead of the navy modal bg,
+       or the two visually clash. */
+    --nxdw-bar-bg:      rgba(0,0,0,0.94);
+    --nxdw-bar-border:  rgba(212,175,125,0.5);
+}
+
+.nxdw-hidden { display: none !important; }
+
+/* ---- Announcement bar ---- */
+
+.nxdw-bar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: var(--nxdw-bar-h);
+    background: var(--nxdw-bar-bg);
+    border-bottom: 1px solid var(--nxdw-bar-border);
+    z-index: var(--nxdw-bar-z);
+    overflow: hidden;
+    transform: translateY(-100%);
+    transition: transform 0.38s cubic-bezier(0.32, 0.72, 0, 1);
+}
+.nxdw-bar--visible { transform: translateY(0); }
+
+.nxdw-bar-items { position: relative; height: 100%; width: 100%; }
+
+.nxdw-bar-item {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-family: var(--nxdw-font-body);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--nxdw-muted);
+    opacity: 0;
+    transform: translateY(5px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    white-space: nowrap;
+    pointer-events: none;
+    padding: 0 16px;
+}
+.nxdw-bar-item.nxdw-active { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.nxdw-bar-item--click { cursor: pointer; }
+.nxdw-bar-gem { color: var(--nxdw-accent); font-size: 8px; flex-shrink: 0; }
+
+.nxdw-bar-copy {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    padding: 0;
+    margin: 0;
+    flex-shrink: 0;
+    background: transparent;
+    border: none;
+    color: var(--nxdw-muted);
+    opacity: 0.55;
+    cursor: pointer;
+    transition: opacity 0.15s, color 0.15s;
+}
+.nxdw-bar-copy:hover { opacity: 1; color: var(--nxdw-ink); }
+.nxdw-bar-copy--done { opacity: 1; color: var(--nxdw-accent); }
+
+/* ---- Modal overlay ---- */
+
+.nxdw-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(6,7,16,0.78);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: var(--nxdw-modal-z);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+}
+.nxdw-overlay.nxdw-open { opacity: 1; pointer-events: auto; }
+
+.nxdw-modal {
+    background:
+        radial-gradient(ellipse 140% 90% at 50% -10%, rgba(212,175,125,0.14), transparent 55%),
+        linear-gradient(180deg, rgb(24,29,56), rgb(17,20,40));
+    color: var(--nxdw-ink);
+    width: 100%;
+    max-width: 460px;
+    border-radius: 2px;
+    border: 1px solid var(--nxdw-border);
+    position: relative;
+    overflow: hidden;
+    max-height: calc(100dvh - 16px);
+    overflow-y: auto;
+    transform: translateY(20px) scale(0.97);
+    transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+    box-shadow: 0 30px 80px -20px rgba(0,0,0,0.6);
+}
+.nxdw-overlay.nxdw-open .nxdw-modal { transform: translateY(0) scale(1); }
+
+/* Inset hairline — the "frame within a frame" look used on the site's
+   certificate/hero mark. */
+.nxdw-modal::before {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border: 1px solid rgba(212,175,125,0.22);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.nxdw-close {
+    position: absolute;
+    top: 16px; right: 16px;
+    width: 30px; height: 30px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--nxdw-accent);
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1;
+    border-radius: 50%;
+    border: 1px solid var(--nxdw-border);
+    background: rgba(6,7,16,0.4);
+    z-index: 3;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+.nxdw-close:hover { border-color: var(--nxdw-accent); color: var(--nxdw-accent-2); background: rgba(212,175,125,0.1); }
+
+/* Square aspect ratio (not a fixed px height) so a square promo/logo image
+   shows in full on mobile instead of getting cropped through its content —
+   a fixed short height was cutting straight through wordmarks. */
+.nxdw-img-wrap { width: 100%; aspect-ratio: 1 / 1; overflow: hidden; flex-shrink: 0; position: relative; z-index: 1; }
+.nxdw-img-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+.nxdw-img-wrap::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 82%, rgba(17,20,40,0.9) 100%);
+}
+
+.nxdw-body { padding: 34px 30px 32px; text-align: center; position: relative; z-index: 2; }
+
+.nxdw-ornament {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+.nxdw-ornament span { width: 28px; height: 1px; background: linear-gradient(90deg, transparent, var(--nxdw-accent)); }
+.nxdw-ornament span:last-child { background: linear-gradient(90deg, var(--nxdw-accent), transparent); }
+.nxdw-ornament em { font-style: normal; color: var(--nxdw-accent); font-size: 11px; }
+
+.nxdw-eyebrow {
+    font-family: var(--nxdw-font-body);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--nxdw-accent);
+    margin: 0 0 10px;
+}
+
+.nxdw-divider {
+    width: 1px;
+    height: 22px;
+    background: linear-gradient(180deg, transparent, var(--nxdw-accent), transparent);
+    margin: 6px auto 22px;
+}
+
+.nxdw-title {
+    font-family: var(--nxdw-font-disp);
+    font-size: clamp(30px, 8vw, 40px);
+    font-weight: 400;
+    line-height: 1.05;
+    margin: 0 0 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+.nxdw-title em { font-style: italic; color: var(--nxdw-accent); font-size: 1.1em; }
+
+.nxdw-sub {
+    font-family: var(--nxdw-font-disp);
+    font-style: italic;
+    font-size: 15px;
+    color: var(--nxdw-muted);
+    margin: 0;
+    line-height: 1.5;
+}
+
+.nxdw-fields { display: flex; flex-direction: column; gap: 18px; margin: 0 0 22px; }
+
+.nxdw-input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255,255,255,0.18);
+    border-radius: 0;
+    padding: 8px 2px;
+    font-family: var(--nxdw-font-body);
+    font-size: 15px;
+    color: var(--nxdw-ink);
+    outline: none;
+    box-sizing: border-box;
+    text-align: center;
+    transition: border-color 0.2s;
+}
+.nxdw-input::placeholder { color: rgba(255,255,255,0.32); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; }
+.nxdw-input:focus { border-bottom-color: var(--nxdw-accent); }
+
+.nxdw-error { font-size: 12px; color: var(--nxdw-danger); text-align: center; min-height: 15px; margin: -8px 0 4px; }
+
+.nxdw-privacy {
+    font-size: 10.5px;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.6;
+    margin-top: 18px;
+}
+.nxdw-privacy a { color: var(--nxdw-accent); text-decoration: underline; }
+
+.nxdw-btn, .nxdw-done-btn {
+    width: 100%;
+    background: linear-gradient(180deg, rgb(226,193,146), rgb(196,159,110));
+    color: rgb(21,25,50);
+    font-family: var(--nxdw-font-body);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 16px;
+    border-radius: 1px;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    box-shadow: 0 8px 22px -8px rgba(212,175,125,0.5);
+    transition: opacity 0.15s, transform 0.15s, box-shadow 0.2s;
+}
+.nxdw-btn:hover, .nxdw-done-btn:hover { opacity: 0.92; transform: translateY(-1px); box-shadow: 0 10px 26px -6px rgba(212,175,125,0.6); }
+.nxdw-btn:disabled { opacity: 0.5; pointer-events: none; }
+
+.nxdw-btn-spinner {
+    display: none;
+    width: 13px; height: 13px;
+    border: 1.5px solid rgba(21,25,50,0.3);
+    border-top-color: rgb(21,25,50);
+    border-radius: 50%;
+    animation: nxdw-spin 0.7s linear infinite;
+    position: absolute; right: 16px; top: 50%;
+    transform: translateY(-50%);
+}
+.nxdw-btn.nxdw-loading .nxdw-btn-spinner { display: block; }
+@keyframes nxdw-spin { to { transform: translateY(-50%) rotate(360deg); } }
+
+/* ---- Success state ---- */
+
+.nxdw-success { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+
+.nxdw-success-icon {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    border: 1px solid var(--nxdw-accent);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--nxdw-accent);
+    background: rgba(212,175,125,0.08);
+    margin-bottom: 2px;
+}
+
+.nxdw-success-title { font-family: var(--nxdw-font-disp); font-size: 26px; font-weight: 400; margin: 0; text-transform: uppercase; letter-spacing: 0.02em; }
+.nxdw-success-sub   { font-family: var(--nxdw-font-disp); font-style: italic; font-size: 15px; color: var(--nxdw-muted); margin: 0; }
+.nxdw-success-desc  { font-family: var(--nxdw-font-body); font-size: 12px; color: rgba(255,255,255,0.5); margin: 0; line-height: 1.5; }
+
+.nxdw-code-box {
+    display: flex; align-items: center; justify-content: center; gap: 14px;
+    background: rgba(255,255,255,0.04);
+    border: 1px dashed var(--nxdw-border);
+    border-radius: 1px;
+    padding: 16px 22px;
+    width: 100%;
+    box-sizing: border-box;
+}
+.nxdw-code-text { font-family: var(--nxdw-font-body); font-size: 21px; font-weight: 700; letter-spacing: 0.18em; color: var(--nxdw-accent-2); }
+
+.nxdw-copy-btn {
+    display: flex; align-items: center; gap: 5px;
+    font-size: 10px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
+    color: var(--nxdw-muted);
+    background: transparent;
+    border: 1px solid var(--nxdw-border);
+    border-radius: 1px;
+    padding: 7px 10px;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: color 0.15s, border-color 0.15s;
+}
+.nxdw-copy-btn:hover { color: var(--nxdw-ink); border-color: var(--nxdw-accent); }
+.nxdw-copy-btn.nxdw-copied { color: var(--nxdw-accent); border-color: var(--nxdw-accent); }
+
+/* ---- Desktop: two-column layout ---- */
+
+@media (min-width: 900px) {
+    .nxdw-modal { max-width: 800px; display: flex; align-items: stretch; }
+    .nxdw-modal.nxdw-no-img { max-width: 480px; }
+    .nxdw-img-wrap { width: 45%; aspect-ratio: auto; height: auto; flex-shrink: 0; }
+    .nxdw-img-wrap::after { background: linear-gradient(90deg, transparent 70%, rgb(17,20,40)); }
+    .nxdw-body { flex: 1; display: flex; flex-direction: column; justify-content: center; text-align: left; padding: 50px 54px; }
+    .nxdw-ornament, .nxdw-divider { margin-left: 0; }
+    .nxdw-ornament { justify-content: flex-start; }
+    .nxdw-success { align-items: flex-start; }
+}

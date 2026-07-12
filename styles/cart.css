@@ -609,6 +609,77 @@
     color: rgb(212, 175, 125) !important;
 }
 
+/* ---- Discount code ---- */
+
+.cart-code-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.cart-code-row input {
+    flex: 1;
+    min-width: 0;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(212, 175, 125, 0.25);
+    border-radius: 6px;
+    padding: 10px 12px;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.cart-code-row input::placeholder {
+    color: rgba(255, 255, 255, 0.35);
+}
+
+.cart-code-row input:focus {
+    border-color: rgb(212, 175, 125);
+}
+
+.cart-code-apply {
+    flex-shrink: 0;
+    background: transparent;
+    border: 1px solid rgb(212, 175, 125);
+    border-radius: 6px;
+    padding: 0 16px;
+    color: rgb(212, 175, 125);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+.cart-code-apply:hover {
+    background: rgb(212, 175, 125);
+    color: rgb(21, 25, 50);
+}
+
+.cart-code-apply:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.cart-code-feedback {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    min-height: 14px;
+    margin: -2px 0 10px;
+}
+
+.cart-code-feedback--ok {
+    color: rgb(212, 175, 125);
+}
+
+.cart-code-feedback--error {
+    color: #ff7070;
+}
+
 /* ---- Responsive: Cart ---- */
 
 @media (max-width: 599px) {

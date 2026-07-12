@@ -34,8 +34,11 @@
 
     <link rel="stylesheet" href="styles/animations.css">
     <link rel="stylesheet" href="styles/checkout-modal.css">
+    <link rel="stylesheet" href="styles/discount-widget.css">
 
     <script src="script.js" defer></script>
+    <script src="scripts/discount-config.js" defer></script>
+    <script src="scripts/discount-widget.js" defer></script>
     <script src="scripts/templates.js" defer></script>
     <script src="scripts/cart.js" defer></script>
     <script src="scripts/home.js" defer></script>
@@ -183,8 +186,13 @@
                 <div class="cart-shipping-track">
                     <div class="cart-shipping-fill" id="cartShippingProgress"></div>
                 </div>
-                <p class="cart-shipping-text" id="cartShippingText">Envío gratis desde $300.000 COP</p>
+                <p class="cart-shipping-text" id="cartShippingText">Envío gratis desde $500.000 COP</p>
             </div>
+            <div class="cart-code-row">
+                <input type="text" id="cartCodigo" placeholder="Código de descuento" autocomplete="off">
+                <button type="button" class="cart-code-apply" id="cartCodeApplyBtn">Aplicar</button>
+            </div>
+            <p class="cart-code-feedback" id="cartCodeFeedback"></p>
             <div class="cart-price-row">
                 <span>Subtotal</span>
                 <span id="cartSubtotal">$0 COP</span>
@@ -192,6 +200,10 @@
             <div class="cart-price-row cart-discount-row" id="cartDiscountRow" style="display:none">
                 <span>Descuento ✨</span>
                 <span id="cartDiscount" class="cart-discount-val">−$0 COP</span>
+            </div>
+            <div class="cart-price-row cart-discount-row" id="cartCodeDiscountRow" style="display:none">
+                <span id="cartCodeDiscountLabel">Código</span>
+                <span id="cartCodeDiscount" class="cart-discount-val">−$0 COP</span>
             </div>
             <div class="cart-price-row cart-total-row">
                 <span>Total</span>

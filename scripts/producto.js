@@ -183,10 +183,36 @@ function renderImage(product) {
     imgEl.src = product.imagenes && product.imagenes.length > 0 ? product.imagenes[0] : './assets/img/scentscape-logo.png';
 }
 
-/** Fills in the product description text. */
+/**
+ * Fills in the product description text and, if it's longer than the
+ * 3-line clamp, shows a "Ver más / Ver menos" toggle to expand it.
+ */
 function renderDescription(product) {
-    var descEl = document.querySelector('#pdDescription p');
+    var descEl   = document.querySelector('#pdDescription p');
+    var toggleEl = document.getElementById('pdDescToggle');
     descEl.textContent = product.descripcion || 'No hay descripción disponible.';
+    descEl.classList.add('pd-desc-clamped');
+    toggleEl.classList.add('hidden');
+    toggleEl.textContent = 'Ver más';
+    toggleEl.setAttribute('aria-expanded', 'false');
+
+    // Only offer the toggle if the text actually overflows 3 lines.
+    requestAnimationFrame(function() {
+        if (descEl.scrollHeight > descEl.clientHeight + 1) {
+            toggleEl.classList.remove('hidden');
+        }
+    });
+}
+
+function initDescriptionToggle() {
+    var descEl   = document.querySelector('#pdDescription p');
+    var toggleEl = document.getElementById('pdDescToggle');
+    toggleEl.addEventListener('click', function() {
+        var expanded = descEl.classList.toggle('pd-desc-expanded');
+        descEl.classList.toggle('pd-desc-clamped', !expanded);
+        toggleEl.textContent = expanded ? 'Ver menos' : 'Ver más';
+        toggleEl.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+    });
 }
 
 /**
@@ -352,6 +378,7 @@ function setupProductPage() {
         adjustQuantity(1);
     });
     document.getElementById('pdAddCart').addEventListener('click', handleAddToCart);
+    initDescriptionToggle();
 }
 
 /**
