@@ -120,9 +120,10 @@
     border-radius: 2px;
     border: 1px solid var(--nxdw-border);
     position: relative;
-    overflow: hidden;
-    max-height: calc(100dvh - 16px);
-    overflow-y: auto;
+    /* Visible, not hidden/auto — the modal itself must never scroll (only
+       the country dropdown does); clipping here would also cut off that
+       dropdown whenever it opens near the modal's bottom edge. */
+    overflow: visible;
     transform: translateY(20px) scale(0.97);
     transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1);
     box-shadow: 0 30px 80px -20px rgba(0,0,0,0.6);
@@ -239,6 +240,93 @@
 .nxdw-input::placeholder { color: rgba(255,255,255,0.32); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; }
 .nxdw-input:focus { border-bottom-color: var(--nxdw-accent); }
 
+.nxdw-phone-group { display: flex; align-items: flex-end; gap: 10px; }
+
+/* ---- Country code dropdown (custom listbox, not a native <select> —
+   the native option panel renders as an unstyleable system control, which
+   is exactly what looked cramped/inconsistent on mobile.) ---- */
+
+.nxdw-country-select { position: relative; flex: 0 0 auto; }
+
+.nxdw-country-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    width: auto;
+    max-width: 92px;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255,255,255,0.18);
+    border-radius: 0;
+    padding: 8px 2px;
+    font-family: var(--nxdw-font-body);
+    font-size: 15px;
+    color: var(--nxdw-ink);
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+.nxdw-country-btn:hover,
+.nxdw-country-btn:focus-visible,
+.nxdw-country-btn[aria-expanded="true"] { border-bottom-color: var(--nxdw-accent); outline: none; }
+
+.nxdw-country-flag { font-size: 16px; line-height: 1; flex-shrink: 0; }
+.nxdw-country-dial { font-size: 14px; white-space: nowrap; }
+.nxdw-country-arrow {
+    color: var(--nxdw-accent);
+    flex-shrink: 0;
+    margin-left: auto;
+    transition: transform 0.2s;
+}
+.nxdw-country-btn[aria-expanded="true"] .nxdw-country-arrow { transform: rotate(180deg); }
+
+.nxdw-country-list {
+    position: absolute;
+    z-index: 5;
+    top: calc(100% + 8px);
+    left: 0;
+    min-width: 190px;
+    max-height: min(260px, 45vh);
+    overflow-y: auto;
+    margin: 0;
+    padding: 6px;
+    list-style: none;
+    background: rgb(26,31,58);
+    border: 1px solid var(--nxdw-border);
+    border-radius: 6px;
+    box-shadow: 0 20px 40px -12px rgba(0,0,0,0.55);
+}
+
+.nxdw-country-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 10px;
+    border-radius: 4px;
+    font-family: var(--nxdw-font-body);
+    font-size: 14px;
+    color: var(--nxdw-ink);
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.15s;
+}
+.nxdw-country-option:hover,
+.nxdw-country-option:focus-visible { background: rgba(212,175,125,0.14); }
+.nxdw-country-option[aria-selected="true"] { background: rgba(212,175,125,0.2); }
+
+.nxdw-country-option-flag { font-size: 17px; flex-shrink: 0; }
+.nxdw-country-option-name { flex: 1; white-space: nowrap; }
+.nxdw-country-option-dial { color: var(--nxdw-muted); font-size: 12.5px; flex-shrink: 0; }
+
+.nxdw-phone-input { flex: 1; min-width: 0; text-align: left; }
+.nxdw-phone-input::placeholder { text-align: left; }
+
+/* Phones are narrower than the desktop-tuned 190px list — let it size to the
+   button's own edge instead of always starting flush left, so it doesn't
+   overhang past the modal's padding on small screens. */
+@media (max-width: 420px) {
+    .nxdw-country-list { min-width: 170px; }
+}
+
 .nxdw-error { font-size: 12px; color: var(--nxdw-danger); text-align: center; min-height: 15px; margin: -8px 0 4px; }
 
 .nxdw-privacy {
@@ -334,7 +422,8 @@
     .nxdw-img-wrap { width: 45%; aspect-ratio: auto; height: auto; flex-shrink: 0; }
     .nxdw-img-wrap::after { background: linear-gradient(90deg, transparent 70%, rgb(17,20,40)); }
     .nxdw-body { flex: 1; display: flex; flex-direction: column; justify-content: center; text-align: left; padding: 50px 54px; }
-    .nxdw-ornament, .nxdw-divider { margin-left: 0; }
-    .nxdw-ornament { justify-content: flex-start; }
+    /* Eyebrow + subtitle (with their ornament/divider) stay centered on
+       desktop even though the rest of the form goes left-aligned. */
+    .nxdw-eyebrow, .nxdw-sub { text-align: center; }
     .nxdw-success { align-items: flex-start; }
 }

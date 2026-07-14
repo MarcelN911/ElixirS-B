@@ -36,6 +36,16 @@
 
     if (!shopId || !apiBase) return;
 
+    // Colombia first (and preselected) since that's where most customers are;
+    // the rest cover the other countries this storefront currently ships to.
+    var COUNTRIES = [
+        { iso: 'CO', dial: '+57',  flag: '🇨🇴', name: 'Colombia' },
+        { iso: 'PE', dial: '+51',  flag: '🇵🇪', name: 'Perú' },
+        { iso: 'VE', dial: '+58',  flag: '🇻🇪', name: 'Venezuela' },
+        { iso: 'EC', dial: '+593', flag: '🇪🇨', name: 'Ecuador' },
+        { iso: 'CL', dial: '+56',  flag: '🇨🇱', name: 'Chile' }
+    ];
+
     var STORAGE_KEY   = 'nxdw_registrado_' + shopId;
     var CLOSES_KEY    = 'nxdw_cierres_' + shopId;
     var NEXT_OPEN_KEY = 'nxdw_reintento_' + shopId;
@@ -71,7 +81,25 @@
                         '<div class="nxdw-divider"></div>' +
                         '<div class="nxdw-fields">' +
                             '<input class="nxdw-input" type="text" id="nxdwNombre" placeholder="Tu nombre" autocomplete="name">' +
-                            '<input class="nxdw-input" type="tel" id="nxdwTelefono" placeholder="WhatsApp (con código país)" autocomplete="tel">' +
+                            '<div class="nxdw-phone-group">' +
+                                '<div class="nxdw-country-select" id="nxdwCountryWrap">' +
+                                    '<button type="button" class="nxdw-country-btn" id="nxdwCountryBtn" aria-haspopup="listbox" aria-expanded="false" data-dial="' + COUNTRIES[0].dial + '">' +
+                                        '<span class="nxdw-country-flag" id="nxdwCountryFlag">' + COUNTRIES[0].flag + '</span>' +
+                                        '<span class="nxdw-country-dial" id="nxdwCountryDial">' + COUNTRIES[0].dial + '</span>' +
+                                        '<svg class="nxdw-country-arrow" width="9" height="6" viewBox="0 0 9 6"><path d="M1 1l3.5 3.5L8 1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+                                    '</button>' +
+                                    '<ul class="nxdw-country-list nxdw-hidden" id="nxdwCountryList" role="listbox" aria-label="Código de país">' +
+                                        COUNTRIES.map(function (c, i) {
+                                            return '<li class="nxdw-country-option" role="option" data-dial="' + c.dial + '" data-flag="' + c.flag + '" aria-selected="' + (i === 0 ? 'true' : 'false') + '">' +
+                                                '<span class="nxdw-country-option-flag">' + c.flag + '</span>' +
+                                                '<span class="nxdw-country-option-name">' + c.name + '</span>' +
+                                                '<span class="nxdw-country-option-dial">' + c.dial + '</span>' +
+                                            '</li>';
+                                        }).join('') +
+                                    '</ul>' +
+                                '</div>' +
+                                '<input class="nxdw-input nxdw-phone-input" type="tel" id="nxdwTelefono" placeholder="WhatsApp" autocomplete="tel" inputmode="tel">' +
+                            '</div>' +
                         '</div>' +
                         '<div class="nxdw-error" id="nxdwError"></div>' +
                         '<button type="button" class="nxdw-btn" id="nxdwSubmitBtn"><span>Obtener código</span><span class="nxdw-btn-spinner"></span></button>' +
@@ -213,6 +241,65 @@
         if (!overlay) return;
         overlay.classList.remove('nxdw-open');
         document.body.style.overflow = '';
+        closeCountryList();
+    }
+
+    // ── Country code dropdown ───────────────────────────────────────────────
+    // Custom listbox instead of a native <select> — the native option panel
+    // can't be styled (that's the cramped system list you get on mobile), so
+    // this renders its own popup that matches the modal everywhere.
+
+    function closeCountryList() {
+        var list = document.getElementById('nxdwCountryList');
+        var btn  = document.getElementById('nxdwCountryBtn');
+        if (list) list.classList.add('nxdw-hidden');
+        if (btn)  btn.setAttribute('aria-expanded', 'false');
+    }
+
+    // Caps the list's height to whatever room is left inside the modal below
+    // the button — the modal itself no longer clips/scrolls, so without this
+    // the list would visually spill out past the modal's own bottom edge.
+    // The list keeps its own overflow-y: auto to scroll internally instead.
+    function capCountryListHeight() {
+        var btn   = document.getElementById('nxdwCountryBtn');
+        var list  = document.getElementById('nxdwCountryList');
+        var modal = document.querySelector('#nxdwOverlay .nxdw-modal');
+        if (!modal) return;
+        var space = modal.getBoundingClientRect().bottom - btn.getBoundingClientRect().bottom - 24;
+        list.style.maxHeight = Math.max(80, Math.min(260, space)) + 'px';
+    }
+
+    function initCountryDropdown() {
+        var wrap = document.getElementById('nxdwCountryWrap');
+        var btn  = document.getElementById('nxdwCountryBtn');
+        var list = document.getElementById('nxdwCountryList');
+        var flag = document.getElementById('nxdwCountryFlag');
+        var dial = document.getElementById('nxdwCountryDial');
+
+        btn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            var isOpen = !list.classList.contains('nxdw-hidden');
+            if (isOpen) { closeCountryList(); return; }
+            capCountryListHeight();
+            list.classList.remove('nxdw-hidden');
+            btn.setAttribute('aria-expanded', 'true');
+        });
+
+        list.addEventListener('click', function (e) {
+            var opt = e.target.closest ? e.target.closest('.nxdw-country-option') : null;
+            if (!opt) return;
+            var options = list.querySelectorAll('.nxdw-country-option');
+            for (var i = 0; i < options.length; i++) options[i].setAttribute('aria-selected', 'false');
+            opt.setAttribute('aria-selected', 'true');
+            btn.setAttribute('data-dial', opt.getAttribute('data-dial'));
+            flag.textContent = opt.getAttribute('data-flag');
+            dial.textContent = opt.getAttribute('data-dial');
+            closeCountryList();
+        });
+
+        document.addEventListener('click', function (e) {
+            if (!wrap.contains(e.target)) closeCountryList();
+        });
     }
 
     // Re-checks dismiss state right before actually opening — guards against
@@ -267,12 +354,17 @@
     }
 
     function handleSubmit() {
-        var nombre   = document.getElementById('nxdwNombre').value.trim();
-        var telefono = document.getElementById('nxdwTelefono').value.trim();
+        var nombre       = document.getElementById('nxdwNombre').value.trim();
+        var dial         = document.getElementById('nxdwCountryBtn').getAttribute('data-dial');
+        // Strip everything but digits so "300 123 4567" / "300-123-4567" and a
+        // leading trunk "0" all normalize to the same clean national number
+        // before we prefix the dial code.
+        var nationalNum  = document.getElementById('nxdwTelefono').value.trim().replace(/\D/g, '').replace(/^0+/, '');
+        var telefono     = nationalNum ? dial + nationalNum : '';
 
         setError('');
         if (!nombre)   { setError('Por favor ingresa tu nombre.'); return; }
-        if (!telefono) { setError('Por favor ingresa tu número de WhatsApp.'); return; }
+        if (!nationalNum || nationalNum.length < 7) { setError('Por favor ingresa un número de WhatsApp válido.'); return; }
 
         var btn = document.getElementById('nxdwSubmitBtn');
         btn.disabled = true;
@@ -321,10 +413,14 @@
         document.getElementById('nxdwDoneBtn').addEventListener('click', closeModal);
         document.getElementById('nxdwSubmitBtn').addEventListener('click', handleSubmit);
         document.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape' && overlay.classList.contains('nxdw-open')) handleUserClose();
+            if (e.key !== 'Escape') return;
+            var list = document.getElementById('nxdwCountryList');
+            if (list && !list.classList.contains('nxdw-hidden')) { closeCountryList(); return; }
+            if (overlay.classList.contains('nxdw-open')) handleUserClose();
         });
         initCopyBtn();
         initBarCopy();
+        initCountryDropdown();
 
         bar.addEventListener('click', function (e) {
             var item = e.target.closest ? e.target.closest('.nxdw-bar-item--click') : null;
