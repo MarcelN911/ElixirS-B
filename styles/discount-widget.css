@@ -117,6 +117,7 @@
     color: var(--nxdw-ink);
     width: 100%;
     max-width: 460px;
+    box-sizing: border-box;
     border-radius: 2px;
     border: 1px solid var(--nxdw-border);
     position: relative;
@@ -417,25 +418,43 @@
 /* ---- Mobile: prevent viewport overflow, always-visible close button ---- */
 
 @media (max-width: 767px) {
-    /* align-items:flex-start (instead of center) stops the overlay from
-       clipping the modal equally at top AND bottom when it's taller than
-       the viewport — that used to hide the X button and the submit button
-       simultaneously. Vertical centering is instead handled by the auto
-       margins on .nxdw-modal below: those center it when it fits, and
-       safely collapse to 0 (pinning it to the top, scrollable) when it
-       doesn't — the flexbox equivalent of `align-items: safe center`
-       without relying on that keyword's patchy Safari support.
+    /* Flexbox centering (align-items:center, or margin:auto with
+       align-items:flex-start) turns out to clip BOTH the top and bottom of
+       an overflowing item in real mobile Safari/Chrome — you can't scroll
+       up far enough to reach content that renders above the container's
+       initial scroll position, so the close button and the submit button
+       both disappear. Flexbox is dropped here in favor of the classic
+       ghost-element technique (an ::before spacer + inline-block +
+       vertical-align:middle): it centers the modal when it fits, and when
+       it doesn't, normal block/inline overflow means scrollTop:0 already
+       shows the top of the modal — nothing is ever unreachable.
        The country-code dropdown can still escape the modal's bottom edge
        because .nxdw-modal keeps overflow:visible — only the overlay scrolls. */
     .nxdw-overlay {
-        align-items: flex-start;
+        display: block;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
         padding: 16px;
+        text-align: center;
+        /* Zeroed out so the whitespace between the ::before spacer and
+           .nxdw-modal in the markup has zero width — otherwise that
+           whitespace is just wide enough to push the modal onto its own
+           line, wrapping it below the full-height spacer instead of
+           centering it beside it. */
+        font-size: 0;
+    }
+    .nxdw-overlay::before {
+        content: '';
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle;
     }
 
     .nxdw-modal {
-        margin: auto 0;
+        display: inline-block;
+        vertical-align: middle;
+        text-align: left;
+        font-size: 16px;
     }
 
     /* Shrink the promo image box from 1:1 (≈343 px tall on a 375-wide phone)
