@@ -457,23 +457,25 @@
         font-size: 16px;
     }
 
-    /* The promo photos this widget is fed are portrait product shots (tall
-       bottle, ~2:3) — forcing them into a fixed landscape/square box always
-       distorts them: object-fit:cover crops chunks off, object-fit:contain
-       (even with a height cap) shrinks them down with empty bars on the
-       sides. Drop the fixed box entirely and let the image size itself at
-       its own natural ratio instead — width:100%, height:auto — so it
-       always renders full-bleed with nothing cropped and nothing
-       letterboxed, whatever aspect ratio a given shop's photo happens to
-       be. A tall photo makes the modal taller, which is fine: the overlay
-       centers what fits and safely falls back to top-pinned + scrollable
-       for the rest (see .nxdw-overlay above) — never clipped, only scrolled. */
+    /* The promo photos this widget is fed are portrait product shots (e.g.
+       the current one is 1024x1536, ~2:3) with the bottle centered in
+       frame and box/flowers/ribbon filling the rest edge-to-edge. Showing
+       the photo at its full natural height keeps the modal so tall that
+       the bottle itself is below the fold until you scroll — reads as
+       "cut off" even though nothing is technically cropped. Keep the
+       compact 16:9 box instead, but use object-fit:cover (not contain, which
+       was shrinking the whole photo down with empty bars on the sides) with
+       object-position:center (not the site-wide default of top center,
+       which pushed the crop window up and cut the bottle's body off) so the
+       crop window sits on the vertical middle of the photo — where the
+       bottle actually is — instead of its top or its full untouched height. */
     .nxdw-img-wrap {
-        aspect-ratio: auto;
+        aspect-ratio: 16 / 9;
     }
     .nxdw-img-wrap img {
-        height: auto;
-        object-fit: contain;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
     }
 
     /* Tighten body padding on small screens */
