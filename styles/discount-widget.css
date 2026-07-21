@@ -414,6 +414,51 @@
 .nxdw-copy-btn:hover { color: var(--nxdw-ink); border-color: var(--nxdw-accent); }
 .nxdw-copy-btn.nxdw-copied { color: var(--nxdw-accent); border-color: var(--nxdw-accent); }
 
+/* ---- Mobile: scrollable overlay + compact image ---- */
+
+@media (max-width: 600px) {
+    /* Let the overlay scroll vertically so the full modal is reachable */
+    .nxdw-overlay {
+        align-items: flex-start;
+        overflow-y: auto;
+        padding: 10px 12px 30px;
+    }
+    /* Shrink the hero image from 1:1 square to 16:9 — roughly halves its
+       height so the form and submit button are visible without scrolling
+       on most phones. */
+    .nxdw-img-wrap {
+        aspect-ratio: 16 / 9;
+    }
+    /* Tighten the form padding on small screens */
+    .nxdw-body {
+        padding: 24px 20px 24px;
+    }
+}
+
+/* ---- Mobile: prevent viewport overflow, always-visible close button ---- */
+
+@media (max-width: 767px) {
+    /* Default align-items:center clips the modal equally at top and bottom
+       when it's taller than the viewport — hiding the X and the submit button.
+       Switch to top-aligned + scrollable: the modal starts right at the top
+       (close button always in view) and users can scroll to reach the form.
+       The country-code dropdown can still overflow .nxdw-modal because the
+       modal itself keeps overflow:visible — only the overlay scrolls here. */
+    .nxdw-overlay {
+        align-items: flex-start;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 10px 16px 24px;
+    }
+
+    /* Shrink the promo image from 1:1 (≈343 px tall on a 375-wide phone) to
+       16:9 (≈193 px) — saves ~150 px so the form is reachable with minimal
+       scrolling on compact phones. */
+    .nxdw-img-wrap {
+        aspect-ratio: 16 / 9;
+    }
+}
+
 /* ---- Desktop: two-column layout ---- */
 
 @media (min-width: 900px) {
