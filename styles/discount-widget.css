@@ -457,15 +457,22 @@
         font-size: 16px;
     }
 
-    /* Shrink the promo image box from 1:1 (≈343 px tall on a 375-wide phone)
-       to 16:9 (≈193 px) — saves ~150 px so the form is reachable with little
-       scrolling on compact phones. object-fit:contain (instead of cover)
-       keeps the whole square promo image visible, letterboxed left/right,
-       instead of cover cropping its bottom off to fill the wider box. */
+    /* The promo photos this widget is fed are portrait product shots (tall
+       bottle, ~2:3) — forcing them into a fixed landscape/square box always
+       distorts them: object-fit:cover crops chunks off, object-fit:contain
+       (even with a height cap) shrinks them down with empty bars on the
+       sides. Drop the fixed box entirely and let the image size itself at
+       its own natural ratio instead — width:100%, height:auto — so it
+       always renders full-bleed with nothing cropped and nothing
+       letterboxed, whatever aspect ratio a given shop's photo happens to
+       be. A tall photo makes the modal taller, which is fine: the overlay
+       centers what fits and safely falls back to top-pinned + scrollable
+       for the rest (see .nxdw-overlay above) — never clipped, only scrolled. */
     .nxdw-img-wrap {
-        aspect-ratio: 16 / 9;
+        aspect-ratio: auto;
     }
     .nxdw-img-wrap img {
+        height: auto;
         object-fit: contain;
     }
 
