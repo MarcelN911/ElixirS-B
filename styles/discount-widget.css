@@ -414,48 +414,45 @@
 .nxdw-copy-btn:hover { color: var(--nxdw-ink); border-color: var(--nxdw-accent); }
 .nxdw-copy-btn.nxdw-copied { color: var(--nxdw-accent); border-color: var(--nxdw-accent); }
 
-/* ---- Mobile: scrollable overlay + compact image ---- */
-
-@media (max-width: 600px) {
-    /* Let the overlay scroll vertically so the full modal is reachable */
-    .nxdw-overlay {
-        align-items: flex-start;
-        overflow-y: auto;
-        padding: 10px 12px 30px;
-    }
-    /* Shrink the hero image from 1:1 square to 16:9 — roughly halves its
-       height so the form and submit button are visible without scrolling
-       on most phones. */
-    .nxdw-img-wrap {
-        aspect-ratio: 16 / 9;
-    }
-    /* Tighten the form padding on small screens */
-    .nxdw-body {
-        padding: 24px 20px 24px;
-    }
-}
-
 /* ---- Mobile: prevent viewport overflow, always-visible close button ---- */
 
 @media (max-width: 767px) {
-    /* Default align-items:center clips the modal equally at top and bottom
-       when it's taller than the viewport — hiding the X and the submit button.
-       Switch to top-aligned + scrollable: the modal starts right at the top
-       (close button always in view) and users can scroll to reach the form.
-       The country-code dropdown can still overflow .nxdw-modal because the
-       modal itself keeps overflow:visible — only the overlay scrolls here. */
+    /* align-items:flex-start (instead of center) stops the overlay from
+       clipping the modal equally at top AND bottom when it's taller than
+       the viewport — that used to hide the X button and the submit button
+       simultaneously. Vertical centering is instead handled by the auto
+       margins on .nxdw-modal below: those center it when it fits, and
+       safely collapse to 0 (pinning it to the top, scrollable) when it
+       doesn't — the flexbox equivalent of `align-items: safe center`
+       without relying on that keyword's patchy Safari support.
+       The country-code dropdown can still escape the modal's bottom edge
+       because .nxdw-modal keeps overflow:visible — only the overlay scrolls. */
     .nxdw-overlay {
         align-items: flex-start;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
-        padding: 10px 16px 24px;
+        padding: 16px;
     }
 
-    /* Shrink the promo image from 1:1 (≈343 px tall on a 375-wide phone) to
-       16:9 (≈193 px) — saves ~150 px so the form is reachable with minimal
-       scrolling on compact phones. */
+    .nxdw-modal {
+        margin: auto 0;
+    }
+
+    /* Shrink the promo image box from 1:1 (≈343 px tall on a 375-wide phone)
+       to 16:9 (≈193 px) — saves ~150 px so the form is reachable with little
+       scrolling on compact phones. object-fit:contain (instead of cover)
+       keeps the whole square promo image visible, letterboxed left/right,
+       instead of cover cropping its bottom off to fill the wider box. */
     .nxdw-img-wrap {
         aspect-ratio: 16 / 9;
+    }
+    .nxdw-img-wrap img {
+        object-fit: contain;
+    }
+
+    /* Tighten body padding on small screens */
+    .nxdw-body {
+        padding: 24px 20px 24px;
     }
 }
 
