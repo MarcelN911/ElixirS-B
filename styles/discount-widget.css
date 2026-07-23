@@ -221,15 +221,7 @@
     line-height: 1.5;
 }
 
-/* Grid (not flex) so the name field's indent tracks the country button's
-   *actual rendered* width — via grid-column sizing, not a guessed pixel
-   value, which broke as soon as real font metrics (the Montserrat webfont,
-   emoji rendering) differed from whatever rendered the guess. .nxdw-phone-group
-   is unwrapped with display:contents below so its two children join this
-   grid directly, sharing column 1's width with nothing else in that column
-   on row 1 — that empty cell is what makes column 1 size itself exactly to
-   the country button, with zero magic numbers. */
-.nxdw-fields { display: grid; grid-template-columns: auto 1fr; align-items: end; column-gap: 10px; row-gap: 18px; margin: 0 0 22px; }
+.nxdw-fields { display: flex; flex-direction: column; gap: 18px; margin: 0 0 22px; }
 
 .nxdw-input {
     width: 100%;
@@ -249,24 +241,7 @@
 .nxdw-input::placeholder { color: rgba(255,255,255,0.32); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; }
 .nxdw-input:focus { border-bottom-color: var(--nxdw-accent); }
 
-/* The name field (.nxdw-fields' direct-child input, not the nested phone
-   one) is centered by the base rule above, while the WhatsApp field below
-   it is left-aligned starting after the country-code button — so the two
-   placeholders don't line up otherwise. Put it in grid column 2 (see
-   .nxdw-fields above) so its left edge lines up with the phone input's,
-   whatever the country button actually measures out to. */
-.nxdw-fields > .nxdw-input {
-    grid-column: 2;
-    grid-row: 1;
-    text-align: left;
-}
-
-/* Unwrap: let .nxdw-country-select and .nxdw-phone-input become direct
-   grid items of .nxdw-fields instead of a nested flex row, so they occupy
-   named grid cells (row 2) rather than sizing independently of row 1. */
-.nxdw-phone-group { display: contents; }
-.nxdw-country-select { grid-column: 1; grid-row: 2; }
-.nxdw-phone-input { grid-column: 2; grid-row: 2; }
+.nxdw-phone-group { display: flex; align-items: flex-end; gap: 10px; }
 
 /* ---- Country code dropdown (custom listbox, not a native <select> —
    the native option panel renders as an unstyleable system control, which
@@ -343,8 +318,11 @@
 .nxdw-country-option-name { flex: 1; white-space: nowrap; }
 .nxdw-country-option-dial { color: var(--nxdw-muted); font-size: 12.5px; flex-shrink: 0; }
 
-.nxdw-phone-input { flex: 1; min-width: 0; text-align: left; }
-.nxdw-phone-input::placeholder { text-align: left; }
+/* Centered (not left-aligned) to match .nxdw-input's default — same
+   treatment as the name field above it, instead of chasing an exact pixel
+   match against the country button's width, which never held up once real
+   font rendering (Montserrat webfont, emoji width) came into play. */
+.nxdw-phone-input { flex: 1; min-width: 0; }
 
 /* Phones are narrower than the desktop-tuned 190px list — let it size to the
    button's own edge instead of always starting flush left, so it doesn't
