@@ -241,6 +241,17 @@
 .nxdw-input::placeholder { color: rgba(255,255,255,0.32); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; }
 .nxdw-input:focus { border-bottom-color: var(--nxdw-accent); }
 
+/* The name field (.nxdw-fields' direct-child input, not the nested phone
+   one) is centered by the base rule above, while the WhatsApp field below
+   it is left-aligned starting after the country-code button — so the two
+   placeholders don't line up. Left-align this one too, with padding-left
+   matching the country button's rendered width (~69px) plus the
+   phone-group gap (10px), so "Tu nombre" sits directly above "WhatsApp". */
+.nxdw-fields > .nxdw-input {
+    text-align: left;
+    padding-left: 79px;
+}
+
 .nxdw-phone-group { display: flex; align-items: flex-end; gap: 10px; }
 
 /* ---- Country code dropdown (custom listbox, not a native <select> —
