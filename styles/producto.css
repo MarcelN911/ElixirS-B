@@ -563,6 +563,10 @@
     letter-spacing: 0.3px;
 }
 
+.pd-desc-text {
+    white-space: pre-line;
+}
+
 .pd-desc-clamped {
     display: -webkit-box;
     -webkit-box-orient: vertical;
