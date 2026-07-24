@@ -183,6 +183,12 @@ function renderImage(product) {
     imgEl.src = product.imagenes && product.imagenes.length > 0 ? product.imagenes[0] : './assets/img/scentscape-logo.png';
 }
 
+/** Escapes HTML special characters so raw description text can be safely
+ *  inserted via innerHTML (needed to support **bold** below). */
+function escapeHtml(str) {
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
 /**
  * Fills in the product description text and, if it's longer than the
  * 3-line clamp, shows a "Ver más / Ver menos" toggle to expand it.
@@ -190,7 +196,10 @@ function renderImage(product) {
 function renderDescription(product) {
     var descEl   = document.querySelector('#pdDescription p');
     var toggleEl = document.getElementById('pdDescToggle');
-    descEl.textContent = product.descripcion || 'No hay descripción disponible.';
+    var raw = product.descripcion || 'No hay descripción disponible.';
+    // **text** -> <strong>text</strong>. Escape first so any stray < or >
+    // in the source text can't be interpreted as markup.
+    descEl.innerHTML = escapeHtml(raw).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
     descEl.classList.add('pd-desc-clamped');
     toggleEl.classList.add('hidden');
     toggleEl.textContent = 'Ver más';
